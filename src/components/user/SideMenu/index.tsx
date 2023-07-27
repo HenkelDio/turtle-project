@@ -5,30 +5,37 @@ import { LiaCertificateSolid } from 'react-icons/lia';
 import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { RiMenu4Fill } from 'react-icons/ri';
-import { SetStateAction, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SideMenu: React.FC = () => {
-	const [isFold, setFold] = useState<boolean>(false);
-	const [page, setPage] = useState<string>('courses');
+	const [isFold, setFold] = useState<string>('false');
+	const [page, setPage] = useState<string>('');
 
+
+	useEffect(() => {
+		if(localStorage.getItem('page')) {
+			setPage(localStorage.getItem('page')?? 'courses')
+		}
+	})
 
 	const handleFoldMenu = () => {
 		setFold(
-			prevState => !prevState
+			prevState => prevState === 'true' ? 'false' : 'true'
 		)
 	}
 
 	const handleSetPage = (page: string) => {
 		setPage(page)
+		localStorage.setItem('page', page);
 	}
 
 	return (
 		<Container 
-		isFold={isFold}
+		isfold={isFold}
 		>
 			<CloseSideMenu
-				isFold={isFold}
+				isfold={isFold}
 				onClick={handleFoldMenu}	
 			>
 				{
@@ -37,7 +44,7 @@ const SideMenu: React.FC = () => {
 			</CloseSideMenu>
 
 			<Logo
-				isFold={isFold}
+				isfold={isFold}
 			>
 				<GiTurtleShell />
 			</Logo>
@@ -46,7 +53,7 @@ const SideMenu: React.FC = () => {
 				<Link to='/courses'>
 					<Box
 					page={page}
-					isFold={isFold}
+					isfold={isFold}
 					style={{ backgroundColor: page === 'courses' ? '#ccc' : 'transparent'}}
 					onClick={() => handleSetPage('courses')}
 					>
@@ -58,7 +65,7 @@ const SideMenu: React.FC = () => {
 				<Box 
 				style={{ backgroundColor: page === 'certificates' ? '#ccc' : 'transparent'}}
 				page={page}
-				isFold={isFold}
+				isfold={isFold}
 				onClick={() => handleSetPage('certificates')}
 				>
 						<LiaCertificateSolid />
@@ -68,7 +75,7 @@ const SideMenu: React.FC = () => {
 				<Link to='/profile'>
 					<Box 
 					page={page}
-					isFold={isFold}
+					isfold={isFold}
 					style={{ backgroundColor: page === 'profile' ? '#ccc' : 'transparent'}}
 					onClick={() => handleSetPage('profile')}
 					>	

@@ -5,18 +5,18 @@ interface IStyleProps {
 }
 
 interface IStyleFold {
-	isFold: boolean,
+	isfold: string,
 }
 
 interface IStyleFoldAndPage {
-	isFold: boolean,
+	isfold: string,
 	page: string,
 }
 
 export const CloseSideMenu = styled.div<IStyleFold>`
 	position: absolute;
 	top: 10px;
-	right: ${({ isFold }: IStyleFold) => isFold ? '20px' : '10px'};
+	right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '20px' : '10px'};
 	font-size: 1.3rem;
 	cursor: pointer;
 	opacity: 0.5;
@@ -29,7 +29,7 @@ export const CloseSideMenu = styled.div<IStyleFold>`
 
 export const Container = styled.div<IStyleFold>`
 	position: relative;
-	width: ${({ isFold }: IStyleFold) => isFold ? '70px' : '220px'};
+	width: ${({ isfold }: IStyleFold) => isfold === 'true' ? '70px' : '220px'};
 	height: 100vh;
 	background-color: #fff;
 	padding: 25px;
@@ -57,7 +57,7 @@ export const Container = styled.div<IStyleFold>`
 			font-family: 'Work Sans', sans-serif;
 			font-size: 1rem;
 			font-weight: 500;
-			display: ${({ isFold }: IStyleFold) => isFold ? 'none' : 'block'};
+			display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
 		}
 	}
 
@@ -77,12 +77,12 @@ export const Container = styled.div<IStyleFold>`
 `;
 
 export const Logo = styled.div<IStyleFold>`
-	font-size: ${({ isFold }: IStyleFold) => isFold ? '2rem' : '4rem'};
+	font-size: ${({ isfold }: IStyleFold) => isfold === 'true' ? '2rem' : '4rem'};
 	margin-bottom: 20px;
 	opacity: 0.9;
 	transition: 1s;
 
-	${({ isFold }) => isFold && css`
+	${({ isfold }) => isfold === 'true' && css`
 		margin-top: 30px;
 	`}
 `;
@@ -106,7 +106,7 @@ export const Box = styled.div<IStyleFoldAndPage>`
 		font-family: 'Work Sans', sans-serif;
 		font-size: 1.2rem;
 		font-weight: 500;
-		display: ${({ isFold }: IStyleFold) => isFold ? 'none' : 'block'};
+		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
 	}
 
 	cursor: pointer;

@@ -1,14 +1,30 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Courses from '../pages/courses';
 import Certificates from '../pages/certificates';
 import Profile from '../pages/profile';
+import Login from '../pages/login';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Routes: React.FC = () => {
+	const [isAuthenticated] = useState(true)
+
+	function PrivateRoute({ component: Component, isAuthenticated, ...rest }: any) {
+		return (
+			<Route {...rest} render={(props) => (
+				isAuthenticated ? <Component {...props} />
+			: <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+			)} />
+		);
+	}
+	
+	
 	return(
 		<Switch>
-			<Route exact path='/courses' component={Courses}></Route>
-			<Route path='/certificates' component={Certificates}></Route>
-			<Route path='/profile' component={Profile}></Route>
+			<Route path='/login' component={Login}></Route>
+			<PrivateRoute path='/courses' component={Courses} isAuthenticated={isAuthenticated}/>
+			<PrivateRoute path='/certificates' component={Certificates} isAuthenticated={isAuthenticated}/>
+			<PrivateRoute path='/profile' component={Profile}  isAuthenticated={isAuthenticated} />
 		</Switch>
 	)
 }

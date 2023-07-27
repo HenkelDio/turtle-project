@@ -1,14 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
-import Routes from "../../configs/routes";
-import SideMenu from "../SideMenu";
 import { Container } from "./styles";
+import SideMenu from "../user/SideMenu";
+import Routes from "../../configs/routes";
+import { useState } from "react";
 
 
 const Layout: React.FC = () => {
+	const [isAuthenticated] = useState(true)
+
 	return(
 		<BrowserRouter>
 			<Container>
-				<SideMenu />
+				{
+					isAuthenticated && <SideMenu />
+				}
+
 				<div className="content">
 					<Routes />
 				</div>
