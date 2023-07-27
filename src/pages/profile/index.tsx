@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
 	
 	return(
 		<Container>
-			<h1>Seu perfil</h1>
+			<h1>Meu perfil</h1>
 			<ContainerFields>
 				<Field title="Nome" content="Willian José Henkel de Deus"/>
 				<Field title="CPF" content="124.400.389-11"/>

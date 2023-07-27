@@ -43,7 +43,7 @@ const Courses: React.FC = () => {
 
 	return(
 		<Container>
-			<h1>Seus cursos</h1>
+			<h1>Meus cursos</h1>
 			<FormInput>
 				<Input 
 				onChange={(e) => handleSearch(e)}

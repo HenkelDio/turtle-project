@@ -42,7 +42,7 @@ const Certificates: React.FC = () => {
 
 	return(
 		<Container>
-			<h1>Seus certificados</h1>
+			<h1>Meus certificados</h1>
 			<Input 
 				placeholder="Pesquise pelo nome do certificado"
 				onChange={(e) => handleSearch(e)}
