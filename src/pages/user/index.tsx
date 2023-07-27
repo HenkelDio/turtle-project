@@ -1,6 +1,10 @@
+import { Container } from "./styles";
+
 const UserPage: React.FC = () => {
 	return(
-		<h1>Usuarios</h1>
+		<Container>
+			<h1>Usuarios</h1>
+		</Container>
 	)
 }
 

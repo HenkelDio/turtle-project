@@ -7,6 +7,7 @@ const useTurtleStore = create<IStore>((set) => ({
 
 	isAuthenticated: false as boolean,
 	setAuthenticated: (payload: boolean) => set((state) => ({isAuthenticated: payload})),
+	
 }))
 
 export default useTurtleStore;

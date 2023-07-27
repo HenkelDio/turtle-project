@@ -17,7 +17,7 @@ const Login: React.FC = () => {
 		setLoading(false)
 		setCredentials({type: 'admin'})
 		setAuthenticated(true);
-		history.push('/users');
+		history.push('/admin/users');
 	}
 
 	return(
@@ -38,6 +38,7 @@ const Login: React.FC = () => {
 				<span className='loader'></span>
 			</Loader>
 			: <Button
+					// eslint-disable-next-line @typescript-eslint/no-misused-promises
 					onClick={hangleAuthenticate}
 				>Entrar</Button>
 		}

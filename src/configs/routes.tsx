@@ -3,48 +3,44 @@ import Courses from '../pages/courses';
 import Certificates from '../pages/certificates';
 import Profile from '../pages/profile';
 import Login from '../pages/login';
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import useTurtleStore from '../store';
 import UserPage from '../pages/user';
 
 const Routes: React.FC = () => {
-	const { isAuthenticated, credentials } = useTurtleStore((state) => state);
+	const { credentials } = useTurtleStore((state) => state);
 
-	function PrivateRoute({ component: Component, isAuthenticated, ...rest }: any) {
-		return (
-			<Route {...rest} render={(props) => (
-				isAuthenticated ? <Component {...props} />
-			: <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-			)} />
-		);
-	}
+	// function LoginRoute({ component: Component, isAuthenticated, ...rest }: any) {
+	// 	return (
+	// 		<Route {...rest} render={(props) => (
+	// 			isAuthenticated ? <Component {...props} />
+	// 		: <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+	// 		)} />
+	// 	);
+	// }
 	
 	
 	if(credentials.type === 'admin') {
 		return(
 			<Switch>
-				<Route path='/login' component={Login}></Route>
-				<PrivateRoute path='/users' component={UserPage} isAuthenticated={isAuthenticated}/>
+				<Route path='/admin/users' component={UserPage} />
 			</Switch>
 		)
 	}
 
 	if(credentials.type === 'user') {
 		<Switch>
-			<Route path='/login' component={Login}></Route>
-			<PrivateRoute path='/courses' component={Courses} isAuthenticated={isAuthenticated}/>
-			<PrivateRoute path='/certificates' component={Certificates} isAuthenticated={isAuthenticated}/>
-			<PrivateRoute path='/profile' component={Profile}  isAuthenticated={isAuthenticated} />
+			<Route path='/courses' component={Courses}/>
+			<Route path='/certificates' component={Certificates}/>
+			<Route path='/profile' component={Profile} />
 		</Switch>
 	}
 
 	return(
 		<Switch>
 			<Route path='/login' component={Login}></Route>
-			<PrivateRoute path='/courses' component={Courses} isAuthenticated={isAuthenticated}/>
-			<PrivateRoute path='/certificates' component={Certificates} isAuthenticated={isAuthenticated}/>
-			<PrivateRoute path='/profile' component={Profile}  isAuthenticated={isAuthenticated} />
+			<Route path='/courses' component={Courses}/>
+			<Route path='/certificates' component={Certificates} />
+			<Route path='/profile' component={Profile} />
 		</Switch>
 	)
 }
