@@ -1,31 +1,33 @@
-import { BrowserRouter } from "react-router-dom";
 import { Container } from "./styles";
-import SideMenu from "../user/SideMenu";
-import Routes from "../../configs/routes";
-import { useState } from "react";
 import useTurtleStore from "../../store";
-import { useHistory } from "react-router-dom";
 import Login from "../../pages/login";
-import SideMenuAdmin from "../admin/SideMenuAdmin";
+import SideMenuAdmin from "../../packages/admin/SideMenuAdmin";
+import Routes from "../../configs/routes";
+import SideMenuStudent from "../../packages/student/SideMenuStudent";
+import { useHistory } from "react-router-dom";
+import delay from "../../utils/delay";
 
 const Layout: React.FC = () => {
 	const { isAuthenticated, credentials } = useTurtleStore((state) => state);
 
+	const history = useHistory();
+
 	if(!isAuthenticated) {
-		return(
-			<Container>
-				<div className='content'>
-				<Login />
-				</div>
-			</Container>
-		)
+		history.push('/login');
+		// return(
+		// 	<Container>
+		// 		<div className='content'>
+		// 		<Login />
+		// 		</div>
+		// 	</Container>
+		// )
 	}
 
 	return(
 		<>
 			<Container>
 				{
-					isAuthenticated && credentials.type === 'user' && <SideMenu />
+					isAuthenticated && credentials.type === 'user' && <SideMenuStudent />
 				}
 
 				{

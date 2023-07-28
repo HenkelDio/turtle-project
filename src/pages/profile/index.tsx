@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Field from "../../components/profileField";
 import { Container, ContainerFields } from "./styles";
 import delay from "../../utils/delay";
-import Loader from "../../components/loader";
+import Field from "../../components/ProfileField";
+import Loader from "../../components/Loader";
 
 const Profile: React.FC = () => {
 	const [isLoading, setLoading] = useState(true);

@@ -5,7 +5,8 @@ export default {
 			main: '#3E3E3E',
 		},
 		green: {
-			main: '#57CC99',
+			main: '#009879',
+			light: '#0eb38e',
 		}
 	}
 }

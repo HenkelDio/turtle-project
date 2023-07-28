@@ -8,14 +8,14 @@ import { RiMenu4Fill } from 'react-icons/ri';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const SideMenuAdmin: React.FC = () => {
+const SideMenuStudent: React.FC = () => {
 	const [isFold, setFold] = useState<string>('false');
 	const [page, setPage] = useState<string>('');
 
 
 	useEffect(() => {
-		if(localStorage.getItem('page')) {
-			setPage(localStorage.getItem('page')?? 'users')
+		if(localStorage.getItem('page_student')) {
+			setPage(localStorage.getItem('page_student')?? 'courses')
 		}
 	})
 
@@ -27,7 +27,7 @@ const SideMenuAdmin: React.FC = () => {
 
 	const handleSetPage = (page: string) => {
 		setPage(page)
-		localStorage.setItem('page', page);
+		localStorage.setItem('page_student', page);
 	}
 
 	return (
@@ -50,26 +50,26 @@ const SideMenuAdmin: React.FC = () => {
 			</Logo>
 			<div className="containerBox">
 				<p>overview</p>
-				<Link to='/admin/users'>
+				<Link to='/courses'>
 					<Box
 					page={page}
 					isfold={isFold}
-					style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}
-					onClick={() => handleSetPage('users')}
+					style={{ backgroundColor: page === 'courses' ? '#ccc' : 'transparent'}}
+					onClick={() => handleSetPage('courses')}
 					>
 						<BiBook />
-						<p>Usuários</p>
+						<p>Cursos</p>
 					</Box>
 				</Link>
 				<Link to='/certificates'>
 				<Box 
-				style={{ backgroundColor: page === 'admin-courses' ? '#ccc' : 'transparent'}}
+				style={{ backgroundColor: page === 'certificates' ? '#ccc' : 'transparent'}}
 				page={page}
 				isfold={isFold}
-				onClick={() => handleSetPage('admin-courses')}
+				onClick={() => handleSetPage('certificates')}
 				>
 						<LiaCertificateSolid />
-						<p>Cursos</p>
+						<p>Certificados</p>
 					</Box>
 				</Link>
 				<Link to='/profile'>
@@ -91,4 +91,4 @@ const SideMenuAdmin: React.FC = () => {
 	)
 }
 
-export default SideMenuAdmin;
+export default SideMenuStudent;

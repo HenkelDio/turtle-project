@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import Input from "../../components/Input";
-import CertificateCard from "../../components/user/CertificateCard";
 import { Container, ContainerCertificates } from "./styles";
-import delay from "../../utils/delay";
-import Loader from "../../components/loader";
+
+import Input from "../../../components/Input";
+import CertificateCard from "../../../packages/student/CertificateCard";
+import delay from "../../../utils/delay";
+import Loader from "../../../components/Loader";
 
 const Certificates: React.FC = () => {
 	const [cards] = useState([

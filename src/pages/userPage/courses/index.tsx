@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import Input from "../../components/Input";
-import { Container, ContainerCards, FormInput } from "./styles";
+import { Container, ContainerCards } from "./styles";
 import { HiFilter } from 'react-icons/hi';
-import CourseCard from "../../components/user/CourseCard/courseCard";
-import delay from "../../utils/delay";
-import Loader from "../../components/loader";
+import delay from "../../../utils/delay";
+import { FormInput } from "../../../components/FormInput";
+import Input from "../../../components/Input";
+import CourseCard from "../../../packages/student/CourseCard/courseCard";
+import Loader from "../../../components/Loader";
 
 const Courses: React.FC = () => {
 	const [cards] = useState([
