@@ -1,6 +1,6 @@
 import { Container, Logo, Box, CloseSideMenu } from "./styles"
 import { GiTurtleShell } from 'react-icons/gi';
-import { BiBook } from 'react-icons/bi';
+import { GoPeople } from 'react-icons/go';
 import { LiaCertificateSolid } from 'react-icons/lia';
 import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
@@ -50,17 +50,15 @@ const SideMenuAdmin: React.FC = () => {
 			</Logo>
 			<div className="containerBox">
 				<p>overview</p>
-				<Link to='/admin/users'>
 					<Box
 					page={page}
 					isfold={isFold}
-					style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}
 					onClick={() => handleSetPage('users')}
 					>
-						<BiBook />
-						<p>Usuários</p>
+						<summary><GoPeople/><span> </span>Usuários</summary>
+						<Link to='/admin/users'><p style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}>Gerenciar usuários</p></Link>
+						<Link to='/admin/users'><p style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}>Adicionar usuário</p></Link>
 					</Box>
-				</Link>
 				<Link to='/certificates'>
 				<Box 
 				style={{ backgroundColor: page === 'admin-courses' ? '#ccc' : 'transparent'}}

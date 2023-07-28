@@ -32,7 +32,7 @@ export const Container = styled.div<IStyleFold>`
 	width: ${({ isfold }: IStyleFold) => isfold === 'true' ? '70px' : '220px'};
 	height: 100vh;
 	background-color: #fff;
-	padding: 25px;
+	padding: 20px;
 	transition: 1s;
 
 	display: flex;
@@ -47,6 +47,7 @@ export const Container = styled.div<IStyleFold>`
 		display: flex;
 		flex-direction: column;
 		gap: 15px;
+		width: 100%;
 
 		a {
 			color: black;
@@ -87,26 +88,25 @@ export const Logo = styled.div<IStyleFold>`
 	`}
 `;
 
-export const Box = styled.div<IStyleFoldAndPage>`
-	display: flex;
-	flex-direction: row;
-	align-items: start;
-	gap: 12px;
+export const Box = styled.details<IStyleFoldAndPage>`
 	align-items: center;
-	font-size: 1.5rem;
-	padding: 10px 17px;
+	padding: 10px 8px;
 	border-radius: 10px;
 	transition: 0.5s;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 1rem;
 
 	&:hover {
 		background-color: #EAEAEA;
 	}
 
 	p {
+		margin-top: 10px;
 		font-family: 'Work Sans', sans-serif;
-		font-size: 1.2rem;
+		padding: 10px;
 		font-weight: 500;
 		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
+		border-radius: 10px;
 	}
 
 	cursor: pointer;

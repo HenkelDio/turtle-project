@@ -2,8 +2,31 @@ import { HiFilter } from "react-icons/hi";
 import { FormInput } from "../../../components/FormInput";
 import { Container, ContainerList, Button, Box} from "./styles";
 import Input from "../../../components/Input";
+import { useEffect, useState } from "react";
+import delay from "../../../utils/delay";
+import Loader from "../../../components/Loader";
 
 const UserAdministration: React.FC = () => {
+	const [isLoading, setLoading] = useState(true);
+
+	useEffect(() => {
+		async function handleDelay() {
+			setLoading(true);
+			await delay();
+			setLoading(false);
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-floating-promises
+		handleDelay();
+
+	}, [])
+
+	if(isLoading) {
+		return (
+			<Loader />
+		)
+	}
+
 	return (
 		<Container>
 			<h1>Usuários</h1>

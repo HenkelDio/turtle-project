@@ -18,7 +18,7 @@ export const Button = styled.button`
 	background-color: ${({ theme }) => theme.colors.green.main};
 	color: #fff;
 	font-family: 'Work Sans', sans-serif;
-	border-radius: 10px;
+	border-radius: 7px;
 	font-size: 1.1rem;
 	cursor: pointer;
 
