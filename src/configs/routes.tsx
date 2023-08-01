@@ -5,6 +5,7 @@ import useTurtleStore from '../store';
 import UserAdministration from '../pages/adminPage/usersAdministration';
 import Courses from '../pages/userPage/courses';
 import Certificates from '../pages/userPage/certificates';
+import UserRegister from '../pages/adminPage/userRegister';
 
 const Routes: React.FC = () => {
 	const { credentials, isAuthenticated } = useTurtleStore((state) => state);
@@ -22,7 +23,8 @@ const Routes: React.FC = () => {
 	if (credentials.type === 'admin') {
 		return (
 			<Switch>
-				<Route path='/admin/users' component={UserAdministration} />
+				<Route exact path='/admin/users' component={UserAdministration} />
+				<Route path='/admin/users/register' component={UserRegister} />
 			</Switch>
 		)
 	}

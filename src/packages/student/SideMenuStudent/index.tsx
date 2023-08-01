@@ -12,12 +12,11 @@ const SideMenuStudent: React.FC = () => {
 	const [isFold, setFold] = useState<string>('false');
 	const [page, setPage] = useState<string>('');
 
-
 	useEffect(() => {
 		if(localStorage.getItem('page_student')) {
 			setPage(localStorage.getItem('page_student')?? 'courses')
 		}
-	})
+	}, [])
 
 	const handleFoldMenu = () => {
 		setFold(
@@ -55,9 +54,9 @@ const SideMenuStudent: React.FC = () => {
 					page={page}
 					isfold={isFold}
 					style={{ backgroundColor: page === 'courses' ? '#ccc' : 'transparent'}}
-					onClick={() => handleSetPage('courses')}
+					onMouseDown={() => handleSetPage('courses')}
 					>
-						<BiBook />
+						<div><BiBook /></div>
 						<p>Cursos</p>
 					</Box>
 				</Link>
@@ -68,7 +67,7 @@ const SideMenuStudent: React.FC = () => {
 				isfold={isFold}
 				onClick={() => handleSetPage('certificates')}
 				>
-						<LiaCertificateSolid />
+						<div><LiaCertificateSolid /></div>
 						<p>Certificados</p>
 					</Box>
 				</Link>
@@ -79,7 +78,7 @@ const SideMenuStudent: React.FC = () => {
 					style={{ backgroundColor: page === 'profile' ? '#ccc' : 'transparent'}}
 					onClick={() => handleSetPage('profile')}
 					>	
-						<CgProfile />
+						<div><CgProfile /></div>
 						<p>Perfil</p>
 					</Box>
 				</Link>

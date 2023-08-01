@@ -35,6 +35,9 @@ export const Container = styled.div<IStyleFold>`
 	padding: 20px;
 	transition: 1s;
 
+	overflow-y: hidden;
+	overflow-x: hidden;
+
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -52,6 +55,11 @@ export const Container = styled.div<IStyleFold>`
 		a {
 			color: black;
 			text-decoration: none;
+
+			border-radius: 7px;
+			&:hover {
+				background-color: #EAEAEA;
+			}
 		}
 
 		> p {
@@ -88,11 +96,12 @@ export const Logo = styled.div<IStyleFold>`
 	`}
 `;
 
-export const Box = styled.details<IStyleFoldAndPage>`
+export const Box = styled.div<IStyleFoldAndPage>`
+	display: flex;
+	gap: 15px;
 	align-items: center;
 	padding: 10px 8px;
-	border-radius: 10px;
-	transition: 0.5s;
+	border-radius: 7px;
 	font-family: 'Work Sans', sans-serif;
 	font-size: 1rem;
 
@@ -100,14 +109,27 @@ export const Box = styled.details<IStyleFoldAndPage>`
 		background-color: #EAEAEA;
 	}
 
-	p {
-		margin-top: 10px;
-		font-family: 'Work Sans', sans-serif;
-		padding: 10px;
-		font-weight: 500;
-		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
-		border-radius: 10px;
+	div {
+		height: 100%;
+		display: flex;
+		align-items: center;
 	}
 
+	p {
+		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
+	}
 	cursor: pointer;
+`;
+
+
+export const ContainerMenu = styled.div`
+	display: flex;
+	flex-direction: column;
+	z-index: 9999;
+
+	a {
+		padding: 10px;
+		font-family: 'Work Sans', sans-serif;
+		font-size: 0.9rem;
+	}
 `;

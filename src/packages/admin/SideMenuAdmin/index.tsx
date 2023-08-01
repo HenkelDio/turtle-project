@@ -1,6 +1,7 @@
-import { Container, Logo, Box, CloseSideMenu } from "./styles"
+import { Container, Logo, Box, CloseSideMenu, ContainerMenu } from "./styles"
 import { GiTurtleShell } from 'react-icons/gi';
 import { GoPeople } from 'react-icons/go';
+import { IoIosArrowForward, IoIosArrowDown} from 'react-icons/io';
 import { LiaCertificateSolid } from 'react-icons/lia';
 import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
@@ -11,13 +12,14 @@ import { Link } from "react-router-dom";
 const SideMenuAdmin: React.FC = () => {
 	const [isFold, setFold] = useState<string>('false');
 	const [page, setPage] = useState<string>('');
+	const [isOpenContainerMenu, setOpenContainerMenu] = useState<boolean>(false);
 
 
 	useEffect(() => {
-		if(localStorage.getItem('page_admin')) {
-			setPage(localStorage.getItem('page_admin')?? 'users')
+		if (localStorage.getItem('page_admin')) {
+			setPage(localStorage.getItem('page_admin') ?? 'users')
 		}
-	})
+	}, [])
 
 	const handleFoldMenu = () => {
 		setFold(
@@ -31,15 +33,15 @@ const SideMenuAdmin: React.FC = () => {
 	}
 
 	return (
-		<Container 
-		isfold={isFold}
+		<Container
+			isfold={isFold}
 		>
 			<CloseSideMenu
 				isfold={isFold}
-				onClick={handleFoldMenu}	
+				onClick={handleFoldMenu}
 			>
 				{
-					isFold ? <RiMenu4Fill /> : <MdOutlineMenuOpen /> 
+					isFold ? <RiMenu4Fill /> : <MdOutlineMenuOpen />
 				}
 			</CloseSideMenu>
 
@@ -50,34 +52,42 @@ const SideMenuAdmin: React.FC = () => {
 			</Logo>
 			<div className="containerBox">
 				<p>overview</p>
-					<Box
+				<ContainerMenu>
+				<Box
+					onClick={() => setOpenContainerMenu(prevState => !prevState)}
 					page={page}
 					isfold={isFold}
-					onClick={() => handleSetPage('users')}
-					>
-						<summary><GoPeople/><span> </span>Usuários</summary>
-						<Link to='/admin/users'><p style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}>Gerenciar usuários</p></Link>
-						<Link to='/admin/users'><p style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent'}}>Adicionar usuário</p></Link>
-					</Box>
-				<Link to='/certificates'>
-				<Box 
-				style={{ backgroundColor: page === 'admin-courses' ? '#ccc' : 'transparent'}}
-				page={page}
-				isfold={isFold}
-				onClick={() => handleSetPage('admin-courses')}
 				>
-						<LiaCertificateSolid />
+					<div><GoPeople /></div>
+					<p>Usuários</p>
+					<div>{isOpenContainerMenu ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
+				</Box>
+				{
+					isOpenContainerMenu && <>
+					<Link to="/admin/users">Gerenciar usuários</Link>
+					<Link to="/admin/users/register">Adicionar usuário</Link>
+					</>
+				}
+				</ContainerMenu>
+				<Link to='/certificates'>
+					<Box
+						style={{ backgroundColor: page === 'admin-courses' ? '#ccc' : 'transparent' }}
+						page={page}
+						isfold={isFold}
+						onClick={() => handleSetPage('admin-courses')}
+					>
+						<div><LiaCertificateSolid /></div>
 						<p>Cursos</p>
 					</Box>
 				</Link>
 				<Link to='/profile'>
-					<Box 
-					page={page}
-					isfold={isFold}
-					style={{ backgroundColor: page === 'profile' ? '#ccc' : 'transparent'}}
-					onClick={() => handleSetPage('profile')}
-					>	
-						<CgProfile />
+					<Box
+						page={page}
+						isfold={isFold}
+						style={{ backgroundColor: page === 'profile' ? '#ccc' : 'transparent' }}
+						onClick={() => handleSetPage('profile')}
+					>
+						<div><CgProfile /></div>
 						<p>Perfil</p>
 					</Box>
 				</Link>

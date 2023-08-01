@@ -9,3 +9,7 @@ export interface IStore {
 export interface ICredentials {
 	type: string,
 }
+
+export interface IHttpClient {
+	baseURL: string,
+}
