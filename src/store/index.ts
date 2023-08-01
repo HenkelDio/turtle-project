@@ -8,6 +8,8 @@ const useTurtleStore = create<IStore>((set) => ({
 	isAuthenticated: false as boolean,
 	setAuthenticated: (payload: boolean) => set((state) => ({isAuthenticated: payload})),
 	
+	registerType: 'default' as string,
+	setRegisterType: (payload: string) => set((state) => ({registerType: payload})),
 }))
 
 export default useTurtleStore;

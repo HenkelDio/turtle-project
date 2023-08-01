@@ -8,6 +8,7 @@ export const Box = styled.div`
 
 	h2 {
 		width: 120px;
+		text-align: left;
 	}
 `
 
@@ -27,10 +28,11 @@ export const Divider = styled.div`
 export const ContainerChips = styled.div`
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
+	justify-content: start;
 	gap: 10px;
-	height: 500px;
-	width: 300px;
+	padding: 0 10px;
+	height: 300px;
+	width: 400px;
 
 	overflow-y: scroll;
 
@@ -62,7 +64,7 @@ export const Chip = styled.div`
 
   background: #bfbfbf;
 	max-height: 100px;
-	max-width: 200px;
+	width: 100%;
   padding: 20px 10px;
   border-radius: 10px;
   font-size: 13px;
@@ -78,6 +80,9 @@ export const BackPage = styled.div`
 	top: 5px;
 	left: 20px;
 
+	a {
+		color: black;
+	}
 	font-size: 2rem;
 	cursor: pointer;
 `;

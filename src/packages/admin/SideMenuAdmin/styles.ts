@@ -135,6 +135,7 @@ export const ContainerMenu = styled.div<IStyleFold>`
 		position: absolute;
 		right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '-198px' : '-180px'};
 		display: flex;
+		z-index: 9999;
 		flex-direction: column;
 		width: 200px;
 		padding: 10px;

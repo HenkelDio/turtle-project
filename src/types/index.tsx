@@ -4,6 +4,9 @@ export interface IStore {
 
 	isAuthenticated: boolean,
 	setAuthenticated: Function,
+
+	registerType: string,
+	setRegisterType: Function,
 }
 
 export interface ICredentials {

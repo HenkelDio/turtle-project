@@ -74,7 +74,7 @@ const SideMenuAdmin: React.FC = () => {
 				{
 					isOpenContainerMenu && <div className="options">
 					<Link onClick={() => handleSetPage('users')} to="/admin/users">Gerenciar usuários</Link>
-					<Link onClick={() => handleSetPage('users')} to="/admin/users/student-register">Adicionar usuário</Link>
+					<Link onClick={() => handleSetPage('users')} to="/admin/users/register">Adicionar usuário</Link>
 					</div>
 				}
 				</ContainerMenu>
