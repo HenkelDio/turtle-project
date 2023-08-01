@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "5.2.0",
-    "styled-components": "^6.0.4"
+    "styled-components": "^6.0.4",
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
