@@ -1,7 +1,7 @@
 import { Container, Logo, Box, CloseSideMenu, ContainerMenu } from "./styles"
 import { GiTurtleShell } from 'react-icons/gi';
 import { GoPeople } from 'react-icons/go';
-import { IoIosArrowForward, IoIosArrowDown} from 'react-icons/io';
+import { IoIosArrowForward, IoIosArrowDown, IoIosArrowDropleftCircle, IoIosArrowDroprightCircle} from 'react-icons/io';
 import { LiaCertificateSolid } from 'react-icons/lia';
 import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
@@ -10,10 +10,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const SideMenuAdmin: React.FC = () => {
-	const [isFold, setFold] = useState<string>('false');
+	const [isFold, setFold] = useState<string>('true');
 	const [page, setPage] = useState<string>('');
 	const [isOpenContainerMenu, setOpenContainerMenu] = useState<boolean>(false);
-
 
 	useEffect(() => {
 		if (localStorage.getItem('page_admin')) {
@@ -41,7 +40,7 @@ const SideMenuAdmin: React.FC = () => {
 				onClick={handleFoldMenu}
 			>
 				{
-					isFold ? <RiMenu4Fill /> : <MdOutlineMenuOpen />
+					isFold === 'true' ? <IoIosArrowDroprightCircle /> : <IoIosArrowDropleftCircle />
 				}
 			</CloseSideMenu>
 
@@ -52,21 +51,31 @@ const SideMenuAdmin: React.FC = () => {
 			</Logo>
 			<div className="containerBox">
 				<p>overview</p>
-				<ContainerMenu>
+				<ContainerMenu
+					isfold={isFold}
+					onMouseEnter={() => setOpenContainerMenu(true)}
+					onMouseLeave={() => setOpenContainerMenu(false)}
+				>
 				<Box
-					onClick={() => setOpenContainerMenu(prevState => !prevState)}
+					style={{ backgroundColor: page === 'users' ? '#ccc' : 'transparent' }}
 					page={page}
 					isfold={isFold}
 				>
 					<div><GoPeople /></div>
 					<p>Usuários</p>
-					<div>{isOpenContainerMenu ? <IoIosArrowDown /> : <IoIosArrowForward />}</div>
+					{
+						isFold && <>
+						{
+						isOpenContainerMenu ? <p><IoIosArrowDown/></p> : <p><IoIosArrowForward /></p>
+						}
+					</> 
+					}
 				</Box>
 				{
-					isOpenContainerMenu && <>
-					<Link to="/admin/users">Gerenciar usuários</Link>
-					<Link to="/admin/users/register">Adicionar usuário</Link>
-					</>
+					isOpenContainerMenu && <div className="options">
+					<Link onClick={() => handleSetPage('users')} to="/admin/users">Gerenciar usuários</Link>
+					<Link onClick={() => handleSetPage('users')} to="/admin/users/student-register">Adicionar usuário</Link>
+					</div>
 				}
 				</ContainerMenu>
 				<Link to='/certificates'>

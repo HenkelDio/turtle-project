@@ -2,11 +2,10 @@ import { Container, Logo, Box, CloseSideMenu } from "./styles"
 import { GiTurtleShell } from 'react-icons/gi';
 import { BiBook } from 'react-icons/bi';
 import { LiaCertificateSolid } from 'react-icons/lia';
-import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
-import { RiMenu4Fill } from 'react-icons/ri';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
 const SideMenuStudent: React.FC = () => {
 	const [isFold, setFold] = useState<string>('false');
@@ -38,7 +37,7 @@ const SideMenuStudent: React.FC = () => {
 				onClick={handleFoldMenu}	
 			>
 				{
-					isFold ? <RiMenu4Fill /> : <MdOutlineMenuOpen /> 
+					isFold === 'true' ? <IoIosArrowDroprightCircle /> : <IoIosArrowDropleftCircle />
 				}
 			</CloseSideMenu>
 

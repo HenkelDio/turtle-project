@@ -15,9 +15,9 @@ interface IStyleFoldAndPage {
 
 export const CloseSideMenu = styled.div<IStyleFold>`
 	position: absolute;
-	top: 10px;
-	right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '20px' : '10px'};
-	font-size: 1.3rem;
+	top: 50%; 
+	right: -10px;
+	font-size: 1.5rem;
 	cursor: pointer;
 	opacity: 0.5;
 	transition: 0.5s;

@@ -7,6 +7,9 @@ export default {
 		green: {
 			main: '#009879',
 			light: '#0eb38e',
+		},
+		red: {
+			main: '#FE2828',
 		}
 	}
 }

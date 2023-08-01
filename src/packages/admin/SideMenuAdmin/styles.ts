@@ -15,8 +15,8 @@ interface IStyleFoldAndPage {
 
 export const CloseSideMenu = styled.div<IStyleFold>`
 	position: absolute;
-	top: 10px;
-	right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '20px' : '10px'};
+	top: 50%; 
+	right: -10px;
 	font-size: 1.3rem;
 	cursor: pointer;
 	opacity: 0.5;
@@ -35,8 +35,6 @@ export const Container = styled.div<IStyleFold>`
 	padding: 20px;
 	transition: 1s;
 
-	overflow-y: hidden;
-	overflow-x: hidden;
 
 	display: flex;
 	flex-direction: column;
@@ -122,14 +120,39 @@ export const Box = styled.div<IStyleFoldAndPage>`
 `;
 
 
-export const ContainerMenu = styled.div`
+export const ContainerMenu = styled.div<IStyleFold>`
+	position: relative;
 	display: flex;
-	flex-direction: column;
-	z-index: 9999;
+	flex-direction: row;
+	border-radius: 8px;
 
-	a {
+	&:hover {
+		background-color: #EAEAEA;
+	}
+
+
+	.options {
+		position: absolute;
+		right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '-198px' : '-180px'};
+		display: flex;
+		flex-direction: column;
+		width: 200px;
+		padding: 10px;
+		background-color: #EAEAEA;
+		border-radius: 8px;
+		border-top-left-radius: ${({ isfold }: IStyleFold) => isfold === 'true' ? '0' : '8px'};
+
+		a {
 		padding: 10px;
 		font-family: 'Work Sans', sans-serif;
 		font-size: 0.9rem;
+		border-radius: 8px;
+
+		&:hover {
+			background-color: #ccc;
+		}
 	}
+	}
+
+	
 `;

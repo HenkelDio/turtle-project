@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { Container } from "../usersAdministration/styles";
 import UsersService from "../../../services";
+import FormGroup from "../../../packages/admin/FormGroup";
 
-const UserRegister: React.FC = () => {
+const StudentRegister: React.FC = () => {
 	useEffect(() => {
 		async function handleThis() {
 			const testt = await UsersService.postUser();
@@ -16,9 +17,12 @@ const UserRegister: React.FC = () => {
 
 	return(
 		<Container>
-			
+			<h1>Criar novo usuário</h1>
+
+			<FormGroup />
+
 		</Container>
 	)
 }
 
-export default UserRegister;
+export default StudentRegister;
