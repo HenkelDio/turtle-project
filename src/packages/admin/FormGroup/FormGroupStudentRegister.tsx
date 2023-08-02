@@ -34,10 +34,10 @@ const FormGroupStudentRegister: React.FC = () => {
 
 	const queryClient = useQueryClient()
 
-	const { mutate, isLoading } = useMutation(['user'], addStudentUser, {
+	const { mutate, isLoading, status } = useMutation(['user'], addStudentUser, {
 		onSuccess: data => {
-			 console.log(data);
-			 const message = "success"
+			 console.log(status);
+			 const message = status
 			 alert(message)
 		},
 			onError: () => {
@@ -49,7 +49,8 @@ const FormGroupStudentRegister: React.FC = () => {
 		});
 
 
-		const onSubmit = () => {
+		const onSubmit = (e) => {
+			e.preventDefault();
 			const data = {
 				"user_company_id": 4,
 				"user_name": name,
@@ -63,7 +64,7 @@ const FormGroupStudentRegister: React.FC = () => {
 
 	return (
 		<form
-			onSubmit={onSubmit}
+			onSubmit={(e) => onSubmit(e)}
 			style={{ textAlign: 'right' }}
 		>
 			{
