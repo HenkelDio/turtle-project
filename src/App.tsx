@@ -4,11 +4,11 @@ import { ThemeProvider } from "styled-components";
 import _default from "./styles/theme/default";
 import Layout from "./components/Layout";
 import { BrowserRouter } from "react-router-dom";
-import {QueryClientProvider, useQueryClient} from 'react-query'
+import {QueryClient, QueryClientProvider} from 'react-query'
 
 const App: React.FC = () => {
 
-	const queryClient = useQueryClient()
+	const queryClient = new QueryClient()
 
   return(
 		<QueryClientProvider client={queryClient}>
