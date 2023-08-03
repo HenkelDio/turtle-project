@@ -3,9 +3,7 @@ import { GiTurtleShell } from 'react-icons/gi';
 import { GoPeople } from 'react-icons/go';
 import { IoIosArrowForward, IoIosArrowDown, IoIosArrowDropleftCircle, IoIosArrowDroprightCircle} from 'react-icons/io';
 import { LiaCertificateSolid } from 'react-icons/lia';
-import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
-import { RiMenu4Fill } from 'react-icons/ri';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

@@ -1,13 +1,21 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
+
+interface ISelect {
+	select: string,
+}
 
 export const Box = styled.div`
 	display: flex;
-	flex-direction: row;
-	gap: 50px;
+	flex-direction: column;
 	margin-bottom: 50px;
 
-	h2 {
-		width: 120px;
+	p {
+		text-align: right;
+		opacity: 0.5;
+		font-weight: 500;
+	}
+
+	h3 {
 		text-align: left;
 	}
 `
@@ -18,21 +26,23 @@ export const Form = styled.div`
 	gap: 15px;
 `
 
-export const Divider = styled.div`
-	height: 170px;
-	width: 3px;
-	background-color: #3E3E3E;
-	border-radius: 10px;
-`;
 
 export const ContainerChips = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: start;
 	gap: 10px;
-	padding: 0 10px;
+
+	margin-top: 15px;
+	padding: 10px 10px;
 	height: 300px;
-	width: 400px;
+	width: 1000px;
+	border-radius: 8px;
+
+	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+	background-color: #fff;
+	
 
 	overflow-y: scroll;
 
@@ -57,22 +67,27 @@ export const ContainerChips = styled.div`
 	}
 `
 
-export const Chip = styled.div`
+export const Chip = styled.div<ISelect>`
 	display: flex;
 	align-items: center;
 	text-align: center;
-
-  background: #bfbfbf;
-	max-height: 100px;
-	width: 100%;
+	font-weight: 500;
+  background: ${({ theme }) => theme.colors.green.main};
+	color: #ffff;
+	/* TODO trazer color do theme */
+	max-height: 50px;
   padding: 20px 10px;
   border-radius: 10px;
   font-size: 13px;
 	cursor: pointer;
 
   &:hover {
-    background: #ccc;
+    background: ${({ theme }) => theme.colors.green.light};
   }
+
+	${({ select }: ISelect) => select === 'true' && css`
+			background: ${({ theme }) => theme.colors.green.dark}!important;
+	`}
 `
 
 export const BackPage = styled.div`

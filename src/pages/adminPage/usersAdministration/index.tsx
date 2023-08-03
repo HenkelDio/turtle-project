@@ -1,10 +1,11 @@
 import { HiFilter } from "react-icons/hi";
 import { FormInput } from "../../../components/FormInput";
-import { Container, ContainerList, Button, Box} from "./styles";
+import { Container, ContainerList, Button, Box } from "./styles";
 import Input from "../../../components/Input";
 import { useEffect, useState } from "react";
 import delay from "../../../utils/delay";
 import Loader from "../../../components/Loader";
+import { Link } from "react-router-dom";
 
 const UserAdministration: React.FC = () => {
 	const [isLoading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ const UserAdministration: React.FC = () => {
 
 	}, [])
 
-	if(isLoading) {
+	if (isLoading) {
 		return (
 			<Loader />
 		)
@@ -31,11 +32,13 @@ const UserAdministration: React.FC = () => {
 		<Container>
 			<h1>Usuários</h1>
 			<Box>
-			<Input
+				<Input
 					placeholder="Pesquise pelo nome do usuário" />
-				<Button>
-					Novo Usuário
-				</Button>
+				<Link to="/admin/users/register">
+					<Button>
+						Novo Usuário
+					</Button>
+				</Link>
 			</Box>
 			<ContainerList>
 				<table className="styled-table">

@@ -1,18 +1,24 @@
-import { useEffect } from "react";
 import { Container } from "../usersAdministration/styles";
-import UsersService from "../../../services";
 import FormGroupStudentRegister from "../../../packages/admin/FormGroup/FormGroupStudentRegister";
 import Select from "../../../components/Select";
 import { Box } from "./styles";
 import useTurtleStore from "../../../store";
+import { Link } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { BackPage } from "../../../packages/admin/FormGroup/styles";
+import FormGroupCompanyRegister from "../../../packages/admin/FormGroup/FormGroupCompanyRegister";
 
 const userRegister: React.FC = () => {
 	const { registerType } = useTurtleStore((state) => state);
 
-	return(
+	return (
 		<Container>
+			<BackPage>
+				<Link to='/admin/users'><IoIosArrowBack /></Link>
+			</BackPage>
+
 			<h1>Criar novo usuário</h1>
-			
+
 			<Box>
 				<Select />
 			</Box>
@@ -20,7 +26,10 @@ const userRegister: React.FC = () => {
 			{
 				registerType === 'student' && <FormGroupStudentRegister />
 			}
-			
+
+			{
+				registerType === 'company' && <FormGroupCompanyRegister	 />
+			}
 
 		</Container>
 	)

@@ -2,37 +2,49 @@ import { useState } from "react"
 import Button from "../../../components/Button"
 import Input from "../../../components/Input"
 import RegisterForm from "../../../components/RegisterForm"
-import { Box, Form, Divider, Chip, ContainerChips, BackPage } from "./styles"
+import { Box, Form, Chip, ContainerChips, BackPage } from "./styles"
 import { IoIosArrowBack } from "react-icons/io"
-import { Link } from "react-router-dom"
 import { useMutation, useQueryClient } from "react-query"
 import { addStudentUser } from "../../../services"
-import { GiDatabase } from "react-icons/gi"
+import { IUser } from "../../../types"
+import useErrors from "../../../hooks/useErrors"
+import formatPhone from "../../../utils/phoneFormat"
+import isEmailValid from "../../../utils/emailFormat"
+import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
 
 const FormGroupStudentRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
+	const [isOpen, setOpen] = useState(false);
+	const [selected, setSelected] = useState<any>();
 	const [courses] = useState([
 		{ index: 15, name: 'Como treinar o seu dragão' },
-		{ index: 457, name: 'Como aaaa o seu dragão' },
-		{ index: 488, name: 'Como trevvvvinar o seu dragão' },
-		{ index: 789, name: 'Como treivvvedsadnar o seu dragão' },
-		{ index: 788, name: 'Como treivvvedsadnar o seu dragão' },
-		{ index: 755, name: 'Como treivvvedsadnar o seu dragão' },
-		{ index: 782, name: 'Como treivvvedsadnar o seu dragão' },
+		{ index: 457, name: 'Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa' },
 	])
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
-	const [name, setName] = useState<any>();
-	const [document, setDocument] = useState<any>();
-	const [phone, setPhone] = useState<any>();
-	const [email, setEmail] = useState<any>();
+	const [user, setUser] = useState<IUser>({
+		user_name: '',
+		user_company_id: 0,
+		user_email: '',
+		user_register: '',
+		user_telephone: ''
+	});
+
+	const {
+    setError, removeError, getErrorMessageByFieldName, errors,
+  } = useErrors();
+
+
+	const queryClient = useQueryClient();
 
 	const handleSelectedCourse = (index: number) => {
-		if(!selectedCourses.some((el: number) => el === index)) {
-		setSelectedCourses((prevState: any) => [...prevState, index]);	
-	}
+		selectedCourses.some((el: any) => (index === el))
+		? setSelectedCourses([...selectedCourses.filter((course: any) => index !== course)])
+		: setSelectedCourses([...selectedCourses, index])
 	}
 
-	const queryClient = useQueryClient()
+	console.log(selectedCourses)
+
+
 
 	const { mutate, isLoading, status } = useMutation(['user'], addStudentUser, {
 		onSuccess: data => {
@@ -47,74 +59,132 @@ const FormGroupStudentRegister: React.FC = () => {
 					queryClient.invalidateQueries('create')
 		}
 		});
+		
+		const handleSetUser = (key: string, e: any) => {
+
+			if(key === 'user_telephone') {
+				setUser((prevState: any) => ({
+					...prevState,
+					[key]: formatPhone(e.target.value)
+				}));	
+			} else {
+				setUser((prevState: any) => ({
+					...prevState,
+					[key]: e.target.value
+				}));
+			}
 
 
-		const onSubmit = (e) => {
+			// TODO melhorar forma de validar erros e ajustar código
+			if(key === 'user_email' && !isEmailValid(e.target.value)) {
+				setError({ field: 'user_email', message: 'E-mail inválido'})
+			} else {
+				removeError(key)
+			}
+
+			if(!e.target.value) {
+				setError({ field: key, message: 'Campo obrigatório'})
+			} else {
+				removeError(key)
+			}
+		}
+
+		const isFormValid = (
+			user.user_email &&
+			user.user_name &&
+			user.user_register &&
+			user.user_telephone && 
+			errors.length === 0
+			);
+
+		const onSubmit = (e: any) => {
 			e.preventDefault();
 			const data = {
 				"user_company_id": 4,
-				"user_name": name,
-				"user_register": document,
-				"user_telephone": phone,
-				"user_email": email,
+				"user_email": user.user_email,
+				"user_name": user.user_name,
+				"user_register":user.user_register,
+				"user_telephone": user.user_telephone.replace(/\D/g, '')
 			}
 
-			 mutate(data);
+			 console.log(data);
 		}
+
+		const handle = (index: number) => {
+			const test = selectedCourses.some((el: any) => (index === el))
+			return test;
+		}
+
 
 	return (
 		<form
 			onSubmit={(e) => onSubmit(e)}
 			style={{ textAlign: 'right' }}
 		>
+			<ConfirmUserModal
+				user={user}
+				selectedCourses={selectedCourses}
+				courses={courses}
+				isOpen={isOpen}
+				setOpen={setOpen}
+			/>
+
 			{
 				step === 1 &&
 				<>
-					<BackPage>
-						<Link to='/admin/users'><IoIosArrowBack /></Link>
-					</BackPage>
 					<Box>
-						<h2>Dados<br />pessoais</h2>
-						<Divider />
+						<p>Dados pessoais</p>
 						<Form>
-							<RegisterForm error="">
+							<RegisterForm error={getErrorMessageByFieldName('user_name')}>
 								<label htmlFor="name">Nome completo</label>
 								<Input 
-								name="name" 
-								placeholder="Digite o nome completo" 
-								onChange={e => setName(e.target.value)}
+								name="name"
+								type="text"
+								placeholder="Digite o nome completo"
+								value={user?.user_name}
+								onChange={e => handleSetUser('user_name', e)}
 								/>
 							</RegisterForm>
-							<RegisterForm error="">
-								<label htmlFor="name">CPF</label>
+							<RegisterForm error={getErrorMessageByFieldName('user_register')}>
+								<label htmlFor="document">CPF</label>
 								<Input 
-									name="name" 
+									name="document" 
+									type="text"
 									placeholder="Digite aqui o CPF" 
-									onChange={e => setDocument(e.target.value)}
+									value={user?.user_register}
+									onChange={e => handleSetUser('user_register', e)}
 								/>
 							</RegisterForm>
 						</Form>
 					</Box>
 					<Box>
-						<h2>Contato</h2>
-						<Divider />
+						<p>Contato</p>
 						<Form>
-							<RegisterForm error="">
-								<label htmlFor="name">E-mail</label>
-								<Input name="name" type="email" placeholder="Digite o e-mail" />
-							</RegisterForm>
-							<RegisterForm error="">
-								<label htmlFor="name">Celular</label>
+							<RegisterForm error={getErrorMessageByFieldName('user_email')}>
+								<label htmlFor="email">E-mail</label>
 								<Input 
-									name="name" 
+									name="email" 
+									type="email" 
+									placeholder="Digite o e-mail"
+									value={user?.user_email}
+									onChange={e => handleSetUser('user_email', e)}
+									/>
+							</RegisterForm>
+							<RegisterForm error={getErrorMessageByFieldName('user_telephone')}>
+								<label htmlFor="phone">Celular</label>
+								<Input 
+									name="phone"
+									type="tel" 
 									placeholder="Digite aqui o número" 
-									onChange={e => setPhone(e.target.value)}
+									value={user?.user_telephone}
+									onChange={e => handleSetUser('user_telephone', e)}
+									maxLength={15}
 									/>
 							</RegisterForm>
 						</Form>
 					</Box>
 					<Button
-						disabled={false}
+						disabled={!isFormValid}
 						onClick={() => setStep(2)}
 					>
 						Continuar
@@ -131,14 +201,16 @@ const FormGroupStudentRegister: React.FC = () => {
 						<IoIosArrowBack />
 					</BackPage>
 					<Box>
-						<h2>Selecione os cursos</h2>
-						<Divider />
+						<h3>Selecione os cursos do usuário</h3>
 						<ContainerChips>
 							{
 								courses.map((course) => {
 									return (
 										<Chip
 											key={course.index}
+											select={
+												handle(course.index) ? 'true' : 'false'
+											}
 											onClick={() => handleSelectedCourse(course.index)}
 										>
 											{course.name}
@@ -148,28 +220,10 @@ const FormGroupStudentRegister: React.FC = () => {
 							}
 						</ContainerChips>
 					</Box>
-					<Box>
-						<h2>Cursos selecionados</h2>
-						<Divider />
-						<ContainerChips>
-							{
-								selectedCourses?.map((course: any) => {
-									return (
-										<Chip 
-										key={course.index}
-										>
-											{
-												courses.filter((el) => el.index === course)[0].name
-											}
-										</Chip>
-									)
-								})
-							}
-						</ContainerChips>
-					</Box>
 					<Button
 						disabled={false}
-						type="submit"
+						type="button"
+						onClick={() => setOpen(true)}
 					>
 						Salvar
 					</Button>

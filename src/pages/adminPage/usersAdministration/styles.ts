@@ -6,6 +6,7 @@ export const Container = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	transition: 1s;
 
 	h1 {
 		margin-bottom: 50px;

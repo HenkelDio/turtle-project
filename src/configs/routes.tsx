@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Profile from '../pages/profile';
 import Login from '../pages/login';
 import useTurtleStore from '../store';
@@ -6,9 +6,12 @@ import UserAdministration from '../pages/adminPage/usersAdministration';
 import Courses from '../pages/userPage/courses';
 import Certificates from '../pages/userPage/certificates';
 import userRegister from '../pages/adminPage/userRegister';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Routes: React.FC = () => {
 	const { credentials, isAuthenticated } = useTurtleStore((state) => state);
+
+	const location = useLocation();
 
 	function PrivateRoute({ component: Component, isAuthenticated, ...rest }: any) {
 		return (

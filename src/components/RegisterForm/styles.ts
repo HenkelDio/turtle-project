@@ -1,6 +1,10 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 
-export const Container = styled.div`
+interface IErrorProps {
+	error: string | undefined,
+}
+
+export const Container = styled.div<IErrorProps>`
 	display: flex;
 	flex-direction: column;
 	align-items: start;
@@ -8,6 +12,12 @@ export const Container = styled.div`
 
 	label {
 		font-weight: 600;
+	}
+
+	input {
+		${({ theme, error }) => error && css`
+			border: 3px solid ${theme.colors.red.main};
+		`}
 	}
 
 	span {
