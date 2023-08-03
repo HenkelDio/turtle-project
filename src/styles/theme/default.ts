@@ -7,9 +7,11 @@ export default {
 			main: '#3E3E3E',
 		},
 		green: {
+			darker: '#001c13',
 			dark: '#004d3d',
 			main: '#009879',
 			light: '#0eb38e',
+			lighter: '#dbfffa',
 		},
 		red: {
 			main: '#FE2828',

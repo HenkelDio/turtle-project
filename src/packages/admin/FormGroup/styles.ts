@@ -36,7 +36,7 @@ export const ContainerChips = styled.div`
 
 	margin-top: 15px;
 	padding: 10px 10px;
-	height: 300px;
+	max-height: 300px;
 	width: 1000px;
 	border-radius: 8px;
 
@@ -44,7 +44,7 @@ export const ContainerChips = styled.div`
 	background-color: #fff;
 	
 
-	overflow-y: scroll;
+	overflow-y: auto;
 
 	&::-webkit-scrollbar {
  			 width: 10px;
@@ -101,3 +101,23 @@ export const BackPage = styled.div`
 	font-size: 2rem;
 	cursor: pointer;
 `;
+
+export const BoxAddress = styled.div`
+	display: flex;
+	gap: 10px;
+
+	div:nth-child(1) {
+		width: 390px;
+		input {
+			width: 100%;
+		}
+	}
+
+	div:nth-child(2) {
+		width: 100px;
+
+		input {
+			width: 100%;
+		}
+	}
+`

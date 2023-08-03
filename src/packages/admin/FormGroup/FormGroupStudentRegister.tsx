@@ -19,6 +19,9 @@ const FormGroupStudentRegister: React.FC = () => {
 	const [courses] = useState([
 		{ index: 15, name: 'Como treinar o seu dragão' },
 		{ index: 457, name: 'Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa' },
+		{ index: 448, name: 'Como aaaa o seu dasdasd' },
+		{ index: 459, name: 'Como aaaa o seu yyty' },
+		{ index: 450, name: 'Como aaaa o seu kugb' },
 	])
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
 	const [user, setUser] = useState<IUser>({
@@ -30,90 +33,69 @@ const FormGroupStudentRegister: React.FC = () => {
 	});
 
 	const {
-    setError, removeError, getErrorMessageByFieldName, errors,
-  } = useErrors();
+		setError, removeError, getErrorMessageByFieldName, errors,
+	} = useErrors();
 
-
-	const queryClient = useQueryClient();
 
 	const handleSelectedCourse = (index: number) => {
 		selectedCourses.some((el: any) => (index === el))
-		? setSelectedCourses([...selectedCourses.filter((course: any) => index !== course)])
-		: setSelectedCourses([...selectedCourses, index])
+			? setSelectedCourses([...selectedCourses.filter((course: any) => index !== course)])
+			: setSelectedCourses([...selectedCourses, index])
+	}
+	const handleSetUser = (key: string, e: any) => {
+
+		if (key === 'user_telephone') {
+			setUser((prevState: any) => ({
+				...prevState,
+				[key]: formatPhone(e.target.value)
+			}));
+		} else {
+			setUser((prevState: any) => ({
+				...prevState,
+				[key]: e.target.value
+			}));
+		}
+
+
+		// TODO melhorar forma de validar erros e ajustar código
+		if (key === 'user_email' && !isEmailValid(e.target.value)) {
+			setError({ field: 'user_email', message: 'E-mail inválido' })
+		} else {
+			removeError(key)
+		}
+
+		if (!e.target.value) {
+			setError({ field: key, message: 'Campo obrigatório' })
+		} else {
+			removeError(key)
+		}
 	}
 
-	console.log(selectedCourses)
+	const isFormValid = (
+		user.user_email &&
+		user.user_name &&
+		user.user_register &&
+		user.user_telephone &&
+		errors.length === 0
+	);
 
-
-
-	const { mutate, isLoading, status } = useMutation(['user'], addStudentUser, {
-		onSuccess: data => {
-			 console.log(status);
-			 const message = status
-			 alert(message)
-		},
-			onError: () => {
-						alert("there was an error")
-		},
-			onSettled: () => {
-					queryClient.invalidateQueries('create')
-		}
-		});
-		
-		const handleSetUser = (key: string, e: any) => {
-
-			if(key === 'user_telephone') {
-				setUser((prevState: any) => ({
-					...prevState,
-					[key]: formatPhone(e.target.value)
-				}));	
-			} else {
-				setUser((prevState: any) => ({
-					...prevState,
-					[key]: e.target.value
-				}));
-			}
-
-
-			// TODO melhorar forma de validar erros e ajustar código
-			if(key === 'user_email' && !isEmailValid(e.target.value)) {
-				setError({ field: 'user_email', message: 'E-mail inválido'})
-			} else {
-				removeError(key)
-			}
-
-			if(!e.target.value) {
-				setError({ field: key, message: 'Campo obrigatório'})
-			} else {
-				removeError(key)
-			}
+	const onSubmit = (e: any) => {
+		e.preventDefault();
+		const data = {
+			"user_company_id": 4,
+			"user_email": user.user_email,
+			"user_name": user.user_name,
+			"user_register": user.user_register,
+			"user_telephone": user.user_telephone.replace(/\D/g, '')
 		}
 
-		const isFormValid = (
-			user.user_email &&
-			user.user_name &&
-			user.user_register &&
-			user.user_telephone && 
-			errors.length === 0
-			);
+		console.log(data);
+	}
 
-		const onSubmit = (e: any) => {
-			e.preventDefault();
-			const data = {
-				"user_company_id": 4,
-				"user_email": user.user_email,
-				"user_name": user.user_name,
-				"user_register":user.user_register,
-				"user_telephone": user.user_telephone.replace(/\D/g, '')
-			}
-
-			 console.log(data);
-		}
-
-		const handle = (index: number) => {
-			const test = selectedCourses.some((el: any) => (index === el))
-			return test;
-		}
+	const handle = (index: number) => {
+		const test = selectedCourses.some((el: number) => (index === el))
+		return test;
+	}
 
 
 	return (
@@ -137,20 +119,20 @@ const FormGroupStudentRegister: React.FC = () => {
 						<Form>
 							<RegisterForm error={getErrorMessageByFieldName('user_name')}>
 								<label htmlFor="name">Nome completo</label>
-								<Input 
-								name="name"
-								type="text"
-								placeholder="Digite o nome completo"
-								value={user?.user_name}
-								onChange={e => handleSetUser('user_name', e)}
+								<Input
+									name="name"
+									type="text"
+									placeholder="Digite o nome completo"
+									value={user?.user_name}
+									onChange={e => handleSetUser('user_name', e)}
 								/>
 							</RegisterForm>
 							<RegisterForm error={getErrorMessageByFieldName('user_register')}>
 								<label htmlFor="document">CPF</label>
-								<Input 
-									name="document" 
+								<Input
+									name="document"
 									type="text"
-									placeholder="Digite aqui o CPF" 
+									placeholder="Digite aqui o CPF"
 									value={user?.user_register}
 									onChange={e => handleSetUser('user_register', e)}
 								/>
@@ -162,24 +144,24 @@ const FormGroupStudentRegister: React.FC = () => {
 						<Form>
 							<RegisterForm error={getErrorMessageByFieldName('user_email')}>
 								<label htmlFor="email">E-mail</label>
-								<Input 
-									name="email" 
-									type="email" 
+								<Input
+									name="email"
+									type="email"
 									placeholder="Digite o e-mail"
 									value={user?.user_email}
 									onChange={e => handleSetUser('user_email', e)}
-									/>
+								/>
 							</RegisterForm>
 							<RegisterForm error={getErrorMessageByFieldName('user_telephone')}>
 								<label htmlFor="phone">Celular</label>
-								<Input 
+								<Input
 									name="phone"
-									type="tel" 
-									placeholder="Digite aqui o número" 
+									type="tel"
+									placeholder="Digite aqui o número"
 									value={user?.user_telephone}
 									onChange={e => handleSetUser('user_telephone', e)}
 									maxLength={15}
-									/>
+								/>
 							</RegisterForm>
 						</Form>
 					</Box>

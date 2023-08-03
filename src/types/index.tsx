@@ -25,6 +25,22 @@ export interface IUser {
 	user_email: string,
 }
 
+export interface ICompany {
+	company_name: string,
+	company_address: IAddressCompany,
+	company_contact: string,
+	company_register: string,
+	company_telephone: string,
+	company_email: string,
+}
+
+interface IAddressCompany {
+	cep: string,
+	street: string,
+	number: string,
+	district: string,
+}
+
 export interface IFieldErrors {
 	field: string,
 	message: string
