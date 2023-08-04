@@ -15,7 +15,7 @@ const Login: React.FC = () => {
 		setLoading(true)
 		await delay();
 		setLoading(false)
-		setCredentials({type: 'admin'})
+		setCredentials({type: 'user'})
 		setAuthenticated(true);
 		history.push('/courses');
 	}

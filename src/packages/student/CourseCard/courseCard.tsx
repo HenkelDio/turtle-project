@@ -18,7 +18,7 @@ const CourseCard: React.FC<IProps> = ({ title, percentage }: IProps) => {
 				<h2>{title}</h2>
 				<div className="details">
 					<p>{percentage}%</p>
-					<Link to='/'>
+					<Link to='/course/id=404848DJNS40'>
 						Acessar curso
 					</Link>
 				</div>

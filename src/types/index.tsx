@@ -7,6 +7,8 @@ export interface IStore {
 
 	registerType: string,
 	setRegisterType: Function,
+
+	onCourse: boolean,
 }
 
 export interface ICredentials {

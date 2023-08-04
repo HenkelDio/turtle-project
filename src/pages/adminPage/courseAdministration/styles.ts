@@ -9,12 +9,15 @@ export const Container = styled.div`
 	transition: 1s;
 
 	h1 {
-		margin-bottom: 50px;
+		margin-bottom: 30px;
 	}
 `;
 
 export const ContainerList = styled.div`
-	
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 `;
 
 export const Box = styled.div`
@@ -22,6 +25,12 @@ export const Box = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	height: 100px;
 	
 	width: 500px;
+
+	p {
+		font-size: 1.5rem;
+		font-weight: 500;
+	}
 `;

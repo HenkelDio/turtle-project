@@ -10,6 +10,8 @@ const useTurtleStore = create<IStore>((set) => ({
 	
 	registerType: 'default' as string,
 	setRegisterType: (payload: string) => set((state) => ({registerType: payload})),
+
+	onCourse: true as boolean,
 }))
 
 export default useTurtleStore;
