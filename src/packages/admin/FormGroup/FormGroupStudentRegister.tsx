@@ -81,13 +81,7 @@ const FormGroupStudentRegister: React.FC = () => {
 
 	const onSubmit = (e: any) => {
 		e.preventDefault();
-		const data = {
-			"user_company_id": 4,
-			"user_email": user.user_email,
-			"user_name": user.user_name,
-			"user_register": user.user_register,
-			"user_telephone": user.user_telephone.replace(/\D/g, '')
-		}
+		
 
 		console.log(data);
 	}

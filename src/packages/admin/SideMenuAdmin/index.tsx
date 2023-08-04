@@ -2,10 +2,10 @@ import { Container, Logo, Box, CloseSideMenu, ContainerMenu } from "./styles"
 import { GiTurtleShell } from 'react-icons/gi';
 import { GoPeople } from 'react-icons/go';
 import { IoIosArrowForward, IoIosArrowDown, IoIosArrowDropleftCircle, IoIosArrowDroprightCircle} from 'react-icons/io';
-import { LiaCertificateSolid } from 'react-icons/lia';
 import { CgProfile } from 'react-icons/cg';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
 
 const SideMenuAdmin: React.FC = () => {
 	const [isFold, setFold] = useState<string>('true');
@@ -76,14 +76,14 @@ const SideMenuAdmin: React.FC = () => {
 					</div>
 				}
 				</ContainerMenu>
-				<Link to='/certificates'>
+				<Link to='/admin/courses'>
 					<Box
 						style={{ backgroundColor: page === 'admin-courses' ? '#ccc' : 'transparent' }}
 						page={page}
 						isfold={isFold}
 						onClick={() => handleSetPage('admin-courses')}
 					>
-						<div><LiaCertificateSolid /></div>
+						<div><MdOutlineBookmarkAdd /></div>
 						<p>Cursos</p>
 					</Box>
 				</Link>

@@ -7,6 +7,7 @@ import Courses from '../pages/userPage/courses';
 import Certificates from '../pages/userPage/certificates';
 import userRegister from '../pages/adminPage/userRegister';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import CourseAdministration from '../pages/adminPage/courseAdministration';
 
 const Routes: React.FC = () => {
 	const { credentials, isAuthenticated } = useTurtleStore((state) => state);
@@ -28,6 +29,7 @@ const Routes: React.FC = () => {
 			<Switch>
 				<Route exact path='/admin/users' component={UserAdministration} />
 				<Route path='/admin/users/register' component={userRegister} />
+				<Route exact path='/admin/courses' component={CourseAdministration} />
 			</Switch>
 		)
 	}
