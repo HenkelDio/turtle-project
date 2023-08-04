@@ -45,7 +45,14 @@ const ConfirmUserModal: React.FC<IProps> = ({user, courses, isOpen, selectedCour
 
 	const handleCreateUser = () => {
 		setDone(true)
-		mutate(user)
+		const data = {
+			"user_company_id": 4,
+			"user_email": user.user_email,
+			"user_name": user.user_name,
+			"user_register": user.user_register,
+			"user_telephone": user.user_telephone.replace(/\D/g, '')
+		}
+		mutate(data)
 	}
 
 	if (!isOpen) {
