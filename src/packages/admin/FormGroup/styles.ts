@@ -24,6 +24,7 @@ export const Form = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
+	margin-top: 10px;
 `
 
 
@@ -121,3 +122,14 @@ export const BoxAddress = styled.div`
 		}
 	}
 `
+
+export const ContainerCompaniesChip = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: start;
+	gap: 10px;
+	height: 300px;
+
+	overflow-y:auto;
+`;	

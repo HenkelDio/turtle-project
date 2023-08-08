@@ -1,5 +1,4 @@
 import axios from 'axios';
-import HttpClient from './utils/HttpClient';
 
 // class UsersService {
 // 	httpClient: HttpClient;
@@ -14,9 +13,18 @@ import HttpClient from './utils/HttpClient';
 	
 // }
 
-export const addStudentUser = async (payload: Object) => {
+export const addStudentUser = async (payload: object) => {
   try {
     const { data } = await axios.post(`http://localhost:3000/createStudent`, payload);
+    return { data: data, err: null };
+  } catch (err) {
+    return { data: null, err };
+  }
+}
+
+export const listStudentes = async () => {
+  try {
+    const { data } = await axios.get(`http://localhost:3000/getStudents`);
     return { data: data, err: null };
   } catch (err) {
     return { data: null, err };

@@ -5,7 +5,7 @@ export const Container = styled.div`
 	flex-direction: row;
 
 	.content {
-		padding: 0px 0px;
+		padding: 20px 0px;
 		font-family: 'Work Sans', sans-serif;
 		width: 100%;
 		height: 100vh;

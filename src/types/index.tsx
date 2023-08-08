@@ -19,12 +19,12 @@ export interface IHttpClient {
 	baseURL: string,
 }
 
-export interface IUser {
-	user_company_id: number,
-	user_name: string,
-	user_register: string,
-	user_telephone: string,
-	user_email: string,
+export interface IUserStudent {
+	student_company_id: number,
+	student_name: string,
+	student_cpf: string,
+	student_cellphone: string,
+	student_email: string,
 }
 
 export interface ICompany {

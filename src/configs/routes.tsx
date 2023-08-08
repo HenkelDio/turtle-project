@@ -6,9 +6,8 @@ import UserAdministration from '../pages/adminPage/usersAdministration';
 import Courses from '../pages/userPage/courses';
 import Certificates from '../pages/userPage/certificates';
 import userRegister from '../pages/adminPage/userRegister';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import CourseAdministration from '../pages/adminPage/courseAdministration';
-import ClassPage from '../pages/userPage/classes';
+import ClassPage from '../pages/userPage/classesPage';
 
 const Routes: React.FC = () => {
 	const { credentials, isAuthenticated } = useTurtleStore((state) => state);

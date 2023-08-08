@@ -3,17 +3,16 @@ import ReactDOM from 'react-dom';
 import { Container, Footer, Overlay, ContainerField, Conclusion } from '../styles';
 import Field from '../../ProfileField';
 import Button from '../../Button';
-import { IUser } from '../../../types';
+import { IUserStudent } from '../../../types';
 import { MdOutlineVerified } from 'react-icons/md';
 import { useState } from 'react';
-import delay from '../../../utils/delay';
-import Loader from '../../Loader';
 import { useMutation, useQueryClient } from 'react-query';
 import { addStudentUser } from '../../../services';
 import { useHistory } from 'react-router-dom';
+import Loader from '../../Loader';
 
 interface IProps {
-	user: IUser,
+	user: IUserStudent,
 	courses: any,
 	selectedCourses: [],
 	isOpen: boolean,
@@ -21,7 +20,7 @@ interface IProps {
 	setOpen: Function,
 }
 
-const ConfirmUserModal: React.FC<IProps> = ({user, courses, isOpen, selectedCourses, setOpen}: IProps) => {
+const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCourses, setOpen }: IProps) => {
 
 	const [isDone, setDone] = useState(false);
 
@@ -29,69 +28,68 @@ const ConfirmUserModal: React.FC<IProps> = ({user, courses, isOpen, selectedCour
 
 	const history = useHistory();
 
-	const { mutate, isLoading, status } = useMutation(['user'], addStudentUser, {
+	const { mutate, isLoading } = useMutation(['user'], addStudentUser, {
 		onSuccess: data => {
-			console.log(status);
-			const message = status
-			alert(message)
+			if (data && data.data) {
+				console.log(data.data);
+			} else {
+				console.log(data.err)
+			}
 		},
-		onError: () => {
-			alert("there was an error")
-		},
-		onSettled: () => {
-			queryClient.invalidateQueries('create')
+		onSettled: async () => {
+			await queryClient.invalidateQueries('create')
 		}
 	});
 
 	const handleCreateUser = () => {
 		setDone(true)
 		const data = {
-			"user_company_id": 4,
-			"user_email": user.user_email,
-			"user_name": user.user_name,
-			"user_register": user.user_register,
-			"user_telephone": user.user_telephone.replace(/\D/g, '')
+			"student_company_id": 4,
+			"student_name": user.student_name,
+			"student_cpf": user.student_cpf.replace(/\D/g, ''),
+			"student_email": user.student_email,
+			"student_cellphone": user.student_cellphone.replace(/\D/g, '')
 		}
 		mutate(data)
 	}
 
 	if (!isOpen) {
-    return null;
-  }
+		return null;
+	}
 
 	return ReactDOM.createPortal(
 		<Overlay>
 			<Container>
 				<div className='confirm-data' style={{ right: isDone ? '500px' : '0px', animation: isDone ? '1s slide-out' : '', position: isDone ? 'absolute' : 'relative', opacity: isDone ? '0' : '1' }}>
-				<h1>Confirme os dados do usuário</h1>
-				<ContainerField>
-					<Field title='Nome' content={user.user_name} />
-					<Field title='CPF' content={user.user_register} />
-					<Field title='E-mail' content={user.user_email} />
-					<Field title='Celular' content={user.user_telephone} />
-					<b>Cursos matriculados</b>
-					<div className='courses'>
-					{
-						selectedCourses.map((course) => {
-							return(
-								<p>{
-									courses.filter((el: any) => el.index === course)[0].name
-								}</p>
-							)
-						})
-					}
-					</div>
-				</ContainerField>
-				<Footer>
-					<button type="button" className="cancel-button" onClick={() => setOpen(false)}>
-						Cancelar
-					</button>
-					<Button type="button" onClick={() => handleCreateUser()}>
-						Adicionar
-					</Button>
-				</Footer>
+					<h1>Confirme os dados do usuário</h1>
+					<ContainerField>
+						<Field title='Nome' content={user.student_email} />
+						<Field title='CPF' content={user.student_cpf} />
+						<Field title='E-mail' content={user.student_email} />
+						<Field title='Celular' content={user.student_cellphone} />
+						<b>Cursos matriculados</b>
+						<div className='courses'>
+							{
+								selectedCourses.map((course) => {
+									return (
+										<p>{
+											courses.filter((el: any) => el.index === course)[0].name
+										}</p>
+									)
+								})
+							}
+						</div>
+					</ContainerField>
+					<Footer>
+						<button type="button" className="cancel-button" onClick={() => setOpen(false)}>
+							Cancelar
+						</button>
+						<Button type="button" onClick={() => handleCreateUser()}>
+							Adicionar
+						</Button>
+					</Footer>
 				</div>
-				
+
 				<Conclusion style={{ right: isDone ? '0px' : '-500px', animation: isDone ? '3s slide-in' : '' }}>
 
 					{
@@ -102,7 +100,7 @@ const ConfirmUserModal: React.FC<IProps> = ({user, courses, isOpen, selectedCour
 
 					<h1>Usuário adicionado com sucesso!</h1>
 
-					<p>E-mail para login: {user.user_email}</p>
+					<p>E-mail para login: {user.student_email}</p>
 
 					<Button onClick={() => history.push('/admin/users')}>
 						Fechar

@@ -2,25 +2,33 @@ import { HiFilter } from "react-icons/hi";
 import { FormInput } from "../../../components/FormInput";
 import { Container, ContainerList, Button, Box } from "./styles";
 import Input from "../../../components/Input";
-import { useEffect, useState } from "react";
-import delay from "../../../utils/delay";
+import { useState } from "react";
 import Loader from "../../../components/Loader";
 import { Link } from "react-router-dom";
+import { listStudentes } from "../../../services";
+import { useQuery, useQueryClient } from "react-query";
+import { IUserStudent } from "../../../types";
+import formatPhone from "../../../utils/phoneFormat";
+import {formatDocument} from "../../../utils/documentFormat";
 
 const UserAdministration: React.FC = () => {
-	const [isLoading, setLoading] = useState(true);
+	const [users, setUsers] = useState([]);
 
-	useEffect(() => {
-		async function handleDelay() {
-			setLoading(true);
-			await delay();
-			setLoading(false);
+	const queryClient = useQueryClient();
+
+	const { isLoading } = useQuery(['user'], listStudentes, {
+		onSuccess: data => {
+			if (data && data.data) {
+				console.log(data.data);
+				setUsers(data.data);
+			} else {
+				console.log(data.err)
+			}
+		},
+		onSettled: async () => {
+			await queryClient.invalidateQueries('create')
 		}
-
-		// eslint-disable-next-line @typescript-eslint/no-floating-promises
-		handleDelay();
-
-	}, [])
+	});
 
 	if (isLoading) {
 		return (
@@ -44,73 +52,24 @@ const UserAdministration: React.FC = () => {
 				<table className="styled-table">
 					<thead>
 						<tr>
-							<th>ID</th>
 							<th>Nome</th>
 							<th>CPF</th>
-							<th>Matriculas</th>
+							<th>Telefone</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr>
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
-						<tr className="active-row">
-							<td>58478</td>
-							<td>Willian José Henkel de Deus</td>
-							<td>124.400.389-11</td>
-							<td>5</td>
-						</tr>
+						{
+							users && users.map((user: IUserStudent) => {
+								return(
+									<tr>
+										<td>{user.student_name}</td>
+										<td>{formatDocument(user.student_cpf)}</td>
+										<td>{formatPhone(user.student_cellphone)}</td>
+									</tr>
+								)
+							})
+						}
+						
 					</tbody>
 				</table>
 			</ContainerList>

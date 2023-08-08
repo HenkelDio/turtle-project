@@ -2,34 +2,38 @@ import { useState } from "react"
 import Button from "../../../components/Button"
 import Input from "../../../components/Input"
 import RegisterForm from "../../../components/RegisterForm"
-import { Box, Form, Chip, ContainerChips, BackPage } from "./styles"
+import { Box, Form, Chip, ContainerChips, BackPage, ContainerCompaniesChip } from "./styles"
 import { IoIosArrowBack } from "react-icons/io"
-import { useMutation, useQueryClient } from "react-query"
-import { addStudentUser } from "../../../services"
-import { IUser } from "../../../types"
+import { IUserStudent } from "../../../types"
 import useErrors from "../../../hooks/useErrors"
 import formatPhone from "../../../utils/phoneFormat"
 import isEmailValid from "../../../utils/emailFormat"
 import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
+import { formatDocument } from "../../../utils/documentFormat"
 
 const FormGroupStudentRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
 	const [isOpen, setOpen] = useState(false);
-	const [selected, setSelected] = useState<any>();
+	const [selectedWorkplace, setSelectedWorkplace] = useState<any>([]);
 	const [courses] = useState([
 		{ index: 15, name: 'Como treinar o seu dragão' },
 		{ index: 457, name: 'Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa' },
 		{ index: 448, name: 'Como aaaa o seu dasdasd' },
 		{ index: 459, name: 'Como aaaa o seu yyty' },
 		{ index: 450, name: 'Como aaaa o seu kugb' },
+	]);
+	const [workplaces] = useState([
+		{ index: 15, name: 'Souza Treinamentos' },
+		{ index: 457, name: 'Code&Code' },
+		{ index: 448, name: 'Loja de Sapatos' },
 	])
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
-	const [user, setUser] = useState<IUser>({
-		user_name: '',
-		user_company_id: 0,
-		user_email: '',
-		user_register: '',
-		user_telephone: ''
+	const [user, setUser] = useState<IUserStudent>({
+		student_company_id: 0,
+		student_name: '',
+		student_cpf: '',
+		student_cellphone: '',
+		student_email: '',
 	});
 
 	const {
@@ -42,9 +46,20 @@ const FormGroupStudentRegister: React.FC = () => {
 			? setSelectedCourses([...selectedCourses.filter((course: any) => index !== course)])
 			: setSelectedCourses([...selectedCourses, index])
 	}
+
+
+	const handleSelectedWorkplace = (index: number) => {
+		
+			if(!selectedWorkplace.some((el: any) => (index === el))) {
+				setSelectedWorkplace([index]);
+			}
+
+			console.log(selectedWorkplace);
+	}
+
 	const handleSetUser = (key: string, e: any) => {
 
-		if (key === 'user_telephone') {
+		if (key === 'student_cellphone') {
 			setUser((prevState: any) => ({
 				...prevState,
 				[key]: formatPhone(e.target.value)
@@ -56,10 +71,9 @@ const FormGroupStudentRegister: React.FC = () => {
 			}));
 		}
 
-
 		// TODO melhorar forma de validar erros e ajustar código
-		if (key === 'user_email' && !isEmailValid(e.target.value)) {
-			setError({ field: 'user_email', message: 'E-mail inválido' })
+		if (key === 'student_email' && !isEmailValid(e.target.value)) {
+			setError({ field: 'student_email', message: 'E-mail inválido' })
 		} else {
 			removeError(key)
 		}
@@ -71,30 +85,43 @@ const FormGroupStudentRegister: React.FC = () => {
 		}
 	}
 
+	const handleSetDocument = (e: any) => {
+		if (!e.target.value) {
+			// TODO refazer essa logica, impedir usuario de seguir
+			setError({ field: 'student_cpf', message: "'CPF' inválido" })
+		} else {
+			removeError('student_cpf')
+		}
+
+		setUser((prevState: any) => ({
+			...prevState,
+			student_cpf:formatDocument(e.target.value)
+		}));
+
+		
+	} 
+
 	const isFormValid = (
-		user.user_email &&
-		user.user_name &&
-		user.user_register &&
-		user.user_telephone &&
+		user.student_name &&
+		user.student_cellphone &&
+		user.student_email &&
+		user.student_cpf &&
 		errors.length === 0
 	);
-
-	const onSubmit = (e: any) => {
-		e.preventDefault();
-		
-
-		console.log(data);
-	}
 
 	const handle = (index: number) => {
 		const test = selectedCourses.some((el: number) => (index === el))
 		return test;
 	}
 
+	const handleWorkplaces = (index: number) => {
+		const test = selectedWorkplace.some((el: number) => (index === el))
+		return test;
+	}
+
 
 	return (
 		<form
-			onSubmit={(e) => onSubmit(e)}
 			style={{ textAlign: 'right' }}
 		>
 			<ConfirmUserModal
@@ -111,24 +138,25 @@ const FormGroupStudentRegister: React.FC = () => {
 					<Box>
 						<p>Dados pessoais</p>
 						<Form>
-							<RegisterForm error={getErrorMessageByFieldName('user_name')}>
+							<RegisterForm error={getErrorMessageByFieldName('student_name')}>
 								<label htmlFor="name">Nome completo</label>
 								<Input
 									name="name"
 									type="text"
 									placeholder="Digite o nome completo"
-									value={user?.user_name}
-									onChange={e => handleSetUser('user_name', e)}
+									value={user?.student_name}
+									onChange={e => handleSetUser('student_name', e)}
 								/>
 							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('user_register')}>
+							<RegisterForm error={getErrorMessageByFieldName('student_cpf')}>
 								<label htmlFor="document">CPF</label>
 								<Input
 									name="document"
 									type="text"
 									placeholder="Digite aqui o CPF"
-									value={user?.user_register}
-									onChange={e => handleSetUser('user_register', e)}
+									value={user?.student_cpf}
+									onChange={e => handleSetDocument(e)}
+									maxLength={11}
 								/>
 							</RegisterForm>
 						</Form>
@@ -136,24 +164,24 @@ const FormGroupStudentRegister: React.FC = () => {
 					<Box>
 						<p>Contato</p>
 						<Form>
-							<RegisterForm error={getErrorMessageByFieldName('user_email')}>
+							<RegisterForm error={getErrorMessageByFieldName('student_email')}>
 								<label htmlFor="email">E-mail</label>
 								<Input
 									name="email"
 									type="email"
 									placeholder="Digite o e-mail"
-									value={user?.user_email}
-									onChange={e => handleSetUser('user_email', e)}
+									value={user?.student_email}
+									onChange={e => handleSetUser('student_email', e)}
 								/>
 							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('user_telephone')}>
+							<RegisterForm error={getErrorMessageByFieldName('student_cellphone')}>
 								<label htmlFor="phone">Celular</label>
 								<Input
 									name="phone"
 									type="tel"
 									placeholder="Digite aqui o número"
-									value={user?.user_telephone}
-									onChange={e => handleSetUser('user_telephone', e)}
+									value={user?.student_cellphone}
+									onChange={e => handleSetUser('student_cellphone', e)}
 									maxLength={15}
 								/>
 							</RegisterForm>
@@ -171,8 +199,46 @@ const FormGroupStudentRegister: React.FC = () => {
 			{
 				step === 2 &&
 				<>
-					<BackPage
+				<BackPage
 						onClick={() => setStep(1)}
+				><IoIosArrowBack /></BackPage>
+					<Box>
+						<p>Selecione por qual empresa o usuário está se matriculando</p>
+						<Form>
+							<Input placeholder="Pesquise pelo nome da empresa" />
+							<ContainerCompaniesChip>
+							{
+								workplaces.map((course) => {
+									return (
+										<Chip
+											key={course.index}
+											select={
+												handleWorkplaces(course.index) ? 'true': 'false'
+											}
+											onClick={() => handleSelectedWorkplace(course.index)}
+										>
+											{course.name}
+										</Chip>
+									)
+								})
+							}
+						</ContainerCompaniesChip>
+						</Form>
+					</Box>
+					<Button
+						disabled={!isFormValid}
+						onClick={() => setStep(3)}
+					>
+						Continuar
+					</Button>
+				</>
+			}
+
+			{
+				step === 3 &&
+				<>
+					<BackPage
+						onClick={() => setStep(2)}
 					>
 						<IoIosArrowBack />
 					</BackPage>
