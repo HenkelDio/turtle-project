@@ -1,81 +1,165 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div`
+export const Overlay = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-
 	width: 100%;
+	height: calc(100vh - 40px);
+
+	position: relative;
+
+	.bg-layout{
+		width: 100%;
+		height: 50vh;
+		
+		
+		position: absolute;
+		top: -20px;
+		z-index: 0;
+
+		background-color: ${({ theme }) => theme.colors.green.main};
+
+ 	}
+`;
+
+export const Container = styled.div`
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: row;
+
+	position: relative;
+
+	margin: 0 auto;
+	width: 500px;
+	height: 400px;
+
+	border-radius: 10px;
+	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+
+	background-color: #ffff;
 `
 
-export const FieldLogin = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
-	width: 350px;
-	margin-top: 20px;
+export const BackIcon = styled.div`
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	font-size: 2rem;
+	cursor: pointer;
+	animation: login-form 0.3s ease;
 
-	input {
-		width: 100%;
-	}
+	@keyframes login-form {
+    from {
+        opacity: 0;
+        left: 5px;
+    }
+    to {
+        opacity: 1;
+        left: 30px;
+    }
+}
 `;
 
 export const Button = styled.button`
 	width: 350px;
-	height: 37px;
+	height: 50px;
 	margin-top: 25px;
 	
-
-	border: 2px solid transparent;
-	background-color: #80ED99;
+	border: none;
+	background-color: ${({ theme }) => theme.colors.green.main};
 	border-radius: 10px;
 	
 	font-size: 1rem;
 	font-weight: 700;
-	color: ${({ theme }) => theme.colors.grey.main};
+	color: #ffff;
 	cursor: pointer;
 
+	position: relative;
+
+
+
 	&:hover {
-		border: 4px solid #57CC99;
+		background-color: ${({ theme }) => theme.colors.green.light};
 	}
 
+	&:focus {
+		background-color: ${({ theme }) => theme.colors.green.dark};
+	}
+
+	span {
+		position: absolute;
+		right: 10px;
+		top: 13px;
+		font-size: 1.5rem;
+	}
+
+
 `
+
+export const Form = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+
+	label {
+		font-weight: 400;
+	}
+
+	input {
+		width: 350px;
+		background-color: #f8f0f2;
+	}
+
+	h1 {
+		font-weight: 500;
+	}
+
+	p {
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
+
+	.animate-form{
+		animation: animation 0.5s ease;
+		position: relative;
+
+		@keyframes animation {
+			from {
+					opacity: 0;
+					left: 10px;
+			}
+			to {
+					opacity: 1;
+					left: 0;
+			}
+}
+	}
+
+
+`;
 
 export const Loader = styled.div`
 	margin-top: 30px;
 
-.loader, .loader:before, .loader:after {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  animation-fill-mode: both;
-  animation: bblFadInOut 1.8s infinite ease-in-out;
-}
-.loader {
-  color: ${({ theme }) => theme.colors.green.main};;
-  font-size: 7px;
-  position: relative;
-  text-indent: -9999em;
-  transform: translateZ(0);
-  animation-delay: -0.16s;
-}
-.loader:before,
-.loader:after {
-  content: '';
-  position: absolute;
-  top: 0;
-}
-.loader:before {
-  left: -3.5em;
-  animation-delay: -0.32s;
-}
-.loader:after {
-  left: 3.5em;
-}
+	.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid ${({ theme }) => theme.colors.green.main};
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
 
-@keyframes bblFadInOut {
-  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
-  40% { box-shadow: 0 2.5em 0 0 }
-}
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
 `

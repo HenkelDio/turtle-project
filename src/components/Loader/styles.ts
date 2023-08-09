@@ -8,29 +8,22 @@ export const ContainerLoader = styled.div`
 	height: 100%;
 	
 	.loader {
-  box-sizing: border-box;
-  position: relative;
-  width: 48px;
-  height: 48px;
-  animation: spin 1s linear infinite;
-}
-.loader:after, .loader:before {
-  content: "";
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.green.main};
-  animation: spin 1s linear infinite;
-  transform-origin: 0px 100%;
-}
-.loader:before {
-  transform-origin: 0 50%;
-  background: #fff;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+    width: 48px;
+    height: 48px;
+    border: 5px solid ${({ theme }) => theme.colors.green.main};
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
 `;
