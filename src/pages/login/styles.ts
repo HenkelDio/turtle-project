@@ -108,7 +108,7 @@ export const Form = styled.div`
 	}
 
 	input {
-		width: 350px;
+		width: 350px!important;
 		background-color: #f8f0f2;
 	}
 

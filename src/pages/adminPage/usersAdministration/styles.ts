@@ -36,15 +36,17 @@ export const ContainerList = styled.div`
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
+		font-family: 'Work Sans', sans-serif;
     min-width: 1000px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+		
 		}
 
 		.styled-table thead tr {
     background-color: #009879;
     color: #ffffff;
     text-align: left;
+		height: 60px;
 		}
 
 		.styled-table th,
@@ -54,6 +56,7 @@ export const ContainerList = styled.div`
 
 		.styled-table tbody tr {
     border-bottom: 1px solid #dddddd;
+		height: 50px;
 		}
 
 		.styled-table tbody tr:nth-of-type(even) {
@@ -79,4 +82,14 @@ export const Box = styled.div`
 	
 	width: 1000px;
 
+`;
+
+export const FilterInput = styled.div`
+	display: flex;
+	
+	background-color: #fff;
+
+	select {
+		height: 40px;
+	}
 `;

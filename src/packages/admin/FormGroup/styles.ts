@@ -20,7 +20,7 @@ export const Box = styled.div`
 	}
 `
 
-export const Form = styled.div`
+export const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;

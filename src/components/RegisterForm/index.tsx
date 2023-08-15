@@ -2,15 +2,13 @@ import React from "react";
 import { Container } from "./styles";
 
 interface IProps {
-	error: string | undefined,
 	children: any,
 }
 
-const RegisterForm: React.FC<IProps> = ({ error, children }: IProps) => {
+const RegisterForm: React.FC<IProps> = ({ children }: IProps) => {
 	return(
-		<Container error={error}>
+		<Container>
 			{children}
-			{error && <span>{error}</span>}
 		</Container>
 	)
 }

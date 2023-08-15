@@ -1,8 +1,7 @@
 import { PiStudentLight, PiSuitcaseSimpleThin } from "react-icons/pi";
 import { Container } from "./styles"
 import { RiAdminLine } from "react-icons/ri";
-import { useState } from "react";
-import useTurtleStore from "../../store";
+import useTurtleStore from "../../../store";
 
 const Select: React.FC = () => {
 	const { registerType, setRegisterType } = useTurtleStore((state) => state);

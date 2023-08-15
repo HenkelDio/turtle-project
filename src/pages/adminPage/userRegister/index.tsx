@@ -1,7 +1,6 @@
-import { Container } from "../usersAdministration/styles";
 import FormGroupStudentRegister from "../../../packages/admin/FormGroup/FormGroupStudentRegister";
-import Select from "../../../components/Select";
-import { Box } from "./styles";
+import Select from "../../../packages/student/Select";
+import { Box, Container } from "./styles";
 import useTurtleStore from "../../../store";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";

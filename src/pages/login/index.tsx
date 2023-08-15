@@ -56,7 +56,7 @@ const Login: React.FC = () => {
 					{
 						step === 1 &&
 						<div className="animate-form">
-						<RegisterForm error="">
+						<RegisterForm>
 							<label>Seu e-mail</label>
 							<Input type="email" placeholder="e-mail" />
 						</RegisterForm>
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
 					{
 						step === 2 &&
 						<div className="animate-form">
-						<RegisterForm error="">
+						<RegisterForm>
 							<label>Sua senha</label>
 							<Input type="password" placeholder="senha" />
 						</RegisterForm>

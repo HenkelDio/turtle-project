@@ -29,18 +29,16 @@ export interface IUserStudent {
 
 export interface ICompany {
 	company_name: string,
-	company_address: IAddressCompany,
 	company_contact: string,
 	company_register: string,
 	company_telephone: string,
 	company_email: string,
-}
-
-interface IAddressCompany {
-	cep: string,
-	street: string,
-	number: string,
-	district: string,
+	company_cep: string,
+	company_street: string,
+	company_district: string,
+	company_state: string,
+	company_city: string,
+	company_address_number: string
 }
 
 export interface IFieldErrors {

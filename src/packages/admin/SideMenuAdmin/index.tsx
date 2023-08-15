@@ -1,5 +1,5 @@
 import { Container, Logo, Box, CloseSideMenu, ContainerMenu } from "./styles"
-import { GiTurtleShell } from 'react-icons/gi';
+import { GiTurtle } from 'react-icons/gi';
 import { GoPeople } from 'react-icons/go';
 import { IoIosArrowForward, IoIosArrowDown, IoIosArrowDropleftCircle, IoIosArrowDroprightCircle} from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg';
@@ -45,7 +45,7 @@ const SideMenuAdmin: React.FC = () => {
 			<Logo
 				isfold={isFold}
 			>
-				<GiTurtleShell />
+				<GiTurtle />
 			</Logo>
 			<div className="containerBox">
 				<p>overview</p>

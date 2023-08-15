@@ -2,18 +2,21 @@ import { useState } from "react"
 import Button from "../../../components/Button"
 import Input from "../../../components/Input"
 import RegisterForm from "../../../components/RegisterForm"
-import { Box, Form, Chip, ContainerChips, BackPage, BoxAddress } from "./styles"
+import { Box, FormContainer, Chip, ContainerChips, BackPage, BoxAddress } from "./styles"
 import { IoIosArrowBack } from "react-icons/io"
 import { ICompany } from "../../../types"
-import useErrors from "../../../hooks/useErrors"
-import formatPhone from "../../../utils/phoneFormat"
-import isEmailValid from "../../../utils/emailFormat"
 import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { workplaceValidation } from "../../../validations"
+import MaskedInput from "react-text-mask"
+import { cepMask, cnpjMask } from "../../../utils/masks"
+import FieldInput from "../../../components/Fields/FieldInput"
+import FieldSelect from "../../../components/Fields/FieldSelect"
 
 const FormGroupCompanyRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
 	const [isOpen, setOpen] = useState(false);
-	const [selected, setSelected] = useState<any>();
+	const [isFormValid, setFormValid] = useState(false);
 	const [courses] = useState([
 		{ index: 15, name: 'Como treinar o seu dragão' },
 		{ index: 457, name: 'Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa' },
@@ -22,23 +25,8 @@ const FormGroupCompanyRegister: React.FC = () => {
 		{ index: 450, name: 'Como aaaa o seu kugb' },
 	])
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
-	const [user, setUser] = useState<ICompany>({
-		company_name: '',
-		company_address: {
-			cep: '',
-			street: '',
-			number: '',
-			district: '',
-		},
-		company_contact: '',
-		company_register: '',
-		company_telephone: '',
-		company_email: '',
-	});
-
-	const {
-		setError, removeError, getErrorMessageByFieldName, errors,
-	} = useErrors();
+	const [document, setDocument] = useState('');
+	const [workplace, setWorkplace] = useState<ICompany | undefined>();
 
 
 	const handleSelectedCourse = (index: number) => {
@@ -46,198 +34,181 @@ const FormGroupCompanyRegister: React.FC = () => {
 			? setSelectedCourses([...selectedCourses.filter((course: any) => index !== course)])
 			: setSelectedCourses([...selectedCourses, index])
 	}
-	const handleSetUser = (key: string, e: any) => {
-
-		if (key === 'user_telephone') {
-			setUser((prevState: any) => ({
-				...prevState,
-				[key]: formatPhone(e.target.value)
-			}));
-		} else {
-			setUser((prevState: any) => ({
-				...prevState,
-				[key]: e.target.value
-			}));
-		}
 
 
-		// TODO melhorar forma de validar erros e ajustar código
-		if (key === 'user_email' && !isEmailValid(e.target.value)) {
-			setError({ field: 'user_email', message: 'E-mail inválido' })
-		} else {
-			removeError(key)
-		}
-
-		if (!e.target.value) {
-			setError({ field: key, message: 'Campo obrigatório' })
-		} else {
-			removeError(key)
-		}
+	const initialValuesEmpty = {
+		company_name: undefined,
+		company_contact: undefined,
+		company_register: undefined,
+		company_telephone: undefined,
+		company_email: undefined,
+		company_cep: undefined,
+		company_street: undefined,
+		company_district: undefined,
+		company_address_number: undefined
 	}
 
-	const isFormValid = (
-		user.company_address.cep &&
-		user.company_address.district &&
-		user.company_address.number &&
-		user.company_address.street &&
-		user.company_contact &&
-		user.company_email &&
-		user.company_name &&
-		user.company_register &&
-		user.company_telephone &&
-		errors.length === 0
-	);
-
-	const onSubmit = (e: any) => {
-		e.preventDefault();
-		const data = {
-			"user_company_id": 4,
-			"user_email": user.user_email,
-			"user_name": user.user_name,
-			"user_register": user.user_register,
-			"user_telephone": user.user_telephone.replace(/\D/g, '')
-		}
-
-		console.log(data);
+	const handleSetWorkplace = async (values: ICompany) => {
+		console.log(values)
+		setStep(2)
+		setWorkplace({
+			company_name: values.company_name,
+			company_contact: values.company_contact,
+			company_register: values.company_register,
+			company_telephone: values.company_telephone,
+			company_email: values.company_email,
+			company_cep: values.company_cep,
+			company_street: values.company_street,
+			company_district: values.company_district,
+			company_state: values.company_state,
+			company_city: values.company_city,
+			company_address_number: values.company_address_number
+		})
+		// await workplaceValidation
+		// .isValid(values)
+		// .then(valid => {
+		// 	console.log(valid);
+		// 	setFormValid(valid);
+		// })
 	}
+
+	
+
 
 	const handle = (index: number) => {
 		const test = selectedCourses.some((el: number) => (index === el))
 		return test;
 	}
 
-
 	return (
-		<form
-			onSubmit={(e) => onSubmit(e)}
-			style={{ textAlign: 'right' }}
-		>
-			<ConfirmUserModal
+		<>
+			{/* <ConfirmUserModal
 				user={user}
 				selectedCourses={selectedCourses}
 				courses={courses}
 				isOpen={isOpen}
 				setOpen={setOpen}
-			/>
-
+			/> */}
+		
 			{
 				step === 1 &&
-				<>
+				<Formik
+				style={{ textAlign: 'right' }}
+				onSubmit={handleSetWorkplace}
+				initialValues={workplace || initialValuesEmpty}
+				validationSchema={workplaceValidation}
+				>
+				<Form>
 					<Box>
-						<p>Dados pessoais</p>
-						<Form>
-							<RegisterForm error={getErrorMessageByFieldName('company_name')}>
-								<label htmlFor="name">Nome da empresa</label>
-								<Input
-									name="name"
-									type="text"
-									placeholder="Digite o nome da empresa"
-									value={user?.company_name}
-									onChange={e => handleSetUser('company_name', e)}
-								/>
-							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('company_register')}>
-								<label htmlFor="document">CNPJ</label>
-								<Input
-									name="document"
-									type="text"
-									placeholder="Digite aqui o CNPJ"
-									value={user?.company_register}
-									onChange={e => handleSetUser('company_register', e)}
-								/>
-							</RegisterForm>
-						</Form>
+						<p>Dados da empresa</p>
+						<FormContainer>
+							<FieldInput 
+								name="company_name"
+								title="Nome da empresa"
+								placeholder="Digite o nome da empresa"
+							/>
+						<RegisterForm>
+							<label htmlFor="company_register">CNPJ</label>
+							<Field name="company_register">
+							 {
+                  ({ field }: any) => <MaskedInput
+                    {...field}
+                    type="text"
+										id="company_register"
+                    mask={cnpjMask}
+                    placeholder="Digite o CNPJ"
+                    className="text-input"
+                  />
+                }
+								</Field>
+								<ErrorMessage 
+								name="company_register"
+								component="span"
+							/>
+						</RegisterForm>
+						</FormContainer>
 					</Box>
 					<Box>
 						<p>Contato</p>
-						<Form>
-						<RegisterForm error={getErrorMessageByFieldName('company_contact')}>
-								<label htmlFor="contact_name">Nome do responsável</label>
-								<Input
-									name="contact_name"
-									type="text"
-									placeholder="Digite o nome do responsável"
-									value={user?.company_contact}
-									onChange={e => handleSetUser('company_contact', e)}
-								/>
-							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('company_email')}>
-								<label htmlFor="email">E-mail do responsável</label>
-								<Input
-									name="email"
-									type="email"
-									placeholder="Digite o e-mail do responsável"
-									value={user?.company_email}
-									onChange={e => handleSetUser('company_email', e)}
-								/>
-							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('company_telephone')}>
-								<label htmlFor="phone">Celular</label>
-								<Input
-									name="phone"
-									type="tel"
-									placeholder="Digite aqui o número"
-									value={user?.company_telephone}
-									onChange={e => handleSetUser('company_telephone', e)}
-									maxLength={15}
-								/>
-							</RegisterForm>
-						</Form>
+						<FormContainer>
+							<FieldInput 
+								name="company_contact"
+								title="Nome do responsável"
+								placeholder="Digite o nome do responsáve"
+							/>
+							<FieldInput 
+								name="company_email"
+								title="E-mail do responsável"
+								placeholder="Digite o e-mail do responsável"
+							/>
+							<FieldInput 
+								name="company_telephone"
+								title="Celular"
+								placeholder="Digite o número de celular"
+							/>
+						</FormContainer>
 					</Box>
 					<Box>
 						<p>Endereço</p>
-						<Form>
-						<RegisterForm error={getErrorMessageByFieldName('company_address.cep')}>
-								<label htmlFor="cep">CEP</label>
-								<Input
-									name="cep"
-									type="text"
-									placeholder="Digite o CEP"
-									value={user?.company_address.cep}
-									onChange={e => handleSetUser('company_address.cep', e)}
-								/>
-							</RegisterForm>
+						<FormContainer>
 							<BoxAddress>
-							<RegisterForm error={getErrorMessageByFieldName('company_address.street')}>
-								<label htmlFor="street">Logradouro</label>
-								<Input
-									name="street"
-									type="text"
-									placeholder="Digite o Logradouro"
-									value={user?.company_address.street}
-									onChange={e => handleSetUser('company_address.street', e)}
-								/>
-							</RegisterForm>
-							<RegisterForm error={getErrorMessageByFieldName('company_address.number')}>
-								<label htmlFor="number">Número</label>
-								<Input
-									name="number"
-									type="string"
-									placeholder="Número"
-									value={user?.company_address.number}
-									onChange={e => handleSetUser('company_address.number', e)}
-								/>
-							</RegisterForm>
+							<RegisterForm>
+							<label htmlFor="company_cep">CEP</label>
+							<Field name="company_cep">
+							 {
+                  ({ field }: any) => <MaskedInput
+                    {...field}
+                    type="text"
+										id="company_cep"
+                    mask={cepMask}
+                    placeholder="Digite o CEP"
+                    className="text-input"
+                  />
+                }
+								</Field>
+								<ErrorMessage 
+								name="company_cep"
+								component="span"
+							/>
+						</RegisterForm>
+							<FieldSelect
+								name="company_state" 
+								title="UF"
+								placeholder="UF"
+							/>
 							</BoxAddress>
-							<RegisterForm error={getErrorMessageByFieldName('company_address.district')}>
-								<label htmlFor="district">Bairro</label>
-								<Input
-									name="district"
-									type="text"
-									placeholder="Digite o bairro"
-									value={user?.company_address.district}
-									onChange={e => handleSetUser('company_address.district', e)}
-								/>
-							</RegisterForm>
-						</Form>
+							<BoxAddress>
+							<FieldInput 
+								name="company_street"
+								title="Logradouro"
+								placeholder="Digite o Logradouro"
+							/>
+							<FieldInput 
+								name="company_address_number"
+								title="Número"
+								placeholder="Número"
+							/>
+							</BoxAddress>
+							<FieldInput 
+								name="company_city"
+								title="Cidade"
+								placeholder="Digite a cidade"
+							/>
+							<FieldInput 
+								name="company_district"
+								title="Bairro"
+								placeholder="Digite o bairro"
+							/>
+							</FormContainer>
 					</Box>
 					<Button
-						disabled={!isFormValid}
-						onClick={() => setStep(2)}
+						type="submit"
+						disabled={false}
 					>
 						Continuar
 					</Button>
-				</>
+				</Form>
+				</Formik>
 			}
 
 			{
@@ -277,7 +248,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 					</Button>
 				</>
 			}
-		</form>
+		</>
 	)
 }
 

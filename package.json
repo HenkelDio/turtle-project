@@ -11,13 +11,17 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-text-mask": "^5.4.11",
     "axios": "^1.4.0",
+    "formik": "^2.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-query": "^3.39.3",
     "react-router-dom": "5.2.0",
+    "react-text-mask": "^5.5.0",
     "styled-components": "^6.0.4",
+    "yup": "^1.2.0",
     "zustand": "^4.3.9"
   },
   "devDependencies": {
