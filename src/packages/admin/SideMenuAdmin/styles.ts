@@ -29,7 +29,7 @@ export const CloseSideMenu = styled.div<IStyleFold>`
 
 export const Container = styled.div<IStyleFold>`
 	position: relative;
-	width: ${({ isfold }: IStyleFold) => isfold === 'true' ? '70px' : '220px'};
+	width: ${({ isfold }: IStyleFold) => isfold === 'true' ? '90px' : '220px'};
 	height: 100vh;
 	background-color: #fff;
 	padding: 20px;
@@ -47,8 +47,12 @@ export const Container = styled.div<IStyleFold>`
 	.containerBox{
 		display: flex;
 		flex-direction: column;
-		gap: 15px;
+		gap: 35px;
 		width: 100%;
+
+		${({ isfold }) => isfold === 'true' && css`
+		align-items: center;
+	`}
 
 		a {
 			color: black;
@@ -98,7 +102,7 @@ export const Box = styled.div<IStyleFoldAndPage>`
 	display: flex;
 	gap: 15px;
 	align-items: center;
-	padding: 10px 8px;
+	padding: 10px 10px;
 	border-radius: 7px;
 	font-family: 'Work Sans', sans-serif;
 	font-size: 1rem;
@@ -108,12 +112,14 @@ export const Box = styled.div<IStyleFoldAndPage>`
 	}
 
 	div {
+		font-size: 1.8rem;
 		height: 100%;
 		display: flex;
 		align-items: center;
 	}
 
 	p {
+		
 		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
 	}
 	cursor: pointer;

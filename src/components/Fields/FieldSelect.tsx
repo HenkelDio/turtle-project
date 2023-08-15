@@ -54,7 +54,7 @@ const FieldSelect: React.FC<IProps> = ({ name, placeholder, title }: IProps) => 
 			}
 
 			<label htmlFor={name}>{title}</label>
-			<Field name={name} placeholder={placeholder} value={selectedItem} maxLength={2} autoComplete="off" onClick={handleOpenDialog}/>
+			<Field name={name} placeholder={placeholder} value={selectedItem} maxLength={2} autoComplete="off" onClick={handleOpenDialog} onFocus={handleOpenDialog}/>
 			<ErrorMessage 
 				name={name}
 				component="span"

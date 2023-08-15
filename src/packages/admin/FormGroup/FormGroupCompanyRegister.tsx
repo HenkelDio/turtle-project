@@ -1,6 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../../../components/Button"
-import Input from "../../../components/Input"
 import RegisterForm from "../../../components/RegisterForm"
 import { Box, FormContainer, Chip, ContainerChips, BackPage, BoxAddress } from "./styles"
 import { IoIosArrowBack } from "react-icons/io"
@@ -9,7 +8,7 @@ import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { workplaceValidation } from "../../../validations"
 import MaskedInput from "react-text-mask"
-import { cepMask, cnpjMask } from "../../../utils/masks"
+import { cepMask, cnpjMask, phoneMask } from "../../../utils/masks"
 import FieldInput from "../../../components/Fields/FieldInput"
 import FieldSelect from "../../../components/Fields/FieldSelect"
 
@@ -27,7 +26,6 @@ const FormGroupCompanyRegister: React.FC = () => {
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
 	const [document, setDocument] = useState('');
 	const [workplace, setWorkplace] = useState<ICompany | undefined>();
-
 
 	const handleSelectedCourse = (index: number) => {
 		selectedCourses.some((el: any) => (index === el))
@@ -61,7 +59,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 			company_street: values.company_street,
 			company_district: values.company_district,
 			company_state: values.company_state,
-			company_city: values.company_city,
+			company_city: values.company_city,	
 			company_address_number: values.company_address_number
 		})
 		// await workplaceValidation
@@ -73,6 +71,25 @@ const FormGroupCompanyRegister: React.FC = () => {
 	}
 
 	
+	const handleGetCep = async (e: any) => {
+		console.log(e.target.value);
+		if(e.target.value.length === 9) {
+			await fetch(`https://viacep.com.br/ws/${e.target.value}/json/`)
+			.then(async (res) => {
+				let data = await res.json();
+				setWorkplace((prevState: any) => (
+					{
+							...prevState,
+							company_street: data.logradouro,
+							company_city: data.localidade,
+							company_district: data.bairro,
+							company_state: data.uf,
+							company_cep: data.cep,
+					}
+				))
+			}) 
+		}
+	}
 
 
 	const handle = (index: number) => {
@@ -81,7 +98,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 	}
 
 	return (
-		<>
+		<div style={{ textAlign: "right"}}>
 			{/* <ConfirmUserModal
 				user={user}
 				selectedCourses={selectedCourses}
@@ -97,8 +114,9 @@ const FormGroupCompanyRegister: React.FC = () => {
 				onSubmit={handleSetWorkplace}
 				initialValues={workplace || initialValuesEmpty}
 				validationSchema={workplaceValidation}
+				enableReinitialize={true}
 				>
-				<Form>
+					<Form>
 					<Box>
 						<p>Dados da empresa</p>
 						<FormContainer>
@@ -134,25 +152,39 @@ const FormGroupCompanyRegister: React.FC = () => {
 							<FieldInput 
 								name="company_contact"
 								title="Nome do responsável"
-								placeholder="Digite o nome do responsáve"
+								placeholder="Digite o nome do responsável"
 							/>
 							<FieldInput 
 								name="company_email"
 								title="E-mail do responsável"
 								placeholder="Digite o e-mail do responsável"
 							/>
-							<FieldInput 
+							<RegisterForm>
+							<label htmlFor="company_telephone">Celular</label>
+							<Field name="company_telephone">
+							 {
+                  ({ field }: any) => <MaskedInput
+                    {...field}
+                    type="text"
+										id="company_telephone"
+                    mask={phoneMask}
+                    placeholder="Digite o número de celular"
+                    className="text-input"
+                  />
+                }
+								</Field>
+								<ErrorMessage 
 								name="company_telephone"
-								title="Celular"
-								placeholder="Digite o número de celular"
+								component="span"
 							/>
+						</RegisterForm>
 						</FormContainer>
 					</Box>
 					<Box>
 						<p>Endereço</p>
 						<FormContainer>
 							<BoxAddress>
-							<RegisterForm>
+							<RegisterForm>	
 							<label htmlFor="company_cep">CEP</label>
 							<Field name="company_cep">
 							 {
@@ -163,6 +195,7 @@ const FormGroupCompanyRegister: React.FC = () => {
                     mask={cepMask}
                     placeholder="Digite o CEP"
                     className="text-input"
+										onChange={e => handleGetCep(e)}
                   />
                 }
 								</Field>
@@ -207,7 +240,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 					>
 						Continuar
 					</Button>
-				</Form>
+				</Form>				
 				</Formik>
 			}
 
@@ -248,7 +281,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 					</Button>
 				</>
 			}
-		</>
+		</div>
 	)
 }
 
