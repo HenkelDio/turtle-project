@@ -9,7 +9,7 @@ import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
 import { ErrorMessage, Field, Formik, Form } from "formik"
 import FieldInput from "../../../components/Fields/FieldInput"
 import MaskedInput from "react-text-mask"
-import { phoneMask } from "../../../utils/masks"
+import { cpfMask, phoneMask } from "../../../utils/masks"
 import { studentValidation } from "../../../validations"
 
 const FormGroupStudentRegister: React.FC = () => {
@@ -83,7 +83,9 @@ const FormGroupStudentRegister: React.FC = () => {
 			<ConfirmUserModal
 				user={student}
 				selectedCourses={selectedCourses}
+				selectedWorkplace={selectedWorkplace}
 				courses={courses}
+				workplaces={workplaces}
 				isOpen={isOpen}
 				setOpen={setOpen}
 			/>
@@ -112,7 +114,7 @@ const FormGroupStudentRegister: React.FC = () => {
                     {...field}
                     type="text"
 										id="student_cpf"
-                    mask={phoneMask}
+                    mask={cpfMask}
                     placeholder="Digite o CPF"
                     className="text-input"
                   />

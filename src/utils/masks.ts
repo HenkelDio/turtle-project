@@ -52,4 +52,21 @@ const phoneMask = [
 	/\d/,
 ]
 
-export { cnpjMask, cepMask, phoneMask };
+const cpfMask = [
+	/[0-9]/,
+	/\d/,
+	/\d/,
+	".",
+	/\d/,
+	/\d/,
+	/\d/,
+	".",
+	/\d/,
+	/\d/,
+	/\d/,
+	"-",
+	/\d/,
+	/\d/
+]
+
+export { cnpjMask, cepMask, phoneMask, cpfMask };

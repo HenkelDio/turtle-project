@@ -12,15 +12,25 @@ import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
 
 interface IProps {
-	user: IUserStudent,
+	user: IUserStudent | undefined,
 	courses: any,
 	selectedCourses: [],
 	isOpen: boolean,
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	setOpen: Function,
+	selectedWorkplace: [],
+	workplaces: any,
 }
 
-const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCourses, setOpen }: IProps) => {
+const ConfirmUserModal: React.FC<IProps> = ({ 
+	user, 
+	courses, 
+	isOpen, 
+	selectedCourses, 
+	setOpen,
+	selectedWorkplace,
+	workplaces
+}: IProps) => {
 
 	const [isDone, setDone] = useState(false);
 
@@ -45,10 +55,10 @@ const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCou
 		setDone(true)
 		const data = {
 			"student_company_id": 4,
-			"student_name": user.student_name,
-			"student_cpf": user.student_cpf.replace(/\D/g, ''),
-			"student_email": user.student_email,
-			"student_cellphone": user.student_cellphone.replace(/\D/g, '')
+			"student_name": user?.student_name,
+			"student_cpf": user?.student_cpf.replace(/\D/g, ''),
+			"student_email": user?.student_email,
+			"student_cellphone": user?.student_cellphone.replace(/\D/g, '')
 		}
 		mutate(data)
 	}
@@ -63,10 +73,10 @@ const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCou
 				<div className='confirm-data' style={{ right: isDone ? '500px' : '0px', animation: isDone ? '1s slide-out' : '', position: isDone ? 'absolute' : 'relative', opacity: isDone ? '0' : '1' }}>
 					<h1>Confirme os dados do usuário</h1>
 					<ContainerField>
-						<Field title='Nome' content={user.student_email} />
-						<Field title='CPF' content={user.student_cpf} />
-						<Field title='E-mail' content={user.student_email} />
-						<Field title='Celular' content={user.student_cellphone} />
+						<Field title='Nome' content={user?.student_email} />
+						<Field title='CPF' content={user?.student_cpf} />
+						<Field title='E-mail' content={user?.student_email} />
+						<Field title='Celular' content={user?.student_cellphone} />
 						<b>Cursos matriculados</b>
 						<div className='courses'>
 							{
@@ -74,6 +84,18 @@ const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCou
 									return (
 										<p>{
 											courses.filter((el: any) => el.index === course)[0].name
+										}</p>
+									)
+								})
+							}
+						</div>
+						<b>Matriculado pela empresa</b>
+						<div className='workplace'>
+							{
+								selectedWorkplace.map((workplace) => {
+									return (
+										<p>{
+											workplaces.filter((el: any) => el.index === workplace)[0].name
 										}</p>
 									)
 								})
@@ -100,7 +122,7 @@ const ConfirmUserModal: React.FC<IProps> = ({ user, courses, isOpen, selectedCou
 
 					<h1>Usuário adicionado com sucesso!</h1>
 
-					<p>E-mail para login: {user.student_email}</p>
+					<p>E-mail para login: {user?.student_email}</p>
 
 					<Button onClick={() => history.push('/admin/users')}>
 						Fechar
