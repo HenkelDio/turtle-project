@@ -72,11 +72,11 @@ const FormGroupCompanyRegister: React.FC = () => {
 
 	
 	const handleGetCep = async (e: any) => {
-		console.log(e.target.value);
+		console.log(e.target.value.length)
 		if(e.target.value.length === 9) {
 			await fetch(`https://viacep.com.br/ws/${e.target.value}/json/`)
 			.then(async (res) => {
-				let data = await res.json();
+				const data = await res.json();
 				setWorkplace((prevState: any) => (
 					{
 							...prevState,
@@ -87,7 +87,22 @@ const FormGroupCompanyRegister: React.FC = () => {
 							company_cep: data.cep,
 					}
 				))
-			}) 
+			}).catch(err => {
+				console.log(err)
+				setWorkplace((prevState: any) => (
+					{
+							...prevState,
+							company_cep: e.target.value,
+					}
+				))
+			}).finally(() => {
+				setWorkplace((prevState: any) => (
+					{
+							...prevState,
+							company_cep: e.target.value,
+					}
+				))
+			})
 		}
 	}
 
@@ -128,7 +143,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 						<RegisterForm>
 							<label htmlFor="company_register">CNPJ</label>
 							<Field name="company_register">
-							 {
+								{
                   ({ field }: any) => <MaskedInput
                     {...field}
                     type="text"
@@ -162,7 +177,7 @@ const FormGroupCompanyRegister: React.FC = () => {
 							<RegisterForm>
 							<label htmlFor="company_telephone">Celular</label>
 							<Field name="company_telephone">
-							 {
+								{
                   ({ field }: any) => <MaskedInput
                     {...field}
                     type="text"

@@ -54,9 +54,10 @@ export const Container = styled.div`
 `
 
 export const OptionsContainer = styled.div`
-	width: 50px;
+	width: 10px;
 	height: 200px;
 	padding: 10px;
+	max-width: 205px;
 
 	background-color: #fff;
 
@@ -75,67 +76,42 @@ export const OptionsContainer = styled.div`
 
 	input {
 		margin-bottom: 20px;
+		height: 50px;
 	}
 
-	.radio-section {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 10vh;
-}
+	.stateContainer{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 7vh;
+			width: 100%;
+			max-width: 100%;
+			min-width: 100%;
+			position: relative;
 
-.radio-item [type="radio"] {
-	display: none;
-}
-.radio-item + .radio-item {
-	margin-top: 15px;
-}
-.radio-item label {
-	display: block;
-	padding: 5px 60px;
-	background: #ffff;
-	border: 2px solid rgba(255, 255, 255, 0.1);
-	border-radius: 8px;
-	cursor: pointer;
-	font-size: 18px;
-	font-weight: 400;
-	min-width: 100%;
-	white-space: nowrap;
-	position: relative;
-	transition: 0.4s ease-in-out 0s;
-}
-.radio-item label:after,
-.radio-item label:before {
-	content: "";
-	position: absolute;
-	border-radius: 50%;
-}
-.radio-item label:after {
-	height: 12px;
-	width: 12px;
-	border: 2px solid ${({ theme }) => theme.colors.green.main};;
-	left: 19px;
-	top: calc(50% - 12px);
-}
-.radio-item label:before {
-	background: ${({ theme }) => theme.colors.green.main};
-	height: 15px;
-	width: 14px;
-	left: 21px;
-	top: calc(50%-5px);
-	transform: scale(5);
-	opacity: 0;
-	visibility: hidden;
-	transition: 0.4s ease-in-out 0s;
-}
-.radio-item [type="radio"]:checked ~ label {
-	border-color: ${({ theme }) => theme.colors.green.main};;
-}
-.radio-item [type="radio"]:checked ~ label::before {
-	opacity: 1;
-	visibility: visible;
-	transform: scale(1);
-}
+
+		.radio-item [type="radio"] {
+			display: none;
+		}
+		.radio-item + .radio-item {
+			margin-top: 15px;
+		}
+		.radio-item label {
+			display: block;
+			padding: 5px 80px;
+			background: #ccc;
+			border: 2px solid rgba(255, 255, 255, 0.1);
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 18px;
+			font-weight: 400;
+			width: 100%;
+			max-width: 100%;
+			position: relative;
+			transition: 0.4s ease-in-out 0s;
+		}
+		
+	}
 
 
 &::-webkit-scrollbar {

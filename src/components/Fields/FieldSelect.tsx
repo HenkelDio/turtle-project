@@ -32,21 +32,23 @@ const FieldSelect: React.FC<IProps> = ({ name, placeholder, title }: IProps) => 
 		<RegisterForm>
 
 			{
-				isOpen && <OptionsContainer>
+				isOpen && 
+				<OptionsContainer>
 				<Input placeholder="Pesquise a UF" onChange={e => setSearchItem(e.target.value)}/>
 				{
 					filteredStates.map((state) => {
 						return(
-						<>
+						<div className="stateContainer">
 							<div className="radio-item">
 								<input 
 								name="radio" 
 								id={state.uf} 
 								value={state.uf} 
 								type="radio" 
-								onClick={e => handleSelectedItem(e)} /><label htmlFor={state.uf}>{state.uf}</label>
+								onClick={e => handleSelectedItem(e)} />
+								<label htmlFor={state.uf}>{state.uf}</label>
 							</div>
-						</>
+						</div>
 						)
 					})
 				}

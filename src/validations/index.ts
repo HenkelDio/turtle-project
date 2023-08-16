@@ -18,6 +18,7 @@ export const workplaceValidation = yup.object().shape({
 	.required('O "E-mail" é obrigatório'),
 
 	company_telephone: yup.string()
+	.min(18, 'O "número de contato está muito curto')
 	.required('O "número de contato" é obrigatório'),
 
 	company_cep: yup.string()
