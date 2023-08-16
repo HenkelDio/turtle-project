@@ -2,7 +2,7 @@ import { FieldContainer } from "./styles"
 
 interface IProps {
 	title: string,
-	content: string,
+	content?: string,
 }
 
 const Field: React.FC<IProps> = ({ title, content }: IProps) => {

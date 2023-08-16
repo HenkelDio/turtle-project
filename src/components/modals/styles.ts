@@ -29,7 +29,7 @@ export const Container = styled.div`
 	overflow: hidden;
 
 	.courses{
-		height: 80px;
+		min-height: 40px;
 		overflow-y: auto;
 
 		&::-webkit-scrollbar {
@@ -51,6 +51,10 @@ export const Container = styled.div`
 		&::-webkit-scrollbar-thumb:hover {
 			background: #B6B6B6;
 	}
+	
+		.workplace {
+
+		}
 	}
 
 	.confirm-data {
@@ -102,6 +106,30 @@ export const ContainerField = styled.div`
 	gap: 15px;
 
 	margin-top: 15px;
+
+	height: 350px;
+
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+ 			 width: 5px;
+		}
+
+		/* Track */
+		&::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		/* Handle */
+		&::-webkit-scrollbar-thumb {
+			background: #D9D9D9;
+			border-radius: 4px;
+		}
+
+		/* Handle on hover */
+		&::-webkit-scrollbar-thumb:hover {
+			background: #B6B6B6;
+	}
 `;
 
 export const Conclusion = styled.div`
