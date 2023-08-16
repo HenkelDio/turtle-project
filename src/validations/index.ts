@@ -1,5 +1,21 @@
 import * as yup from 'yup';
 
+export const studentValidation = yup.object().shape({
+	student_name: yup.string()
+	.required('O "nome do estudante" é obrigatório'),
+
+	student_email: yup.string()
+	.required('O "e-mail" é obrigatório')
+	.email('Digite um e-mail válido'),
+
+	student_cpf: yup.string()
+	.required('O "CPF" é obrigatório'),
+
+	student_cellphone: yup.string()
+	.required('O "número" é obrigatório')
+
+})
+
 export const workplaceValidation = yup.object().shape({
 	company_name: yup.string()
 	.min(5, 'O "nome da empresa" é muito curto')

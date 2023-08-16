@@ -15,7 +15,6 @@ import FieldSelect from "../../../components/Fields/FieldSelect"
 const FormGroupCompanyRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
 	const [isOpen, setOpen] = useState(false);
-	const [isFormValid, setFormValid] = useState(false);
 	const [courses] = useState([
 		{ index: 15, name: 'Como treinar o seu dragão' },
 		{ index: 457, name: 'Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa' },
@@ -24,7 +23,6 @@ const FormGroupCompanyRegister: React.FC = () => {
 		{ index: 450, name: 'Como aaaa o seu kugb' },
 	])
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
-	const [document, setDocument] = useState('');
 	const [workplace, setWorkplace] = useState<ICompany | undefined>();
 
 	const handleSelectedCourse = (index: number) => {
