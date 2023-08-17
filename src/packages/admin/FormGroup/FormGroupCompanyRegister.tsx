@@ -112,13 +112,13 @@ const FormGroupCompanyRegister: React.FC = () => {
 
 	return (
 		<div style={{ textAlign: "right"}}>
-			{/* <ConfirmUserModal
-				user={user}
+			<ConfirmUserModal
+				company={workplace}
 				selectedCourses={selectedCourses}
 				courses={courses}
 				isOpen={isOpen}
 				setOpen={setOpen}
-			/> */}
+			/>
 		
 			{
 				step === 1 &&

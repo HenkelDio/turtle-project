@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { BackPage } from "../../../packages/admin/FormGroup/styles";
 import FormGroupCompanyRegister from "../../../packages/admin/FormGroup/FormGroupCompanyRegister";
+import FormGroupAdminRegister from "../../../packages/admin/FormGroup/FormGroupAdminRegister";
 
 const userRegister: React.FC = () => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { registerType } = useTurtleStore((state) => state);
 
 	return (
@@ -27,7 +29,11 @@ const userRegister: React.FC = () => {
 			}
 
 			{
-				registerType === 'company' && <FormGroupCompanyRegister	 />
+				registerType === 'company' && <FormGroupCompanyRegister	/>
+			}
+
+			{
+				registerType === 'admin' && <FormGroupAdminRegister />
 			}
 
 		</Container>

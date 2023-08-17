@@ -27,6 +27,11 @@ export interface IUserStudent {
 	student_email: string,
 }
 
+export interface IUserAdmin {
+	admin_name: string,
+	admin_email: string,
+}
+
 export interface ICompany {
 	company_name: string,
 	company_contact: string,

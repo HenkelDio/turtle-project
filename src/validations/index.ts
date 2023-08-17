@@ -16,14 +16,21 @@ export const studentValidation = yup.object().shape({
 
 })
 
+export const adminValidation = yup.object().shape({
+	admin_name: yup.string()
+	.required('O "nome do administrador" é obrigatório'),
+
+	admin_email: yup.string()
+	.email('Digite um e-mail valído')
+	.required('O "e-mail" é obrigatório')
+})
+
 export const workplaceValidation = yup.object().shape({
 	company_name: yup.string()
 	.min(5, 'O "nome da empresa" é muito curto')
 	.required('O campo "nome da empresa" é obrigatório'),
 
 	company_register: yup.string()
-	.min(18, 'O "CNPJ" está muito curto')
-	.max(18)
 	.required('O "CNPJ" é obrigatório'),
 
 	company_contact: yup.string()
@@ -34,7 +41,6 @@ export const workplaceValidation = yup.object().shape({
 	.required('O "E-mail" é obrigatório'),
 
 	company_telephone: yup.string()
-	.min(18, 'O "número de contato está muito curto')
 	.required('O "número de contato" é obrigatório'),
 
 	company_cep: yup.string()
