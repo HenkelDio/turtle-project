@@ -9,9 +9,10 @@ interface IProps {
 	name: string,
 	placeholder: string,
 	title: string,
+	value?: string,	
 }
 
-const FieldSelect: React.FC<IProps> = ({ name, placeholder, title }: IProps) => {
+const FieldSelect: React.FC<IProps> = ({ name, placeholder, title, value }: IProps) => {
 	const [searchItem, setSearchItem] = useState<string>('');
 	const [selectedItem, setSelectedItem] = useState();
 	const [isOpen, setOpen] = useState(false);
@@ -55,8 +56,19 @@ const FieldSelect: React.FC<IProps> = ({ name, placeholder, title }: IProps) => 
 			</OptionsContainer>
 			}
 
-			<label htmlFor={name}>{title}</label>
-			<Field name={name} placeholder={placeholder} value={selectedItem} maxLength={2} autoComplete="off" onClick={handleOpenDialog} onFocus={handleOpenDialog}/>
+			{
+				selectedItem ?
+				<>
+				<label htmlFor={name}>{title}</label>
+				<Field name={name} placeholder={placeholder} maxLength={2} value={selectedItem} autoComplete="off" onClick={handleOpenDialog} onFocus={handleOpenDialog}/>
+				</>
+				: 	
+				<>
+				<label htmlFor={name}>{title}</label>
+				<Field name={name} placeholder={placeholder} maxLength={2} autoComplete="off" onClick={handleOpenDialog} onFocus={handleOpenDialog}/>
+				</>
+			}
+			
 			<ErrorMessage 
 				name={name}
 				component="span"

@@ -56,26 +56,6 @@ export const Container = styled.div`
 
 		}
 	}
-
-	.confirm-data {
-		position: relative;
-		right: 500px;
-
-		@keyframes slide-out {
-		0% {
-			right: 0px;
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.5;
-		}
-		to {
-			right: 500px;
-			position: absolute;
-			opacity: 0;
-		}
-}
-	}
 `
 
 export const Footer = styled.footer`
@@ -162,10 +142,5 @@ export const Conclusion = styled.div`
 		color: #fff;
 		opacity: 0.8;
 	}
-
-	@keyframes slide-in {
-  from {right: -500px;}
-  to {right: 0px;}
-}
 
 `;

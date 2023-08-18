@@ -15,6 +15,11 @@ export default {
 		},
 		red: {
 			main: '#FE2828',
+		},
+		alert: {
+			success: '#5af273',
+			error: '#f54545',
+			errorUnderline: '#a90909',
 		}
 	}
 }

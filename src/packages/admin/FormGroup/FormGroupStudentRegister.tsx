@@ -5,12 +5,12 @@ import RegisterForm from "../../../components/RegisterForm"
 import { Box, FormContainer, Chip, ContainerChips, BackPage, ContainerCompaniesChip } from "./styles"
 import { IoIosArrowBack } from "react-icons/io"
 import { IUserStudent } from "../../../types"
-import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
 import { ErrorMessage, Field, Formik, Form } from "formik"
 import FieldInput from "../../../components/Fields/FieldInput"
 import MaskedInput from "react-text-mask"
 import { cpfMask, phoneMask } from "../../../utils/masks"
 import { studentValidation } from "../../../validations"
+import ConfirmStudentModal from "../../../components/modals/ConfirmUserModal/ConfirmStudentModal"
 
 const FormGroupStudentRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
@@ -45,7 +45,7 @@ const FormGroupStudentRegister: React.FC = () => {
 	}
 
 
-	const handleSetStudent = async (values: IUserStudent) => {
+	const handleSetStudent = (values: IUserStudent) => {
 		console.log(values)
 		setStep(2)
 		setStudent({
@@ -80,15 +80,18 @@ const FormGroupStudentRegister: React.FC = () => {
 		<div
 			style={{ textAlign: 'right' }}
 		>
-			<ConfirmUserModal
-				user={student}
-				selectedCourses={selectedCourses}
-				selectedWorkplace={selectedWorkplace}
-				courses={courses}
-				workplaces={workplaces}
-				isOpen={isOpen}
-				setOpen={setOpen}
-			/>
+			{
+				student &&
+				<ConfirmStudentModal
+					user={student}
+					selectedCourses={selectedCourses}
+					selectedWorkplace={selectedWorkplace}
+					courses={courses}
+					workplaces={workplaces}
+					isOpen={isOpen}
+					setOpen={setOpen}
+				/>
+			}
 
 			{
 				step === 1 &&
@@ -109,7 +112,7 @@ const FormGroupStudentRegister: React.FC = () => {
 							<RegisterForm>
 							<label htmlFor="student_cpf">CPF</label>
 							<Field name="student_cpf">
-							 {
+								{
                   ({ field }: any) => <MaskedInput
                     {...field}
                     type="text"
@@ -138,7 +141,7 @@ const FormGroupStudentRegister: React.FC = () => {
 							<RegisterForm>
 							<label htmlFor="student_cellphone">Celular</label>
 							<Field name="student_cellphone">
-							 {
+								{
                   ({ field }: any) => <MaskedInput
                     {...field}
                     type="text"

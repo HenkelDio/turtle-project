@@ -30,3 +30,12 @@ export const listStudentes = async () => {
     return { data: null, err };
   }
 }
+
+export const addCompanyUser = async (payload: object) => {
+  try {
+    const { data } = await axios.post(`http://localhost:3000/createCompany`, payload);
+    return { data: data, err: null };
+  } catch (err) {
+    return { data: null, err };
+  }
+}

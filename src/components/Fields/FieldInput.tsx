@@ -10,7 +10,7 @@ interface IProps {
 	value?: string,	
 }
 
-const FieldInput: React.FC<IProps> = ({ name, placeholder, title, maxLength, value }: IProps) => {
+const FieldInput: React.FC<IProps> = ({ name, placeholder, title, maxLength }: IProps) => {
 	return(
 		<RegisterForm>
 			<label htmlFor={name}>{title}</label>

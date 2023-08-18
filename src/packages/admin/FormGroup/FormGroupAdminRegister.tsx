@@ -2,10 +2,10 @@ import { useState } from "react"
 import Button from "../../../components/Button"
 import { Box, FormContainer } from "./styles"
 import { IUserAdmin } from "../../../types"
-import ConfirmUserModal from "../../../components/modals/ConfirmUserModal"
 import { Formik, Form } from "formik"
 import FieldInput from "../../../components/Fields/FieldInput"
 import { adminValidation } from "../../../validations"
+import ConfirmAdminModal from "../../../components/modals/ConfirmUserModal/ConfirmAdminModal"
 
 const FormGroupAdminRegister: React.FC = () => {
 	const [isOpen, setOpen] = useState(false);
@@ -30,11 +30,15 @@ const FormGroupAdminRegister: React.FC = () => {
 		<div
 			style={{ textAlign: 'right' }}
 		>
-			<ConfirmUserModal
-				admin={admin}
-				isOpen={isOpen}
-				setOpen={setOpen}
-			/>
+			
+				{
+					admin &&
+					<ConfirmAdminModal
+						admin={admin}
+						isOpen={isOpen}
+						setOpen={setOpen}
+					/>
+				}
 
 				<Formik
 					onSubmit={handleSetAdmin}
