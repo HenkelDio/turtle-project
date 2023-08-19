@@ -112,35 +112,14 @@ export const ContainerField = styled.div`
 	}
 `;
 
-export const Conclusion = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+export const LoadingContainer = styled.div`
 	width: 100%;
 	height: 100%;
-	padding: 50px;
-	background-color: ${({ theme }) => theme.colors.green.main};
-	border-radius: 8px;
-	transition: 1s;
 
-	position: relative;
-	right: -500px;
+	position: absolute;
 
-	span {
-		font-size: 8rem;
-		color: ${({ theme }) => theme.colors.green.lighter};
-	}
+	background-color: rgba(0, 0, 0, 0.3);
 
-	h1 {
-		color: #fff;
-	}
-
-	p {
-		margin: 40px 0;
-		text-align: center;
-		color: #fff;
-		opacity: 0.8;
-	}
-
+	left: 0;
+	top: 0;
 `;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import ReactDOM from 'react-dom';
-import { Container, Footer, Overlay, ContainerField } from '../styles';
+import { Container, Footer, Overlay, ContainerField, LoadingContainer } from '../styles';
 import Field from '../../ProfileField';
 import Button from '../../Button';
 import {IUserAdmin } from '../../../types';
@@ -10,6 +10,7 @@ import { addStudentUser } from '../../../services';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
 import Alert from '../../Alert';
+import delay from '../../../utils/delay';
 
 interface IProps {
 	admin: IUserAdmin,
@@ -24,17 +25,41 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 	setOpen,
 }: IProps) => {
 
+	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState(false);
+	const [openDialog, setOpenDialog] = useState(false);
+	const [label, setLabel] = useState('');
+
 	const queryClient = useQueryClient();
 
 	const history = useHistory();
 
 	const { mutate, isLoading } = useMutation(['user'], addStudentUser, {
-		onSuccess: data => {
-			if (data && data.data) {
-				console.log(data.data);
-			} else {
-				console.log(data.err)
+		onSuccess: async ({ data, err }) => {
+			await delay();
+
+			if(!err) {
+				if (data && data.data) {
+					console.log(data.data);
+					setSuccess(true);
+					setError(false);
+					setLabel('Usuário adicionado com sucesso!')
+					setOpenDialog(true);
+					await delay(5000);
+					setOpenDialog(false);
+					history.push('/admin/users');
+				}
 			}
+
+			if(err) {
+				setError(true);
+				setSuccess(false);
+				setOpenDialog(true);
+				setLabel('Não foi possível adicionar o usuário!')
+				await delay(5000);
+				setOpenDialog(false);
+			}
+	
 		},
 		onSettled: async () => {
 			await queryClient.invalidateQueries('create')
@@ -55,7 +80,15 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 
 	return ReactDOM.createPortal(
 		<Overlay>
-			<Container >
+			<Container>
+
+					{
+						isLoading && 
+						<LoadingContainer>
+							<Loader />
+						</LoadingContainer>
+					}
+
 					<h1>Confirme os dados do usuário</h1>
 					<ContainerField>
 						<Field title='Nome' content={admin.admin_name} />
@@ -65,16 +98,22 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 						<button type="button" className="cancel-button" onClick={() => setOpen(false)}>
 							Cancelar
 						</button>
-						<Button type="button" onClick={() => handleCreateUser()}>
-							Adicionar
+			
+						<Button 
+						type="button" 
+						onClick={() => handleCreateUser()}
+						disabled={isLoading}
+						>
+								Adicionar
 						</Button>
+						
 					</Footer>
 			</Container>
 			<Alert 
-				success={true}
-				error={false}
-				isOpen={true}
-				label="Usuário criado com sucesso!"
+				success={success}
+				error={error}
+				isOpen={openDialog}
+				label={label}
 			/>
 		</Overlay>,
 		document.getElementById('modal-user-confirmation')!,

@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import ReactDOM from 'react-dom';
-import { Container, Footer, Overlay, ContainerField, Conclusion } from '../styles';
+import { Container, Footer, Overlay, ContainerField, LoadingContainer } from '../styles';
 import Field from '../../ProfileField';
 import Button from '../../Button';
 import { ICompany } from '../../../types';
-import { MdOutlineVerified } from 'react-icons/md';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { addCompanyUser } from '../../../services';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
+import Alert from '../../Alert';
+import delay from '../../../utils/delay';
 
 interface IProps {
 	user: ICompany,
@@ -28,18 +29,39 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 	setOpen,
 }: IProps) => {
 
-	const [isDone, setDone] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState(false);
+	const [openDialog, setOpenDialog] = useState(false);
+	const [label, setLabel] = useState('');
 
 	const queryClient = useQueryClient();
 
 	const history = useHistory();
 
 	const { mutate, isLoading } = useMutation(['company'], addCompanyUser, {
-		onSuccess: data => {
-			if (data && data.data) {
-				console.log(data.data);
-			} else {
-				console.log(data.err)
+		onSuccess: async ({data, err}) => {
+			await delay();
+
+			if(!err) {
+				if (data && data.data) {
+					console.log(data.data);
+					setSuccess(true);
+					setError(false);
+					setLabel('Usuário adicionado com sucesso!')
+					setOpenDialog(true);
+					await delay(5000);
+					setOpenDialog(false);
+					history.push('/admin/users');
+				}
+			}
+
+			if(err) {
+				setError(true);
+				setSuccess(false);
+				setOpenDialog(true);
+				setLabel('Não foi possível adicionar o usuário!')
+				await delay(5000);
+				setOpenDialog(false);
 			}
 		},
 		onSettled: async () => {
@@ -48,13 +70,12 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 	});
 
 	const handleCreateUser = () => {
-		setDone(true)
 		const data = {
 			company_name: user.company_name,
 			company_contact: user.company_contact,
-			company_register: user.company_register.replace(/\D/g, ''),
-			company_telephone: user.company_telephone.replace(/\D/g, ''),
-			company_email: user.company_email,
+			company_cnpj: user.company_register.replace(/\D/g, ''),
+			company_contact_telephone: user.company_telephone.replace(/\D/g, ''),
+			company_contact_email: user.company_email,
 			company_cep: user.company_cep.replace(/\D/g, ''),
 			company_street: user.company_street,
 			company_district: user.company_district,
@@ -71,8 +92,16 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 
 	return ReactDOM.createPortal(
 		<Overlay>
-			<Container >
-				<div className='confirm-data' style={{ right: isDone ? '500px' : '0px', animation: isDone ? '1s slide-out' : '', position: isDone ? 'absolute' : 'relative', opacity: isDone ? '0' : '1' }}>
+			<Container>
+
+				{
+						isLoading && 
+						<LoadingContainer>
+							<Loader />
+						</LoadingContainer>
+					}
+
+				
 					<h1>Confirme os dados do usuário</h1>
 					<ContainerField>
 						<Field title='Nome da empresa' content={user?.company_name} />
@@ -105,27 +134,14 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 							Adicionar
 						</Button>
 					</Footer>
-				</div>
-
-				<Conclusion style={{ right: isDone ? '0px' : '-500px', animation: isDone ? '3s slide-in' : '' }}>
-
-					{
-						isLoading && <Loader />
-					}
-
-					<span><MdOutlineVerified /></span>
-
-					<h1>Usuário adicionado com sucesso!</h1>
-
-					<p>E-mail para login: {user?.company_email}</p>
-
-					<Button onClick={() => history.push('/admin/users')}>
-						Fechar
-					</Button>
-
-				</Conclusion>
-
 			</Container>
+			<Alert 
+				success={success}
+				error={error}
+				isOpen={openDialog}
+				label={label}
+			/>
+			
 		</Overlay>,
 		document.getElementById('modal-user-confirmation')!,
 	);
