@@ -8,6 +8,7 @@ import Certificates from '../pages/userPage/certificates';
 import userRegister from '../pages/adminPage/userRegister';
 import CourseAdministration from '../pages/adminPage/courseAdministration';
 import ClassPage from '../pages/userPage/classesPage';
+import CourseRegister from '../pages/adminPage/courseRegister';
 
 const Routes: React.FC = () => {
 	const { credentials, isAuthenticated } = useTurtleStore((state) => state);
@@ -30,6 +31,7 @@ const Routes: React.FC = () => {
 				<Route exact path='/admin/users' component={UserAdministration} />
 				<Route path='/admin/users/register' component={userRegister} />
 				<Route exact path='/admin/courses' component={CourseAdministration} />
+				<Route path='/admin/courses/register' component={CourseRegister} />
 			</Switch>
 		)
 	}

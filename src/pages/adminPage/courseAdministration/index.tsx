@@ -10,7 +10,7 @@ const CourseAdministration: React.FC = () => {
 			<h1>Cursos</h1>
 			<Box>
 				<p>3 cursos</p>
-				<Link to="/admin/users/register">
+				<Link to="/admin/courses/register">
 					<Button>
 						Novo curso
 					</Button>
