@@ -54,7 +54,7 @@ const UserAdministration: React.FC = () => {
 		},
 	});
 
-	const filteredCards = useMemo(() => users.filter((user) => (
+	const filteredCards = useMemo(() => users?.filter((user) => (
 		user.student_name.toLowerCase().includes(searchTerm.toLowerCase()))), [users, searchTerm]);
 
 	return (
