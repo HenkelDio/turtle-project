@@ -1,11 +1,11 @@
 import { Container, Logo, Box, CloseSideMenu, ContainerMenu } from "./styles"
 import { GiTurtle } from 'react-icons/gi';
-import { GoPeople } from 'react-icons/go';
 import { IoIosArrowForward, IoIosArrowDown, IoIosArrowDropleftCircle, IoIosArrowDroprightCircle} from 'react-icons/io';
-import { CgProfile } from 'react-icons/cg';
+import { BsFillPeopleFill, BsFillPersonFill } from 'react-icons/bs';
+import { BiSolidBookAlt } from 'react-icons/bi'; 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineBookmarkAdd } from "react-icons/md";
+
 
 const SideMenuAdmin: React.FC = () => {
 	const [isFold, setFold] = useState<string>('true');
@@ -59,7 +59,7 @@ const SideMenuAdmin: React.FC = () => {
 					page={page}
 					isfold={isFold}
 				>
-					<div><GoPeople /></div>
+					<div><BsFillPeopleFill /></div>
 					<p>Usuários</p>
 					{
 						isFold && <>
@@ -83,7 +83,7 @@ const SideMenuAdmin: React.FC = () => {
 						isfold={isFold}
 						onClick={() => handleSetPage('admin-courses')}
 					>
-						<div><MdOutlineBookmarkAdd /></div>
+						<div><BiSolidBookAlt /></div>
 						<p>Cursos</p>
 					</Box>
 				</Link>
@@ -94,7 +94,7 @@ const SideMenuAdmin: React.FC = () => {
 						style={{ backgroundColor: page === 'profile' ? '#ccc' : 'transparent' }}
 						onClick={() => handleSetPage('profile')}
 					>
-						<div><CgProfile /></div>
+						<div><BsFillPersonFill /></div>
 						<p>Perfil</p>
 					</Box>
 				</Link>

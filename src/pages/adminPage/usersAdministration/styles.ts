@@ -43,10 +43,22 @@ export const ContainerList = styled.div`
 		}
 
 		.styled-table thead tr {
-    background-color: #009879;
-    color: #ffffff;
+    background-color: #FAFAFA;
+    color: #080808;
     text-align: left;
-		height: 60px;
+		height: 30px;
+		}
+
+		.styled-table tbody tr .actions {
+			a {
+				text-decoration: none;
+				color: ${({ theme }) => theme.colors.green.main};
+				font-weight: 500;
+
+				&:hover {
+					color: ${({ theme }) => theme.colors.green.light};
+				}
+			}
 		}
 
 		.styled-table th,
@@ -54,22 +66,14 @@ export const ContainerList = styled.div`
     padding: 12px 15px;
 		}
 
-		.styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
-		height: 50px;
-		}
 
 		.styled-table tbody tr:nth-of-type(even) {
 				background-color: #f3f3f3;
 		}
 
-		.styled-table tbody tr:last-of-type {
-				border-bottom: 2px solid #009879;
-		}
-
 		.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009879;
+			font-weight: bold;
+			color: #009879;
 		}
 `;
 
@@ -93,3 +97,4 @@ export const FilterInput = styled.div`
 		height: 40px;
 	}
 `;
+
