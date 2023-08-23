@@ -1,6 +1,6 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { BackPage } from "../../../packages/admin/FormGroup/styles";
-import { Container } from "./styles";
+import { Container, Box, ContainerPreview, ContainerQuill } from "./styles";
 import { Link } from "react-router-dom";
 import { useQuill } from 'react-quilljs';
 import "quill/dist/quill.snow.css";
@@ -34,13 +34,16 @@ const CourseRegister: React.FC = () => {
 
 			<h1>Criar novo curso</h1>
 
-			<div style={{ width: 1000, height: 400, background: '#ffff' }}>
-				<div ref={quillRef} />
-			</div>
+			<Box>
+			<ContainerQuill>
+				<div style={{ height: '100%'}} ref={quillRef} />
+			</ContainerQuill>
 			
-			<div>
-				{value}
-			</div>
+			<ContainerPreview dangerouslySetInnerHTML={{__html: value}}>
+				
+			</ContainerPreview>
+			</Box>
+
 		</Container>
 	)
 }
