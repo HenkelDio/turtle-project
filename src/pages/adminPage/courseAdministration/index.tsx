@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import Input from "../../../components/Input"
 import { Container, ContainerList, Box } from "./styles"
-import { Button } from "../usersAdministration/styles"
 import CardCourse from "../../../packages/admin/CardCourse"
+import Button from "../../../components/Button"
 
 const CourseAdministration: React.FC = () => {
 	return (

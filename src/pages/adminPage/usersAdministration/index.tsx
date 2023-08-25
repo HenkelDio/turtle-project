@@ -1,18 +1,18 @@
-import { Container, ContainerList, Button, Box, FilterInput } from "./styles";
+import { Container, ContainerList, Box, FilterInput } from "./styles";
 import Input from "../../../components/Input";
 import { useMemo, useState } from "react";
 import Loader from "../../../components/Loader";
 import { Link } from "react-router-dom";
 import { listStudentes } from "../../../services";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { IUserStudent } from "../../../types";
 import formatPhone from "../../../utils/phoneFormat";
 import { formatDocument } from "../../../utils/documentFormat";
 import Select from "../../../components/Select";
 import Alert from "../../../components/Alert";
 import delay from "../../../utils/delay";
-import Lottie from 'react-lottie';
 import errorAnimation from '../../../assets/error_animation.json';
+import Button from "../../../components/Button";
 
 const UserAdministration: React.FC = () => {
 	const [users, setUsers] = useState<any[]>([]);
@@ -22,15 +22,6 @@ const UserAdministration: React.FC = () => {
 	const [label, setLabel] = useState('');
 	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState(false);
-
-	const defaultOptions = {
-		loop: false,
-		autoplay: true,
-		animationData: errorAnimation,
-		rendererSettings: {
-			preserveAspectRatio: "xMidYMid slice"
-		}
-	};
 
 	useQuery(['user'], listStudentes, {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -116,7 +107,7 @@ const UserAdministration: React.FC = () => {
 			<Alert
 				isOpen={openDialog}
 				error={error}
-				label="Erro no servidor"
+				label={label}
 				success={success}
 			/>
 		</Container>

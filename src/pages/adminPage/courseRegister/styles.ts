@@ -5,14 +5,13 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: start;
+	align-items: center;
 	transition: 1s;
 	animation: showContainer 0.5s;
 	padding-left: 50px;
 
 	h1 {
 		margin-bottom: 50px;
-		margin-left: 10px;
 	}
 
 
@@ -42,7 +41,7 @@ export const Box = styled.div`
 `;	
 
 export const ContainerPreview = styled.div`
-	width: 700px;
+	width: 1000px;
 	max-width: 700px;
 	height: 95vh;
 	overflow-x: hidden;
@@ -51,15 +50,26 @@ export const ContainerPreview = styled.div`
 	background-color: #fff;
 	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 
-	padding: 10px;
+	padding: 10px 50px;
 
-	position: absolute;
-	right: 10px;
-	top: -10px;
+	&::-webkit-scrollbar {
+ 			 width: 10px;
+		}
 
+		/* Track */
+		&::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
+
+		/* Handle */
+		&::-webkit-scrollbar-thumb {
+			background: #D9D9D9;
+			border-radius: 4px;
+		}
+
+		/* Handle on hover */
+		&::-webkit-scrollbar-thumb:hover {
+			background: #B6B6B6;
+	}
 `;
 
-export const ContainerQuill = styled.div`
-	width: 500px;
-	height: 400px;
-`
