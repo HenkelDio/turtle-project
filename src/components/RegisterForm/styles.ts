@@ -40,6 +40,21 @@ export const Container = styled.div`
 	}
 	}
 
+	textarea {
+		width: 500px;
+		height: 200px;
+		max-width: 500px;
+		border: 3px solid transparent;
+		border-radius: 5px;
+		padding: 10px 10px;
+
+		outline: none;
+
+		transition: 0.5s ease-out;
+		font-family: 'Work Sans', sans-serif;
+		font-size: 1.1rem;
+	}
+
 	@keyframes showError {
 		0% {
 			top: -20px;

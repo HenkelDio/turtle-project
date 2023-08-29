@@ -25,13 +25,81 @@ export const Container = styled.div`
 			right: 0px;
 		}
 	}
+`;
 
-	.teste {
-		img {
-			width: 100px;
+export const ModulesContainer = styled.div`
+	width: 500px;
+	height: 280px;
+
+	margin: 20px 0;
+	border-radius: 10px;
+	text-align: left;
+	background-color: #fff;
+
+	padding: 10px 20px;
+
+	p {
+		opacity: 0.9;
+		margin-bottom: 5px;
+	}
+
+	.modules {
+		display: flex;
+		gap: 10px;
+
+		padding: 15px 0px;
+		width: 100%;
+
+		overflow-x: auto;
+
+		&::-webkit-scrollbar {
+ 			 width: 2px;
+			 height: 10px;
+		}
+
+		/* Track */
+		&::-webkit-scrollbar-track {
+			background: #fff;
+		}
+
+		/* Handle */
+		&::-webkit-scrollbar-thumb {
+			background: #D9D9D9;
+			border-radius: 4px;
+		}
+
+		/* Handle on hover */
+		&::-webkit-scrollbar-thumb:hover {
+			background: #B6B6B6;
+		}
+
+		.addMoreModulesContainer{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+
+			min-width: 100px;
+			max-width: 100px;
+			opacity: 0.6;
+			cursor: pointer;
+
+			p {
+				font-size: 0.8rem;
+			}
+
+			span {
+				font-size: 1.2rem;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
 		}
 	}
 `;
+
 
 export const Box = styled.div`
 	display: flex;
