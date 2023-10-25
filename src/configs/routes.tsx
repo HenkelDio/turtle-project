@@ -1,57 +1,32 @@
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import Profile from '../pages/profile';
-import Login from '../pages/login';
-import useTurtleStore from '../store';
-import UserAdministration from '../pages/adminPage/usersAdministration';
-import Courses from '../pages/userPage/courses';
-import Certificates from '../pages/userPage/certificates';
-import userRegister from '../pages/adminPage/userRegister';
-import CourseAdministration from '../pages/adminPage/courseAdministration';
-import ClassPage from '../pages/userPage/classesPage';
-import CourseRegister from '../pages/adminPage/courseRegister';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthGuard } from "./AuthGuard";
+import Login from "../pages/login";
+import UserAdministration from "../pages/adminPage/usersAdministration";
+import ContentLayout from "../layouts/ContentLayout";
+import UserRegister from "../pages/adminPage/userRegister";
+import CourseAdministration from "../pages/adminPage/courseAdministration";
+import CourseRegister from "../pages/adminPage/courseRegister";
 
-const Routes: React.FC = () => {
-	const { credentials, isAuthenticated } = useTurtleStore((state) => state);
+export function Router() {
+  return(
+    <BrowserRouter>
+      <Routes>
 
-	const location = useLocation();
+        <Route element={<AuthGuard isPrivate={false} />}>
+          <Route path="/login" element={<Login />}/>
+        </Route>
 
-	function PrivateRoute({ component: Component, isAuthenticated, ...rest }: any) {
-		return (
-			<Route {...rest} render={(props) => (
-				isAuthenticated ? <Component {...props} />
-					: <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-			)} />
-		);
-	}
+        <Route element={<AuthGuard isPrivate={true} />}>
+          <Route element={<ContentLayout />}>
+            <Route path="/users" element={<UserAdministration />}/>
+						<Route path="/users/create" element={<UserRegister />}/>
 
+						<Route path="/courses" element={<CourseAdministration />}/>
+						<Route path="/courses/create" element={<CourseRegister />}/>
+          </Route>
+        </Route>
 
-	if (credentials.type === 'admin') {
-		return (
-			<Switch>
-				<Route exact path='/admin/users' component={UserAdministration} />
-				<Route path='/admin/users/register' component={userRegister} />
-				<Route exact path='/admin/courses' component={CourseAdministration} />
-				<Route path='/admin/courses/register' component={CourseRegister} />
-			</Switch>
-		)
-	}
-
-	if (credentials.type === 'user') {
-		return (
-			<Switch>
-				<PrivateRoute path='/courses' component={Courses} isAuthenticated={isAuthenticated} />
-				<PrivateRoute path='/certificates' component={Certificates} isAuthenticated={isAuthenticated} />
-				<PrivateRoute path='/profile' component={Profile} isAuthenticated={isAuthenticated} />
-				<PrivateRoute path='/course/id=404848DJNS40' component={ClassPage} isAuthenticated={isAuthenticated} />
-			</Switch>
-		)
-	}
-
-	return (
-		<Switch>
-			<Route path='/login' component={Login}></Route>
-		</Switch>
-	)
+      </Routes>
+    </BrowserRouter>
+  )
 }
-
-export default Routes;

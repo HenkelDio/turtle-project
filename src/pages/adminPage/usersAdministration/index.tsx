@@ -63,7 +63,7 @@ const UserAdministration: React.FC = () => {
 						<option defaultValue="admin">Administrador</option>
 					</Select>
 				</FilterInput>
-				<Link to="/admin/users/register">
+				<Link to="/users/create">
 					<Button>
 						Novo Usuário
 					</Button>

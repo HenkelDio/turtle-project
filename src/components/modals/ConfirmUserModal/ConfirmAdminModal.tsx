@@ -7,7 +7,6 @@ import {IUserAdmin } from '../../../types';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { addStudentUser } from '../../../services';
-import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
 import Alert from '../../Alert';
 import delay from '../../../utils/delay';
@@ -32,8 +31,6 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 
 	const queryClient = useQueryClient();
 
-	const history = useHistory();
-
 	const { mutate, isLoading } = useMutation(['user'], addStudentUser, {
 		onSuccess: async ({ data, err }) => {
 			await delay();
@@ -47,7 +44,6 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 					setOpenDialog(true);
 					await delay(5000);
 					setOpenDialog(false);
-					history.push('/admin/users');
 				}
 			}
 

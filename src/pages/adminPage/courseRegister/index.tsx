@@ -17,7 +17,7 @@ const CourseRegister: React.FC = () => {
 	return (
 		<Container>
 			<BackPage>
-				<Link to='/admin/courses'><IoIosArrowBack /></Link>
+				<Link to='/courses'><IoIosArrowBack /></Link>
 			</BackPage>
 
 			{

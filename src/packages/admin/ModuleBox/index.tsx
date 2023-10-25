@@ -1,32 +1,28 @@
-import { useState } from "react";
 import { Container } from "./styles";
-import { AiFillDelete } from 'react-icons/ai';
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+	Icon,
+  MenuItem,
+} from '@chakra-ui/react'
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { MdModeEditOutline } from 'react-icons/md';
 
 const ModuleBox: React.FC = () => {
-	const [isOptionsOpen, setOptionsOpen] = useState<boolean>();
-
-	const handleOpenOptions = () => {
-		setOptionsOpen((prevState) => !prevState);
-	}
-
 	return (
 		<Container>
 			<p>Seu primeiro módulo</p>
 
 
-			<div
-				className="menuOptions"
-				onClick={handleOpenOptions}
-			><BsThreeDotsVertical /></div>
-			{
-				isOptionsOpen &&
-				<div className="options">
-					<span className="delete"><AiFillDelete /> excluir</span>
-					<span className="edit"><MdModeEditOutline /> editar</span>
-				</div>
-			}
+			<div className="menuOptions">
+			<Menu>
+				<MenuButton><Icon as={BsThreeDotsVertical} /></MenuButton>
+				<MenuList>
+					<MenuItem as='button'>Editar</MenuItem>
+					<MenuItem as='button'>Excluir</MenuItem>
+				</MenuList>
+			</Menu>
+			</div>
 		</Container>
 	)
 }

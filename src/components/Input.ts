@@ -11,7 +11,6 @@ export default styled.input`
 	outline: none;
 
 	transition: 0.5s ease-out;
-	font-family: 'Work Sans', sans-serif;
 	font-size: 1.1rem;
 
 

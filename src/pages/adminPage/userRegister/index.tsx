@@ -8,14 +8,14 @@ import { BackPage } from "../../../packages/admin/FormGroup/styles";
 import FormGroupCompanyRegister from "../../../packages/admin/FormGroup/FormGroupCompanyRegister";
 import FormGroupAdminRegister from "../../../packages/admin/FormGroup/FormGroupAdminRegister";
 
-const userRegister: React.FC = () => {
+const UserRegister: React.FC = () => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { registerType } = useTurtleStore((state) => state);
 
 	return (
 		<Container>
 			<BackPage>
-				<Link to='/admin/users'><IoIosArrowBack /></Link>
+				<Link to='/users'><IoIosArrowBack /></Link>
 			</BackPage>
 
 			<h1>Criar novo usuário</h1>
@@ -40,4 +40,4 @@ const userRegister: React.FC = () => {
 	)
 }
 
-export default userRegister;
+export default UserRegister;

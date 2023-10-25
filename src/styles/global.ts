@@ -9,7 +9,11 @@ export const GlobalStyle = createGlobalStyle`
 
 	body {
 		background-color: #E7E7E7;
-		overflow-y: hidden;
+	}
+
+	h1 {
+		font-size: 1.4rem;
+		font-weight: bold;
 	}
 
 `;

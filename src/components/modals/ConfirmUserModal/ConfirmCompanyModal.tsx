@@ -7,7 +7,6 @@ import { ICompany } from '../../../types';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { addCompanyUser } from '../../../services';
-import { useHistory } from 'react-router-dom';
 import Loader from '../../Loader';
 import Alert from '../../Alert';
 import delay from '../../../utils/delay';
@@ -36,7 +35,6 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 
 	const queryClient = useQueryClient();
 
-	const history = useHistory();
 
 	const { mutate, isLoading } = useMutation(['company'], addCompanyUser, {
 		onSuccess: async ({data, err}) => {
@@ -51,7 +49,6 @@ const ConfirmCompanyModal: React.FC<IProps> = ({
 					setOpenDialog(true);
 					await delay(5000);
 					setOpenDialog(false);
-					history.push('/admin/users');
 				}
 			}
 
