@@ -6,6 +6,8 @@ import ContentLayout from "../layouts/ContentLayout";
 import UserRegister from "../pages/adminPage/userRegister";
 import CourseAdministration from "../pages/adminPage/courseAdministration";
 import CourseRegister from "../pages/adminPage/courseRegister";
+import StudentLayout from "../layouts/StudentLayout";
+import Courses from "../pages/userPage/courses";
 
 export function Router() {
   return(
@@ -23,6 +25,10 @@ export function Router() {
 
 						<Route path="/courses" element={<CourseAdministration />}/>
 						<Route path="/courses/create" element={<CourseRegister />}/>
+          </Route>
+
+					<Route element={<StudentLayout />}>
+            <Route path="/student" element={<Courses />}/>
           </Route>
         </Route>
 
