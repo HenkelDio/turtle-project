@@ -13,15 +13,14 @@ import Alert from "../../../components/Alert";
 import delay from "../../../utils/delay";
 import errorAnimation from '../../../assets/error_animation.json';
 import Button from "../../../components/Button";
+import { useToast } from "@chakra-ui/react";
 
 const UserAdministration: React.FC = () => {
 	const [users, setUsers] = useState<any[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isLoading, setLoading] = useState(true);
 	const [openDialog, setOpenDialog] = useState(false);
-	const [label, setLabel] = useState('');
-	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState(false);
+  const toast = useToast()
 
 	useQuery(['user'], listStudentes, {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -34,12 +33,14 @@ const UserAdministration: React.FC = () => {
 				setLoading(false)
 			}
 			if (err) {
-				setError(true);
-				setSuccess(false);
-				setOpenDialog(true);
-				setLabel('Erro no sistema 500')
-				await delay(5000);
-				setOpenDialog(false);
+				toast({
+          title: 'Erro.',
+          description: "Não foi possível carregar os usuários.",
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        })
+
 				setLoading(false)
 			}
 		},
@@ -104,12 +105,6 @@ const UserAdministration: React.FC = () => {
 
 
 			}
-			<Alert
-				isOpen={openDialog}
-				error={error}
-				label={label}
-				success={success}
-			/>
 		</Container>
 	)
 }

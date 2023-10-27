@@ -1,12 +1,12 @@
 export interface IStore {
 	credentials: ICredentials,
-	setCredentials: () => void,
+	setCredentials: Function,
 
 	isAuthenticated: boolean,
-	setAuthenticated: () => void,
+	setAuthenticated: Function,
 
 	registerType: string,
-	setRegisterType: () => void,
+	setRegisterType: Function,
 
 	onCourse: boolean,
 }

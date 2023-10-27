@@ -10,6 +10,8 @@ import StudentLayout from "../layouts/StudentLayout";
 import Courses from "../pages/userPage/courses";
 import ClassPage from "../pages/userPage/classesPage";
 import ExamPage from "../pages/userPage/ExamPage";
+import Profile from "../pages/profile";
+import ProfilePage from "../pages/login";
 
 export function Router() {
   return(
@@ -27,6 +29,7 @@ export function Router() {
 
 						<Route path="/courses" element={<CourseAdministration />}/>
 						<Route path="/courses/create" element={<CourseRegister />}/>
+						<Route path="/profile" element={<Profile />}/>
           </Route>
 
 					<Route element={<StudentLayout />}>

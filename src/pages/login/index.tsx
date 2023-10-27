@@ -1,99 +1,69 @@
-import { Container, BackIcon, Button, Loader, Overlay, Form } from "./styles";
-import Input from "../../components/Input";
-import delay from "../../utils/delay";
-import { AiOutlineArrowRight } from 'react-icons/ai';
-import { useState } from "react";
-import RegisterForm from "../../components/RegisterForm";
-import { IoIosArrowBack } from "react-icons/io";
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
+import useTurtleStore from '../../store';
 
-const Login: React.FC = () => {
-	const [isLoading, setLoading] = useState(false);
-	const [step, setStep] = useState(1);
+export default function LoginPage() {
 
-	const hangleAuthenticate = async () => {
-		setLoading(true)
-		await delay();
-		setLoading(false)
-	}
+	const { setAuthenticated } = useTurtleStore((state) => state);
 
-	return (
-		<Overlay>
-			<div className="bg-layout"></div>
-			<Container>
-
-			{
-				isLoading 
-				? <Loader><span className="loader"></span></Loader>
-				: 
-				<>
-				{
-					step === 2 && 
-					<BackIcon onClick={() => setStep(1)}>
-					<IoIosArrowBack />
-				</BackIcon>
-				}
-
-				<Form>
-					<h1 className="animate-form">Login</h1>
-					{
-						step === 1 && 
-						<p className="animate-form">Olá! insira seu e-mail para entrar</p>
-					}
-					{
-						step === 2 && 
-						<p className="animate-form">Agora insira sua senha super secreta</p>
-					}
-
-
-					{
-						step === 1 &&
-						<div className="animate-form">
-						<RegisterForm>
-							<label>Seu e-mail</label>
-							<Input type="email" placeholder="e-mail" />
-						</RegisterForm>
-						</div>
-					}
-					{
-						step === 2 &&
-						<div className="animate-form">
-						<RegisterForm>
-							<label>Sua senha</label>
-							<Input type="password" placeholder="senha" />
-						</RegisterForm>
-						</div>
-					}
-
-				
-
-					{
-						step === 1 &&
-						<div className="animate-form">
-						<Button
-						// eslint-disable-next-line @typescript-eslint/no-misused-promises
-						onClick={() => setStep(2)}
-					>Continuar
-					</Button>
-					</div>
-					}
-
-					{
-						step === 2 && 
-						<div className="animate-form">
-						<Button
-						// eslint-disable-next-line @typescript-eslint/no-misused-promises
-						onClick={hangleAuthenticate}
-					>Entrar <span><AiOutlineArrowRight /></span>
-					</Button>
-					</div>
-					}
-				</Form>
-				</>
-			}
-
-			</Container>
-		</Overlay>
-	)
+  return (
+    <Flex
+      minH={'100vh'}
+      align={'center'}
+      justify={'center'}
+      bg={useColorModeValue('gray.50', 'gray.800')}>
+      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack align={'center'}>
+          <Heading fontSize={'4xl'}>Entre em sua conta</Heading>
+          <Text fontSize={'lg'} color={'gray.600'}>
+           para se divertir usando nossas <Text color={'blue.400'}>ferramentas</Text> ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={8}>
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>Email</FormLabel>
+              <Input type="email" />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Senha</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <Stack spacing={10}>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Lembre de mim</Checkbox>
+              </Stack>
+              <Button
+								onClick={() => setAuthenticated(true)}
+                bg={'blue.400'}
+                color={'white'}
+                _hover={{
+                  bg: 'blue.500',
+                }}>
+                Entrar
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
+  )
 }
-
-export default Login;

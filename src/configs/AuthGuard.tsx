@@ -1,22 +1,23 @@
 import { Navigate, Outlet } from "react-router-dom";
+import useTurtleStore from "../store";
 
 interface AuthGuardProps {
   isPrivate: boolean
 }
 
 export function AuthGuard({ isPrivate }: AuthGuardProps) {
-  const signedIn = true;
+	const { isAuthenticated } = useTurtleStore((state) => state);
 	const userType = 'admin';
 
-  if(!signedIn && isPrivate) {
+  if(!isAuthenticated && isPrivate) {
     return <Navigate to="/login" replace />
   }
 
-  if(signedIn && !isPrivate && userType === 'admin') {
+  if(isAuthenticated && !isPrivate && userType === 'admin') {
     return <Navigate to="/users" replace />
   }
 
-	if(signedIn && !isPrivate && userType === 'student') {
+	if(isAuthenticated && !isPrivate && userType === 'student') {
     return <Navigate to="/users" replace />
   }
 

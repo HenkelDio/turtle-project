@@ -177,7 +177,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Perfil</MenuItem>
+              <Link to="/profile"><MenuItem>Perfil</MenuItem></Link>
               <MenuItem>Configurações</MenuItem>
               <MenuDivider />
               <MenuItem>Sair</MenuItem>
