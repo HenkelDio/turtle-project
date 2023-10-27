@@ -1,22 +1,15 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div`
-	display: flex;
-	flex-direction: row;
-`;
 
 export const Content = styled.div`
-	width: 80%;
-	padding: 15px 20px;
-	height: 100vh;
-
+	margin: 0 auto;
+	flex: 2;
 	overflow-y: auto;
 
 	.video {
 		width: 100%;
 		height: 400px;
 		background-color: #ccc;
-		padding: 5px;
 	}
 
 	details {
@@ -46,20 +39,7 @@ export const Content = styled.div`
 `;
 
 export const Modules = styled.div`
-	width: 30%;
 	height: 100vh;
 	background-color: #fff;
-
-	details {
-		padding: 10px;
-		cursor: pointer;
-		user-select: none;
-
-		border-bottom: 2px solid #ccc;
-
-		p {
-			padding: 10px;
-			cursor: pointer;
-		}
-	}
+	border-radius: 8px;
 `;

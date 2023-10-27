@@ -1,0 +1,51 @@
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon } from "@chakra-ui/react";
+import { TbSquareCheckFilled, TbSquareCheck } from 'react-icons/tb';
+import { IModuleClass } from "../../types";
+import { Link } from "react-router-dom";
+
+interface IProps {
+	title: string,
+	modules: IModuleClass[]
+}
+
+export function ModuleContainer({ title, modules }: IProps) {
+
+	return (
+		<Accordion allowToggle>
+			<AccordionItem>
+				<h2>
+				<AccordionButton>
+					<Box as="span" flex='1' textAlign='left' fontWeight='bold' py={3}>
+						{title}
+					</Box>
+					<AccordionIcon />
+				</AccordionButton>
+				</h2>
+			<AccordionPanel pb={4}>
+			{
+					modules.map((module) => {
+						return <Link to="#" key={module.title}>
+							<Flex
+							_hover={{
+								background: "#E2E8F0"
+							}}	
+							py={3}
+							px={2}
+							alignItems={'center'} 
+							rounded='md'
+							gap={5}>
+								<p style={{ minWidth: '300px', maxWidth: '300px' }}>{module.title}</p> 
+								<Icon
+									as={module.completed ? TbSquareCheckFilled : TbSquareCheck}
+									color={module.completed ? 'green' : 'black'}
+									boxSize={6}
+								/>
+							</Flex>
+							</Link>
+					})
+				}
+			</AccordionPanel>
+			</AccordionItem>
+		</Accordion>
+	)
+}

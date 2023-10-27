@@ -8,6 +8,7 @@ import CourseAdministration from "../pages/adminPage/courseAdministration";
 import CourseRegister from "../pages/adminPage/courseRegister";
 import StudentLayout from "../layouts/StudentLayout";
 import Courses from "../pages/userPage/courses";
+import ClassPage from "../pages/userPage/classesPage";
 
 export function Router() {
   return(
@@ -29,6 +30,7 @@ export function Router() {
 
 					<Route element={<StudentLayout />}>
             <Route path="/student" element={<Courses />}/>
+						<Route path="/course" element={<ClassPage />}/>
           </Route>
         </Route>
 

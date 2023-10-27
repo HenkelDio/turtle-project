@@ -1,14 +1,14 @@
 import { styled } from "styled-components";
 
 export const Card = styled.div`
-	width: 500px;
-	height: 120px;
+	width: 300px;
+	height: 300px;
 
 	position: relative;
 
 	background-color: #ffff;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	gap: 30px;
 	border-radius: 10px;

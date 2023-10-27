@@ -26,4 +26,42 @@ export default [
 	{ uf: 'SP', nome: 'São Paulo' },
 	{ uf: 'SE', nome: 'Sergipe' },
 	{ uf: 'TO', nome: 'Tocantins' }
+];
+
+export const courseMock = [
+	{
+		title: 'Como ir ao mercado',
+		modules: [
+			{
+				title: 'É fácil ir ao mercado?',
+				completed: true
+			},
+			{
+				title: 'Pense no que comprar',
+				completed: false
+			},
+			{
+				title: 'Vamos ir ao mercado?',
+				completed: false
+			}
+		]
+	},
+	{
+		title: 'Como usar dinheiro?',
+		modules: [
+			{
+				title: 'Cartão de crédito ou débito?',
+				completed: false
+			},
+		]
+	},
+	{
+		title: 'O que é cartão de crédito?',
+		modules: [
+			{
+				title: 'use apenas dinheiros',
+				completed: false
+			},
+		]
+	}
 ]

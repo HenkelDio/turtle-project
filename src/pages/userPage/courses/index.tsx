@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Container, ContainerCards } from "./styles";
-import { HiFilter } from 'react-icons/hi';
 import delay from "../../../utils/delay";
-import { FormInput } from "../../../components/FormInput";
 import Input from "../../../components/Input";
 import CourseCard from "../../../packages/student/CourseCard/courseCard";
 import Loader from "../../../components/Loader";
 
 const Courses: React.FC = () => {
 	const [cards] = useState([
+		{title: 'Ir ao mercado: como fazer? E como montar um macaco', percentage: 10},
+		{title: 'Python básico para iniciantes', percentage: 85},
+		{title: 'Como fazer uma API REST em Node.JS e ir ao mercado', percentage: 25},
 		{title: 'Ir ao mercado: como fazer? E como montar um macaco', percentage: 10},
 		{title: 'Python básico para iniciantes', percentage: 85},
 		{title: 'Como fazer uma API REST em Node.JS e ir ao mercado', percentage: 25},
@@ -44,19 +45,14 @@ const Courses: React.FC = () => {
 
 	return(
 		<Container>
-			<h1>Meus cursos</h1>
-			<FormInput>
-				<Input 
-				onChange={(e) => handleSearch(e)}
-				placeholder="Pesquise pelo nome do curso"/>
-				<p><HiFilter /></p>
-			</FormInput>
 			
-			{
-				filteredCards.length > 0 
-				? <span>{filteredCards.length} cursos encontrados</span>
-				: <span>Não foi encontrado nenhum curso no nome: {searchTerm}</span>
-			}
+			<h1>Meus cursos</h1>
+			<Input 
+				onChange={(e) => handleSearch(e)}
+				placeholder="Pesquise pelo nome do curso"
+			/>
+
+
 			<ContainerCards>
 				{
 					filteredCards.map((card) => {

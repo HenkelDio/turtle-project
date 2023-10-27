@@ -1,12 +1,12 @@
 export interface IStore {
 	credentials: ICredentials,
-	setCredentials: Function,
+	setCredentials: () => void,
 
 	isAuthenticated: boolean,
-	setAuthenticated: Function,
+	setAuthenticated: () => void,
 
 	registerType: string,
-	setRegisterType: Function,
+	setRegisterType: () => void,
 
 	onCourse: boolean,
 }
@@ -49,4 +49,9 @@ export interface ICompany {
 export interface IFieldErrors {
 	field: string,
 	message: string
+}
+
+export interface IModuleClass {
+	title: string,
+	completed: boolean
 }
