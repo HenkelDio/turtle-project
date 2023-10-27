@@ -1,16 +1,32 @@
-import { BiCheckboxChecked } from "react-icons/bi";
-import Button from "../../../components/Button";
 import { Content } from "./styles";
 import { Box, useMediaQuery, Flex, Icon, useDisclosure } from "@chakra-ui/react";
 import ModuleDrawer from "../../../components/ModuleDrawer";
 import { BsArrowUpLeftSquareFill } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import { SetStateAction, useEffect, useState } from "react";
+import { coursesMock } from "../../../mocks/states";
+import { ICourse, IModule, IModuleClass } from "../../../types";
+import ContentClass from "../../../components/ContentClass";
 
 const ClassPage: React.FC = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const [data, setData] = useState<ICourse>();
+	const [module, setModule] = useState<IModule | undefined>();
+	const [content, setContent] = useState<IModuleClass | undefined>();
 
-	const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
+	const { idCourse, idModule, idContent } = useParams();
 
-	console.log(isLargerThan800)
+	useEffect(() => {
+		
+		function handleSetData() {
+			setData(coursesMock.filter((val) => val.id === idCourse)[0]);
+			setModule(data?.modules.filter((val) => val.id === idModule)[0]);
+			setContent(module?.modules.filter((val) => val.id === idContent)[0])
+		}
+
+		handleSetData();
+
+	})
 
 	return(
 			<>
@@ -32,25 +48,17 @@ const ClassPage: React.FC = () => {
 				<ModuleDrawer 
 					onClose={onClose}
 					isOpen={isOpen}
+					courseName={data?.courseTitle}
+					modules={data?.modules}
+					idCourse={data?.id}
 				/>
 
-				<Content style={isLargerThan800 ? { width: '60%'} : { width: '100%'} }>
-					<div className="video">
-					<iframe width="100%" height="100%" src="https://www.youtube.com/embed/l9VEfxCkWRc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-					</div>
-					<details>
-						<summary>Abrir PDF</summary>
-						<iframe src="https://s2.q4cdn.com/175719177/files/doc_presentations/Placeholder-PDF.pdf" width="100%" height="500"></iframe>
-					</details>
-					<div className="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit delectus dolores eaque nam debitis repudiandae suscipit qui veniam hic, quis, molestias dolorum officiis nobis dolore iure consequuntur odio aperiam praesentium? Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					<br />
-					<br />
-					Laudantium laborum ut temporibus accusamus repellat ratione, porro aliquam officia ab totam aliquid rerum nesciunt alias quidem dolor consequuntur ea neque minus?</div>
-
-					<Button>
-						<BiCheckboxChecked />Conclur módulo
-					</Button>
-				</Content>
+				<ContentClass 
+					title={content?.title}
+					videoUrl={content?.videoUrl}
+					description={content?.description}
+					pdfPath={content?.pdfPath}
+				/>
 			</>
 	)
 }

@@ -6,6 +6,10 @@ export const Content = styled.div`
 	flex: 2;
 	overflow-y: auto;
 
+	h1 {
+		margin-bottom: 16px;
+	}
+
 	.video {
 		width: 100%;
 		height: 400px;
@@ -13,7 +17,7 @@ export const Content = styled.div`
 	}
 
 	details {
-		margin-top: 50px;
+		margin-top: 40px;
 		border-radius: 10px;
 		box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 

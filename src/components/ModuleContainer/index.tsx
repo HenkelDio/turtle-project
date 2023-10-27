@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon } from "@chakra-ui/react";
 import { TbSquareCheckFilled, TbSquareCheck } from 'react-icons/tb';
 import { IModuleClass } from "../../types";
@@ -5,10 +6,13 @@ import { Link } from "react-router-dom";
 
 interface IProps {
 	title: string,
-	modules: IModuleClass[]
+	modules: IModuleClass[],
+	idCourse: string | undefined,
+	idModule: string | undefined,
+	onClose: () => void
 }
 
-export function ModuleContainer({ title, modules }: IProps) {
+export function ModuleContainer({ title, modules, idCourse, idModule, onClose }: IProps) {
 
 	return (
 		<Accordion allowToggle>
@@ -24,7 +28,10 @@ export function ModuleContainer({ title, modules }: IProps) {
 			<AccordionPanel pb={4}>
 			{
 					modules.map((module) => {
-						return <Link to="#" key={module.title}>
+						return <Link 
+							to={`/course/${idCourse}/${idModule}/${module.id}`} key={module.title}
+							onClick={onClose}
+							>
 							<Flex
 							_hover={{
 								background: "#E2E8F0"

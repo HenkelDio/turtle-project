@@ -4,21 +4,15 @@ import delay from "../../../utils/delay";
 import Input from "../../../components/Input";
 import CourseCard from "../../../packages/student/CourseCard/courseCard";
 import Loader from "../../../components/Loader";
+import { coursesMock } from "../../../mocks/states";
 
 const Courses: React.FC = () => {
-	const [cards] = useState([
-		{title: 'Ir ao mercado: como fazer? E como montar um macaco', percentage: 10},
-		{title: 'Python básico para iniciantes', percentage: 85},
-		{title: 'Como fazer uma API REST em Node.JS e ir ao mercado', percentage: 25},
-		{title: 'Ir ao mercado: como fazer? E como montar um macaco', percentage: 10},
-		{title: 'Python básico para iniciantes', percentage: 85},
-		{title: 'Como fazer uma API REST em Node.JS e ir ao mercado', percentage: 25},
-	]);
+	const [cards] = useState(coursesMock);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isLoading, setLoading] = useState(true);
 
 	const filteredCards = useMemo(() => cards.filter((card) => (
-    card.title.toLowerCase().includes(searchTerm.toLowerCase()))), [cards, searchTerm]);
+    card.courseTitle[0].toLowerCase().includes(searchTerm.toLowerCase()))), [cards, searchTerm]);
 
 	const handleSearch = (e: any) => {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -57,9 +51,11 @@ const Courses: React.FC = () => {
 				{
 					filteredCards.map((card) => {
 						return <CourseCard 
-							key={card.title}
-							title={card.title}
+							key={card.id}
+							title={card.courseTitle}
 							percentage={card.percentage}
+							idCourse={card.id}
+							modules={card.modules}
 						/>
 					})
 				}

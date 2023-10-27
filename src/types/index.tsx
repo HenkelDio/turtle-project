@@ -53,5 +53,34 @@ export interface IFieldErrors {
 
 export interface IModuleClass {
 	title: string,
-	completed: boolean
+	id: string,
+	completed: boolean,
+	videoUrl: string,
+	description: string,
+	pdfPath: string
+}
+
+export interface IModule {
+	title: string,
+	id: string,
+	modules: IModuleClass[]
+}
+
+export interface IOptions  {
+	option: string,
+	text: string
+}
+
+export interface IQuestion {
+	title: string,
+	options: IOptions[],
+	correctAnswer: string
+}
+
+export interface ICourse {
+	id: string,
+	courseTitle: string,
+	percentage: string,
+	modules: IModule[]
+	questions: IQuestion[]
 }
