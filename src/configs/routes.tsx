@@ -12,6 +12,7 @@ import ClassPage from "../pages/userPage/classesPage";
 import ExamPage from "../pages/userPage/ExamPage";
 import Profile from "../pages/profile";
 import ProfilePage from "../pages/login";
+import CertificatesPage from "../pages/userPage/CertificatesPage";
 
 export function Router() {
   return(
@@ -33,7 +34,8 @@ export function Router() {
           </Route>
 
 					<Route element={<StudentLayout />}>
-            <Route path="/student" element={<Courses />}/>
+            <Route path="/student/courses" element={<Courses />}/>
+						<Route path="/student/certificates" element={<CertificatesPage />}/>
 						<Route path="/course/:idCourse/:idModule/:idContent" element={<ClassPage />}/>
 						<Route path="/course/exam/:idCourse" element={<ExamPage />} />
           </Route>

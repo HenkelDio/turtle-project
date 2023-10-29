@@ -10,9 +10,12 @@ import FieldInput from "../../../components/Fields/FieldInput";
 import ModuleBox from "../../../packages/admin/ModuleBox";
 import { MdNoteAdd } from "react-icons/md";
 import FormModule from "../../../packages/admin/formModule";
+import useTurtleStore from "../../../store";
 
 const CourseRegister: React.FC = () => {
 	const [isOpenEditorModule, setOpenEditorModule] = useState(false);
+	
+	const { modules } = useTurtleStore((state) => state);
 	
 	return (
 		<Container>
@@ -43,6 +46,11 @@ const CourseRegister: React.FC = () => {
 
 			<div className="modules">
 				<ModuleBox />
+				{
+					modules?.map((val) => {
+						return <ModuleBox />
+					})
+				}
 				<div 
 					className="addMoreModulesContainer"
 					onClick={() => setOpenEditorModule(true)}

@@ -9,6 +9,9 @@ export interface IStore {
 	setRegisterType: Function,
 
 	onCourse: boolean,
+
+	modules: IModule[],
+	setModules: Function
 }
 
 export interface ICredentials {
@@ -83,4 +86,16 @@ export interface ICourse {
 	percentage: string,
 	modules: IModule[]
 	questions: IQuestion[]
+}
+
+export interface IContentClass {
+	title: string,
+	urlVideo: string,
+	urlPdf: string,
+	content: string
+}
+
+export interface IModule {
+	title: string,
+	classes: IContentClass[]
 }

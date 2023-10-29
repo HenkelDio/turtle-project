@@ -4,17 +4,13 @@ import {
   IconButton,
   Avatar,
   Box,
-  CloseButton,
   Flex,
   HStack,
   VStack,
   Icon,
   useColorModeValue,
   Text,
-  Drawer,
-  DrawerContent,
   useDisclosure,
-  BoxProps,
   FlexProps,
   Menu,
   MenuButton,
@@ -24,7 +20,6 @@ import {
 } from '@chakra-ui/react'
 import {
   FiUsers,
-  FiTrendingUp,
   FiMenu,
   FiBell,
   FiChevronDown,
@@ -35,7 +30,6 @@ import { Link, Outlet } from 'react-router-dom'
 
 interface LinkItemProps {
   name: string
-  icon: IconType
   link: string
 }
 
@@ -49,8 +43,9 @@ interface MobileProps extends FlexProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-	{ name: 'Usuários', icon: FiUsers, link: '/users' },
-  { name: 'Treinamentos', icon: LuBook, link: '/courses' },
+	{ name: 'Cursos', link: '/student/courses' },
+  { name: 'Certificados', link: '/student/certificates' },
+	{ name: 'Perfil', link: '/courses' },
 ]
 
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
@@ -145,8 +140,13 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Perfil</MenuItem>
-              <MenuItem>Configurações</MenuItem>
+							{
+								LinkItems.map((link) => {
+									return <Link to={link.link}> 
+										<MenuItem>{link.name}</MenuItem>
+									</Link>
+								})
+							}
               <MenuDivider />
               <MenuItem>Sair</MenuItem>
             </MenuList>

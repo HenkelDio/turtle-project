@@ -1,8 +1,14 @@
 import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons"
 import { ButtonGroup, Editable, EditableInput, EditablePreview, Flex, IconButton, useEditableControls } from "@chakra-ui/react"
 import Input from "./Input"
+import { Dispatch, SetStateAction } from "react"
 
-export default function CustomInput() {
+interface IProps {
+	value: string,
+	setTitle: Dispatch<SetStateAction<undefined>>
+}
+
+export default function CustomInput({ value, setTitle }: IProps) {
 	/* Here's a custom control */
 	function EditableControls() {
 		const {
@@ -27,9 +33,10 @@ export default function CustomInput() {
 	return (
 		<Editable
 			textAlign='center'
-			defaultValue='Título da sua primeira aula'
+			defaultValue={value}
 			fontSize='2xl'
 			isPreviewFocusable={false}
+			onChange={(e) => setTitle(e)}
 		>
 			<Flex alignItems='center' justifyContent='center' gap={10}>
 				<EditablePreview />

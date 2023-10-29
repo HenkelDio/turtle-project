@@ -1,4 +1,4 @@
-import { ICourse } from "../types";
+import { IContentClass, ICourse } from "../types";
 
 export default [
 	{ uf: 'AC', nome: 'Acre' },
@@ -270,3 +270,9 @@ export const coursesMock: ICourse[] = [
 
 
 ]
+
+export const ClassesMock: IContentClass = {
+		"title": "Título (clique no ícone para editar)",
+		"urlVideo": "",
+		"urlPdf": "",
+		"content": "Digite um conteúdo de curso épico 🚀"}

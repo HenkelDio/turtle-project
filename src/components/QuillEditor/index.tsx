@@ -5,11 +5,12 @@ import { ContainerQuill } from './styles';
 
 interface IProps {
 	setValue: Function,
+	content: string
 }
 
-const QuillEditor: React.FC<IProps> = ({ setValue }: IProps) => {
+const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
 
-	const placeholder = 'Digite um conteúdo de curso épico 🚀';
+	const placeholder = content;
 
 	const { quill, quillRef } = useQuill({ placeholder });
 
