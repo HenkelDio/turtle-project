@@ -31,7 +31,7 @@ const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
 
 	return (
 		<ContainerQuill>
-			<div style={{ height: '100%', backgroundColor: '#ffff' }} ref={quillRef} />
+			<div style={{ height: '200px', backgroundColor: '#ffff' }} ref={quillRef} />
 		</ContainerQuill>
 	)
 }

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Container, ContainerCards } from "./styles";
+import { Container } from "./styles";
 import delay from "../../../utils/delay";
-import Input from "../../../components/Input";
-import CourseCard from "../../../packages/student/CourseCard/courseCard";
 import Loader from "../../../components/Loader";
 import { coursesMock } from "../../../mocks/states";
+import { Flex, Input } from "@chakra-ui/react";
+import GenericCard from "../../../components/GenericCard";
 
 const Courses: React.FC = () => {
 	const [cards] = useState(coursesMock);
@@ -44,22 +44,28 @@ const Courses: React.FC = () => {
 			<Input 
 				onChange={(e) => handleSearch(e)}
 				placeholder="Pesquise pelo nome do curso"
+				variant="filled"
+				bg="white"
+				_hover={{
+					background: 'white'
+				}}
+				_focus={{
+					background: 'white'
+				}}
 			/>
 
 
-			<ContainerCards>
+			<Flex gap={5} wrap="wrap" mt={50}>
 				{
 					filteredCards.map((card) => {
-						return <CourseCard 
+						return <GenericCard
 							key={card.id}
-							title={card.courseTitle}
-							percentage={card.percentage}
-							idCourse={card.id}
-							modules={card.modules}
+							type="course"
+							courseData={card}
 						/>
 					})
 				}
-			</ContainerCards>
+			</Flex>
 		</Container>
 	)
 }

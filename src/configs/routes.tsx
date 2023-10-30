@@ -38,6 +38,7 @@ export function Router() {
 						<Route path="/student/certificates" element={<CertificatesPage />}/>
 						<Route path="/course/:idCourse/:idModule/:idContent" element={<ClassPage />}/>
 						<Route path="/course/exam/:idCourse" element={<ExamPage />} />
+						<Route path="/student/profile" element={<Profile />} />
           </Route>
         </Route>
 

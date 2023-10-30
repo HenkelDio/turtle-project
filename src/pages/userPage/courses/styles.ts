@@ -9,15 +9,8 @@ export const Container = styled.div`
 	h1 {
 		margin-bottom: 50px;
 		font-size: 2rem;
+		text-align: center;
 	}
 
-`;
-
-export const ContainerCards = styled.div`
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: 20px;
-	margin-top: 50px;
 `;
 

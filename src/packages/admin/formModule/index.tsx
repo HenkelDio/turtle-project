@@ -1,9 +1,9 @@
-import { Button, Flex, Input } from "@chakra-ui/react";
+import { Button, Flex, Input, useDisclosure } from "@chakra-ui/react";
 import { Container } from "./styles";
 import AccordionClass from "../../../components/AccordionClass";
 import { ClassesMock } from "../../../mocks/states";
-import { Dispatch, SetStateAction, useState } from "react";
-import { IContentClass, IModule } from "../../../types";
+import {useState } from "react";
+import { IContentClass } from "../../../types";
 import useTurtleStore from "../../../store";
 
 
@@ -11,14 +11,20 @@ const FormModule: React.FC = () => {
 	const [contentClass, setContentClass] = useState<IContentClass[]>(
 		[ClassesMock]
 	);
+	const { onClose } = useDisclosure();
 
 	const { setModules } = useTurtleStore((state) => state);
+
+	function onDeleteClass(id: string) {
+		setContentClass(contentClass.filter((item) => item.id !== id))
+		onClose
+	}
 
 	function addNewClass() {
 		setContentClass(
 			(prevState) => [
 				...prevState,
-				ClassesMock
+				{...ClassesMock, id: Math.random().toString()},
 			]
 		)
 	}
@@ -47,6 +53,12 @@ const FormModule: React.FC = () => {
 				variant="filled" 
 				bg="white" 
 				h={50} 
+				_hover={{
+					background: "white"
+				}}
+				_focus={{
+					background: "white"
+				}}
 				placeholder="Título do seu novo módulo" 
 				marginBottom={10} 
 				onClick={(e) => addTitle(e)}	
@@ -56,7 +68,7 @@ const FormModule: React.FC = () => {
 			<Flex gap={10} flexDirection="column">
 				{
 					contentClass.map((val) => {
-						return <AccordionClass titleInput={val.title} content={val.content} setContentClass={setContentClass} />
+						return <AccordionClass titleInput={val.title} content={val.content} setContentClass={setContentClass} onDelete={() => onDeleteClass(val.id)}/>
 					})
 				}
 			</Flex>

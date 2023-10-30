@@ -1,7 +1,6 @@
-import { useMediaQuery } from "@chakra-ui/react"
+import { Button, useMediaQuery } from "@chakra-ui/react"
 import { Content } from "../pages/userPage/classesPage/styles"
 import { BiCheckboxChecked } from "react-icons/bi";
-import Button from "./Button";
 
 interface IProps {
 	title: string | undefined,
@@ -38,7 +37,17 @@ export default function ContentClass({ title, videoUrl, description, pdfPath }: 
 				{description}	
 			</div>
 
-			<Button>
+			<Button 
+				variant="solid" 
+				bg="green.400"
+				_hover={{
+					background: "green.500"
+				}}
+				color="white"
+				w={['full', 300]}
+				h={50}
+				mx='auto'
+			>	
 				<BiCheckboxChecked />Conclur módulo
 			</Button>
 		</Content>

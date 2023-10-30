@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { TbSquareCheckFilled, TbSquareCheck } from 'react-icons/tb';
 import { IModuleClass } from "../../types";
 import { Link } from "react-router-dom";
@@ -13,7 +13,6 @@ interface IProps {
 }
 
 export function ModuleContainer({ title, modules, idCourse, idModule, onClose }: IProps) {
-
 	return (
 		<Accordion allowToggle>
 			<AccordionItem>
@@ -41,7 +40,7 @@ export function ModuleContainer({ title, modules, idCourse, idModule, onClose }:
 							alignItems={'center'} 
 							rounded='md'
 							gap={5}>
-								<p style={{ minWidth: '300px', maxWidth: '300px' }}>{module.title}</p> 
+								<Text w={[250,300]}>{module.title}</Text> 
 								<Icon
 									as={module.completed ? TbSquareCheckFilled : TbSquareCheck}
 									color={module.completed ? 'green' : 'black'}

@@ -7,32 +7,37 @@ import {
 	Box,
 	Input,
 	Flex,
+	Button,
+	useDisclosure,
 } from '@chakra-ui/react'
 import CustomInput from './CustomInput'
 import QuillEditor from './QuillEditor'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IContentClass } from '../types';
+import GenericModal from './GenericModal';
 
 interface IProps {
 	titleInput: string,
 	content: string,
 	setContentClass: Dispatch<SetStateAction<IContentClass[]>>,
+	onDelete: () => void
 }
 
-export default function AccordionClass({ titleInput, content, setContentClass}: IProps) {
+export default function AccordionClass({ titleInput, content, setContentClass, onDelete}: IProps) {
 	const [value, setValue] = useState<string | TrustedHTML>("");
 	const [title, setTitle] = useState();
+	const { isOpen, onClose, onOpen } = useDisclosure();
 
-	useEffect(() => {
-		function getTitle() {
-			setContentClass(
-				(prevState) => [
-					...prevState,
-					{'title': title}
-				]
-			)
-		}
-	}, [])
+	// useEffect(() => {
+	// 	function getTitle() {
+	// 		setContentClass(
+	// 			(prevState) => [
+	// 				...prevState,
+	// 				{'title': title}
+	// 			]
+	// 		)
+	// 	}
+	// }, [])
 
 	return (
 		<>
@@ -54,9 +59,27 @@ export default function AccordionClass({ titleInput, content, setContentClass}: 
 						
 						<QuillEditor setValue={setValue} content={content}/>	
 
+						<Button
+							variant="solid"
+							colorScheme="red"
+							onClick={onOpen}
+						>
+							Deletar
+						</Button>
+
 					</AccordionPanel>
 				</AccordionItem>
 			</Accordion>
+
+			<GenericModal 
+				modalTitle='Deletar aula'
+				isOpen={isOpen}
+				onClose={onClose}
+				actionLabel='Deletar'
+				action={() => onDelete()}
+			>
+				<h2>Você tem certeza que deseja deletar essa aula?</h2>
+			</GenericModal>
 		</>
 	)
 }

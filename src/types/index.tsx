@@ -11,7 +11,10 @@ export interface IStore {
 	onCourse: boolean,
 
 	modules: IModule[],
-	setModules: Function
+	setModules: Function,
+
+	userIcon: string,
+	setUserIcon: Function
 }
 
 export interface ICredentials {
@@ -89,13 +92,20 @@ export interface ICourse {
 }
 
 export interface IContentClass {
+	id: string,
 	title: string,
 	urlVideo: string,
 	urlPdf: string,
-	content: string
+	content: string,
+	completed: boolean
 }
 
 export interface IModule {
+	id: string,
 	title: string,
-	classes: IContentClass[]
+	classes?: IContentClass[]
+}
+
+export interface ICertificate {
+	title: string
 }

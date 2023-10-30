@@ -9,16 +9,16 @@ export function AuthGuard({ isPrivate }: AuthGuardProps) {
 	const { isAuthenticated } = useTurtleStore((state) => state);
 	const userType = 'admin';
 
-  if(!true && isPrivate) {
+  if(!isAuthenticated && isPrivate) {
     return <Navigate to="/login" replace />
   }
 
-  if(true && !isPrivate && userType === 'admin') {
+  if(isAuthenticated && !isPrivate && userType === 'admin') {
     return <Navigate to="/users" replace />
   }
 
-	if(true && !isPrivate && userType === 'student') {
-    return <Navigate to="/users" replace />
+	if(isAuthenticated && !isPrivate && userType === 'student') {
+    return <Navigate to="/student/courses" replace />
   }
 
   return <Outlet />

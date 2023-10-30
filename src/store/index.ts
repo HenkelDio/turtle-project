@@ -15,6 +15,9 @@ const useTurtleStore = create<IStore>((set) => ({
 
 	modules: [] as IModule[],
 	setModules:  (payload: IModule[]) => set((state) => ({modules: payload})),
+
+	userIcon: '' as string,
+	setUserIcon: (payload: string) => set((state) => ({userIcon: payload})),
 }))
 
 export default useTurtleStore;

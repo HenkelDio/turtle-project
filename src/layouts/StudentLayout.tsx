@@ -1,7 +1,4 @@
-'use client'
-
 import {
-  IconButton,
   Avatar,
   Box,
   Flex,
@@ -19,14 +16,11 @@ import {
   MenuList,
 } from '@chakra-ui/react'
 import {
-  FiUsers,
-  FiMenu,
-  FiBell,
   FiChevronDown,
 } from 'react-icons/fi'
-import { LuBook } from 'react-icons/lu'
 import { IconType } from 'react-icons'
 import { Link, Outlet } from 'react-router-dom'
+import useTurtleStore from '../store'
 
 interface LinkItemProps {
   name: string
@@ -45,7 +39,7 @@ interface MobileProps extends FlexProps {
 const LinkItems: Array<LinkItemProps> = [
 	{ name: 'Cursos', link: '/student/courses' },
   { name: 'Certificados', link: '/student/certificates' },
-	{ name: 'Perfil', link: '/courses' },
+	{ name: 'Perfil', link: '/student/profile' },
 ]
 
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
@@ -84,6 +78,9 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 }
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+
+	const { userIcon } = useTurtleStore((state) => state);
+
   return (
     <Flex
       ml={{ base: 0, md: 0 }}
@@ -95,32 +92,21 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent={{ base: 'space-between', md: 'space-between' }}
       {...rest}>
-
-      <IconButton
-        display={{ base: 'flex', md: 'none' }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
 			
-			<Link to="/student">
+			<Link to="/student/courses">
 			<Text fontSize="lg" fontWeight="bold">
           ST Treinamentos
         </Text>
 			</Link>
 
       <HStack spacing={{ base: '0', md: '6' }}>
-        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
               <HStack>
                 <Avatar
                   size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                  }
+                  src={userIcon}
                 />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
@@ -142,7 +128,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue('gray.200', 'gray.700')}>
 							{
 								LinkItems.map((link) => {
-									return <Link to={link.link}> 
+									return <Link to={link.link} key={link.name}> 
 										<MenuItem>{link.name}</MenuItem>
 									</Link>
 								})
