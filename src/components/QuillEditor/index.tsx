@@ -14,16 +14,16 @@ const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
 
 	const { quill, quillRef } = useQuill({ placeholder });
 
-	console.log(quill);    // undefined > Quill Object
-	console.log(quillRef);
+	// console.log(quill);    // undefined > Quill Object
+	// console.log(quillRef);
 
 	useEffect(() => {
 		if (quill) {
 			quill.on('text-change', (delta, oldDelta, source) => {
-				console.log('Text change!');
-				console.log(quill.getText()); // Get text only
-				console.log(quill.getContents()); // Get delta contents
-				console.log(quill.root.innerHTML); // Get innerHTML using quill
+				// console.log('Text change!');
+				// console.log(quill.getText()); // Get text only
+				// console.log(quill.getContents()); // Get delta contents
+				// console.log(quill.root.innerHTML); // Get innerHTML using quill
 				setValue(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
 			});
 		}

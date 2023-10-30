@@ -8,20 +8,22 @@ import useTurtleStore from "../../../store";
 
 
 const FormModule: React.FC = () => {
-	const [contentClass, setContentClass] = useState<IContentClass[]>(
+	const [classModel, setClassModel] = useState<IContentClass[]>(
 		[ClassesMock]
 	);
+	const [contentClass, setContentClass] = useState<IContentClass[]>([])
+	const [title, setTitle] = useState<string>();
 	const { onClose } = useDisclosure();
 
-	const { setModules } = useTurtleStore((state) => state);
+	const { setModules, modules } = useTurtleStore((state) => state);
 
 	function onDeleteClass(id: string) {
-		setContentClass(contentClass.filter((item) => item.id !== id))
-		onClose
+		setClassModel(classModel.filter((item) => item.id !== id))
+		onClose()
 	}
 
 	function addNewClass() {
-		setContentClass(
+		setClassModel(
 			(prevState) => [
 				...prevState,
 				{...ClassesMock, id: Math.random().toString()},
@@ -29,19 +31,22 @@ const FormModule: React.FC = () => {
 		)
 	}
 
-	function addTitle(e: any) {
-		const newTitle = e.target.value;
+	function addTitle(e: React.ChangeEvent<HTMLInputElement>) {
+		setTitle(e.target.value);
+
 	}
 
 	function addModule() {
 		setModules(
 			[
 				{
-					title: "Como treinar o seu dragão",
+					title: title,
 					classes: contentClass
 				}
 			]
 		);
+
+		console.log(modules)
 	}
 
 	return (
@@ -61,14 +66,20 @@ const FormModule: React.FC = () => {
 				}}
 				placeholder="Título do seu novo módulo" 
 				marginBottom={10} 
-				onClick={(e) => addTitle(e)}	
+				onChange={(e) => addTitle(e)}	
 			/>
 
 			<p style={{ marginBottom: '10px'}}>Aulas</p>
 			<Flex gap={10} flexDirection="column">
 				{
-					contentClass.map((val) => {
-						return <AccordionClass titleInput={val.title} content={val.content} setContentClass={setContentClass} onDelete={() => onDeleteClass(val.id)}/>
+					classModel.map((val) => {
+						return <AccordionClass 
+							titleInput={val.title} 
+							content={val.content} 
+							setContentClass={setContentClass} 
+							contentClass={contentClass}
+							onDelete={() => onDeleteClass(val.id)}
+							/>
 					})
 				}
 			</Flex>
