@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import Input from "../../../components/Input"
 import { Container, ContainerList, Box } from "./styles"
 import CardCourse from "../../../packages/admin/CardCourse"
-import Button from "../../../components/Button"
+import { Button } from "@chakra-ui/react"
 
 const CourseAdministration: React.FC = () => {
 	return (
@@ -11,7 +11,9 @@ const CourseAdministration: React.FC = () => {
 			<Box>
 				<p>3 cursos</p>
 				<Link to="/courses/create">
-					<Button>
+					<Button
+						colorScheme="green"
+					>
 						Novo curso
 					</Button>
 				</Link>

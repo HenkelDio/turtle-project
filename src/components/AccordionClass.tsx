@@ -63,7 +63,6 @@ export default function AccordionClass({ titleInput, content, setContentClass, o
 			)
 		)
 		setSaved(true)
-			
 	}
 
 	return (

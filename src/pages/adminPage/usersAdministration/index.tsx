@@ -9,11 +9,7 @@ import { IUserStudent } from "../../../types";
 import formatPhone from "../../../utils/phoneFormat";
 import { formatDocument } from "../../../utils/documentFormat";
 import Select from "../../../components/Select";
-import Alert from "../../../components/Alert";
-import delay from "../../../utils/delay";
-import errorAnimation from '../../../assets/error_animation.json';
-import Button from "../../../components/Button";
-import { useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 
 const UserAdministration: React.FC = () => {
 	const [users, setUsers] = useState<any[]>([]);
@@ -65,7 +61,9 @@ const UserAdministration: React.FC = () => {
 					</Select>
 				</FilterInput>
 				<Link to="/users/create">
-					<Button>
+					<Button
+						colorScheme="green"
+					>
 						Novo Usuário
 					</Button>
 				</Link>

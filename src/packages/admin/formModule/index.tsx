@@ -17,7 +17,7 @@ const FormModule: React.FC = () => {
 
 	const { setModules, modules } = useTurtleStore((state) => state);
 
-	function onDeleteClass(id: string) {
+	function onDeleteClass(id: any) {
 		setClassModel(classModel.filter((item) => item.id !== id))
 		onClose()
 	}
@@ -41,12 +41,14 @@ const FormModule: React.FC = () => {
 			[
 				{
 					title: title,
-					classes: contentClass
+					classes: {
+						...contentClass, contentClass
+					}
 				}
 			]
 		);
 
-		console.log(modules)
+		console.log("modules", modules)
 	}
 
 	return (
@@ -79,7 +81,7 @@ const FormModule: React.FC = () => {
 							setContentClass={setContentClass} 
 							contentClass={contentClass}
 							onDelete={() => onDeleteClass(val.id)}
-							/>
+						/>
 					})
 				}
 			</Flex>
