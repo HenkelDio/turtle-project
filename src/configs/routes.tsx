@@ -14,6 +14,9 @@ import Profile from "../pages/profile";
 import ProfilePage from "../pages/login";
 import CertificatesPage from "../pages/userPage/CertificatesPage";
 import CourseMockado from "../pages/Module";
+import LandingPageLayout from "../layouts/LandingPageLayout";
+import HomeLandingPage from "../pages/LandingPage/HomeLandingPage";
+import ContactLandingPage from "../pages/LandingPage/ContactLandingPage";
 
 export function Router() {
   return(
@@ -22,6 +25,11 @@ export function Router() {
 
         <Route element={<AuthGuard isPrivate={false} />}>
           <Route path="/login" element={<Login />}/>
+
+					<Route element={<LandingPageLayout />}>
+						<Route path="/home" element={<HomeLandingPage />}/>
+						<Route path="/contato" element={<ContactLandingPage />} />
+					</Route>
         </Route>
 
         <Route element={<AuthGuard isPrivate={true} />}>
