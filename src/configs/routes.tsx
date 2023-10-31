@@ -13,6 +13,7 @@ import ExamPage from "../pages/userPage/ExamPage";
 import Profile from "../pages/profile";
 import ProfilePage from "../pages/login";
 import CertificatesPage from "../pages/userPage/CertificatesPage";
+import CourseMockado from "../pages/Module";
 
 export function Router() {
   return(
@@ -27,6 +28,7 @@ export function Router() {
           <Route element={<ContentLayout />}>
             <Route path="/users" element={<UserAdministration />}/>
 						<Route path="/users/create" element={<UserRegister />}/>
+						<Route path="/eitalasqueira" element={<CourseMockado />} />
 
 						<Route path="/courses" element={<CourseAdministration />}/>
 						<Route path="/courses/create" element={<CourseRegister />}/>
