@@ -1,9 +1,6 @@
-'use client'
-
 import { ReactElement } from 'react'
 import { Box, SimpleGrid, Icon, Text, Stack, Flex } from '@chakra-ui/react'
-import { FcAddressBook, FcApprove, FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc'
-import { MdApproval } from 'react-icons/md'
+import { FcAddressBook, FcAssistant } from 'react-icons/fc'
 import { BiCertification } from 'react-icons/bi'
 
 interface FeatureProps {
@@ -14,7 +11,7 @@ interface FeatureProps {
 
 const Feature = ({ title, text, icon }: FeatureProps) => {
   return (
-    <Stack bg={'white'} p={10} rounded="lg">
+    <Stack bg={'white'} p={10} rounded="lg" shadow="lg">
       <Flex
         w={16}
         h={16}

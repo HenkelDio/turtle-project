@@ -10,7 +10,7 @@ export function AuthGuard({ isPrivate }: AuthGuardProps) {
 	const userType = 'student';
 
   if(!isAuthenticated && isPrivate) {
-    return <Navigate to="/home" replace />
+    return <Navigate to="/" replace />
   }
 
   if(isAuthenticated && !isPrivate && userType === 'admin') {

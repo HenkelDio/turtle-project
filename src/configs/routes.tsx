@@ -17,6 +17,7 @@ import CourseMockado from "../pages/Module";
 import LandingPageLayout from "../layouts/LandingPageLayout";
 import HomeLandingPage from "../pages/LandingPage/HomeLandingPage";
 import ContactLandingPage from "../pages/LandingPage/ContactLandingPage";
+import CoursesLandingPage from "../pages/LandingPage/CoursesLandingPage";
 
 export function Router() {
   return(
@@ -27,8 +28,9 @@ export function Router() {
           <Route path="/login" element={<Login />}/>
 
 					<Route element={<LandingPageLayout />}>
-						<Route path="/home" element={<HomeLandingPage />}/>
+						<Route path="/" element={<HomeLandingPage />}/>
 						<Route path="/contato" element={<ContactLandingPage />} />
+						<Route path="/cursos" element={<CoursesLandingPage />} />
 					</Route>
         </Route>
 

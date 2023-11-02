@@ -7,7 +7,7 @@ export default function HomeLandingPage() {
 	return (
 		<>
 			<SplitWithImage />
-			<Box p={50} bg={"#1A202C"}>
+			<Box p={50} >
 				<SimpleThreeColumns />
 			</Box>
 			<FooterLandingPage />

@@ -21,6 +21,7 @@ import {
 	ChevronRightIcon,
 } from '@chakra-ui/icons'
 import { Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function LandingPageLayout() {
 	const { isOpen, onToggle } = useDisclosure()
@@ -50,13 +51,15 @@ export default function LandingPageLayout() {
 						/>
 					</Flex>
 					<Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+						<Link to="/">
 						<Text
 							textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
 							fontFamily={'heading'}
 							fontWeight="bold"
 							color={useColorModeValue('gray.800', 'white')}>
 							ST Treinamentos
-						</Text>
+						</Text>	
+						</Link>
 
 						<Flex display={{ base: 'none', md: 'flex' }} ml={10}>
 							<DesktopNav />
@@ -148,12 +151,12 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 			display={'block'}
 			p={2}
 			rounded={'md'}
-			_hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+			_hover={{ bg: useColorModeValue('green.50', 'gray.900') }}>
 			<Stack direction={'row'} align={'center'}>
 				<Box>
 					<Text
 						transition={'all .3s ease'}
-						_groupHover={{ color: 'pink.400' }}
+						_groupHover={{ color: 'green.400' }}
 						fontWeight={500}>
 						{label}
 					</Text>
@@ -244,14 +247,18 @@ const NAV_ITEMS: Array<NavItem> = [
 		label: 'Cursos',
 		children: [
 			{
-				label: 'Explore Design Work',
-				subLabel: 'Trending Design to inspire you',
+				label: 'NR 20: Incêndios',
+				subLabel: 'Ver detalhes',
 				href: '#',
 			},
 			{
-				label: 'New & Noteworthy',
-				subLabel: 'Up-and-coming Designers',
+				label: 'NR 30: Incêndios',
+				subLabel: 'Ver detalhres',
 				href: '#',
+			},
+			{
+				label: 'Ver todos os cursos',
+				href: '/cursos',
 			},
 		],
 	},
