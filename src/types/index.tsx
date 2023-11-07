@@ -84,11 +84,11 @@ export interface IQuestion {
 }
 
 export interface ICourse {
-	id: string,
+	id?: string,
 	courseTitle: string,
-	percentage: string,
+	percentage?: string,
 	modules: IModule[]
-	questions: IQuestion[]
+	questions?: IQuestion[]
 }
 
 export interface IContentClass {

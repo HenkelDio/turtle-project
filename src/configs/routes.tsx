@@ -18,6 +18,7 @@ import LandingPageLayout from "../layouts/LandingPageLayout";
 import HomeLandingPage from "../pages/LandingPage/HomeLandingPage";
 import ContactLandingPage from "../pages/LandingPage/ContactLandingPage";
 import CoursesLandingPage from "../pages/LandingPage/CoursesLandingPage";
+import ContainerCourse from "../pages/Module2";
 
 export function Router() {
   return(
@@ -38,7 +39,7 @@ export function Router() {
           <Route element={<ContentLayout />}>
             <Route path="/users" element={<UserAdministration />}/>
 						<Route path="/users/create" element={<UserRegister />}/>
-						<Route path="/eitalasqueira" element={<CourseMockado />} />
+						<Route path="/eitalasqueira" element={<ContainerCourse />} />
 
 						<Route path="/courses" element={<CourseAdministration />}/>
 						<Route path="/courses/create" element={<CourseRegister />}/>

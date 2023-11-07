@@ -7,7 +7,7 @@ interface AuthGuardProps {
 
 export function AuthGuard({ isPrivate }: AuthGuardProps) {
 	const { isAuthenticated } = useTurtleStore((state) => state);
-	const userType = 'student';
+	const userType = 'admin';
 
   if(!isAuthenticated && isPrivate) {
     return <Navigate to="/" replace />
