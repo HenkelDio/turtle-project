@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Curso from "../components/CourseRegister/Course";
+import { Box } from "@chakra-ui/react";
 
 const ContainerCourse = () => {
 	const [formattedData, setFormattedData] = useState(null);
@@ -26,39 +27,26 @@ const ContainerCourse = () => {
 
   const [cursos, setCursos] = useState([
     {
-      course_title: "Curso 1",
+      course_title: "",
       modules: [
         {
           module_title: "Módulo 1",
           lessons: []
         },
-        {
-          module_title: "Módulo 2",
-          lessons: []
-        }
       ]
     },
-    {
-      course_title: "Curso 2",
-      modules: [
-        {
-          module_title: "Módulo 1",
-          lessons: []
-        }
-      ]
-    }
   ]);
 
   return (
-    <div>
-      <h1>Plataforma de Criação de Cursos</h1>
+    <Box>
+      <h1>Criar novo curso</h1>
       {cursos.map((curso, index) => (
-        <Curso key={index} curso={curso} />
+        <Curso key={index} course={curso} />
       ))}
 
-<button onClick={formatDataToJSON}>Formatar e Imprimir JSON</button>
+		<button onClick={formatDataToJSON}>Formatar e Imprimir JSON</button>
     <pre>{formattedData}</pre>
-    </div>
+    </Box>
   );
 };
 

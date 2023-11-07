@@ -1,39 +1,52 @@
-import React, { useState } from 'react';
-import Modulo from './Module';
+import { Key, useState } from 'react';
+import Module from './Module';
+import { Input } from '@chakra-ui/react';
 
-const Curso = ({ curso }) => {
-  const [course_title, setCourseTitle] = useState(curso.course_title);
-  const [modules, setModules] = useState(curso.modules);
-  // Adicione um estado para controlar o título do novo módulo.
+interface IProps {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	course: any
+}
+
+const Course = ({ course }: IProps) => {
+  const [course_title, setCourseTitle] = useState(course.course_title);
+  const [modules, setModules] = useState(course.modules);
   const [newModuleTitle, setNewModuleTitle] = useState('');
 
-  // Função para adicionar um novo módulo ao curso.
   const addModule = () => {
     setModules([...modules, { module_title: newModuleTitle, lessons: [] }]);
-    setNewModuleTitle(''); // Limpa o campo de entrada do novo módulo.
+    setNewModuleTitle('');
   };
 
 	
-const handleCourseTitleChange = (e) => {
+const handleCourseTitleChange = (e: { target: { value: unknown; }; }) => {
   setCourseTitle(e.target.value);
-  curso.course_title = e.target.value; // Atualiza o valor no objeto do curso
+  course.course_title = e.target.value; 
 };
 
   return (
     <div>
-      <h2>Curso: {course_title}</h2>
-      <input
+      <Input
         type="text"
-        value={course_title}
+        placeholder='Título do curso'
+				bg="white"
+				_hover={{
+					background: "white"
+				}}
+				_focus={{
+					background: "white"
+				}}
         onChange={handleCourseTitleChange}
       />
 
-      {/* Renderize a lista de módulos existentes. */}
-      {modules.map((modulo, index) => (
-        <Modulo key={index} modulo={modulo} />
+			{
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			modules.map((modulo: any, index: Key | null | undefined) => (
+        <Module key={index} module={modulo} />
       ))}
 
-      {/* Adicione um campo de entrada e um botão para adicionar um novo módulo. */}
+      
+      
+
       <input
         type="text"
         value={newModuleTitle}
@@ -45,4 +58,4 @@ const handleCourseTitleChange = (e) => {
   );
 };
 
-export default Curso;
+export default Course;

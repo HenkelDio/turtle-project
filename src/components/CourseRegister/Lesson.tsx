@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import { Input } from '@chakra-ui/react';
+import { useState } from 'react';
 
-const Aula = ({ aula }) => {
-  const [lesson_title, setLessonTitle] = useState(aula.lesson_title);
+interface IProps {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	lesson: any
+}
 
-	const handleLessonTitleChange = (e) => {
+const Lesson = ({ lesson }: IProps) => {
+  const [lesson_title, setLessonTitle] = useState(lesson.lesson_title);
+
+	const handleLessonTitleChange = (e: { target: { value: unknown; }; }) => {
 		setLessonTitle(e.target.value);
-		aula.lesson_title = e.target.value; // Atualiza o valor no objeto da aula
+		lesson.lesson_title = e.target.value; // Atualiza o valor no objeto da aula
 	};
 
   return (
     <div>
-      <p>Aula: {lesson_title}</p>
-      <input
+      <Input
         type="text"
         value={lesson_title}
         onChange={handleLessonTitleChange}
@@ -20,4 +25,4 @@ const Aula = ({ aula }) => {
   );
 };
 
-export default Aula;
+export default Lesson;
