@@ -11,6 +11,9 @@ const Module = ({ module }: IProps) => {
 	const [module_title, setModuleTitle] = useState(module.module_title);
 	const [lessons, setLessons] = useState(module.lessons);
 	const [newLessonTitle, setNewLessonTitle] = useState('');
+	const [videoUrl, setVideoUrl] = useState('');
+	const [pdfUrl, setPdfUrl] = useState('');
+	const [content, setContent] = useState('');
 
 	const handleModuleTitleChange = (e: { target: { value: unknown; }; }) => {
 		setModuleTitle(e.target.value);
@@ -18,11 +21,12 @@ const Module = ({ module }: IProps) => {
 	};
 
 	const addLesson = () => {
-		const newLesson = { lesson_title: newLessonTitle };
+		const newLesson = { lesson_title: newLessonTitle, video_url: videoUrl, pdf_url: pdfUrl, content: content };
 		setLessons([...lessons, newLesson]);
 		setNewLessonTitle('');
-
-		// Atualize o valor no objeto do módulo
+		setVideoUrl('');
+		setPdfUrl('');
+		setContent('');
 		module.lessons = [...lessons, newLesson];
 	};
 
@@ -31,6 +35,8 @@ const Module = ({ module }: IProps) => {
 			bg="white"
 			p={5}
 			my={5}
+			rounded="lg"
+			shadow="lg"
 		>
 
 			<Input

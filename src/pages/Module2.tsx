@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Curso from "../components/CourseRegister/Course";
+import Course from "../components/CourseRegister/Course";
 import { Box } from "@chakra-ui/react";
 
 const ContainerCourse = () => {
@@ -15,6 +15,9 @@ const ContainerCourse = () => {
 						lessons: modulo.lessons.map((aula) => {
 							return {
 								lesson_title: aula.lesson_title,
+								video_url: aula.video_url,
+								pdf_url: aula.pdf_url,
+								content: aula.content
 							};
 						}),
 					};
@@ -41,11 +44,14 @@ const ContainerCourse = () => {
     <Box>
       <h1>Criar novo curso</h1>
       {cursos.map((curso, index) => (
-        <Curso key={index} course={curso} />
+        <Course key={index} course={curso} />
       ))}
 
 		<button onClick={formatDataToJSON}>Formatar e Imprimir JSON</button>
     <pre>{formattedData}</pre>
+
+
+		<iframe src="https://drive.google.com/file/d/1weJnHARZvTV2Tj0MoD3Ov9Fph5cXHrmj/preview" width="640" height="480" allow="autoplay"></iframe>
     </Box>
   );
 };

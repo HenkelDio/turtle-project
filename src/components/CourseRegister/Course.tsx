@@ -1,4 +1,4 @@
-import { Key, useState } from 'react';
+import { useState } from 'react';
 import Module from './Module';
 import { Input } from '@chakra-ui/react';
 
@@ -31,7 +31,6 @@ const Course = ({ course }: IProps) => {
 
 	return (
 		<div>
-			<h2>Curso: {course_title}</h2>
 			<input
 				type="text"
 				value={course_title}
@@ -40,12 +39,6 @@ const Course = ({ course }: IProps) => {
 			{modules.map((modulo, index) => (
 				<Module key={index} module={modulo} />
 			))}
-			<input
-				type="text"
-				value={newModuleTitle}
-				onChange={(e) => setNewModuleTitle(e.target.value)}
-				placeholder="Novo Módulo"
-			/>
 			<button onClick={addModule}>Adicionar Módulo</button>
 		</div>
 	);
