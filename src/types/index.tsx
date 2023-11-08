@@ -66,11 +66,11 @@ export interface IModuleClass {
 	pdfPath: string
 }
 
-export interface IModule {
-	title: string,
-	id: string,
-	modules: IModuleClass[]
-}
+// export interface IModule {
+// 	title: string,
+// 	id: string,
+// 	modules: IModuleClass[]
+// }
 
 export interface IOptions  {
 	option: string,
@@ -78,21 +78,21 @@ export interface IOptions  {
 }
 
 export interface IQuestion {
-	title: string,
+	question_title: string,
 	options: IOptions[],
-	correctAnswer: string
+	correct_answer: string
 }
 
 export interface ICourse {
 	id?: string,
-	courseTitle: string,
+	course_title: string,
 	percentage?: string,
-	modules: IModule[]
+	modules: IModule[],
 	questions?: IQuestion[]
 }
 
 export interface IContentClass {
-	id: string,
+	id?: string,
 	title: string,
 	urlVideo: string,
 	urlPdf: string,
@@ -100,10 +100,17 @@ export interface IContentClass {
 	completed: boolean
 }
 
+export interface ILesson {
+	lesson_title: string,
+	video_url: string,
+	pdf_url: string,
+	content: string,
+}
+
 export interface IModule {
 	id: string,
-	title: string,
-	classes?: IContentClass[]
+	module_title: string,
+	lessons?: ILesson[]
 }
 
 export interface ICertificate {

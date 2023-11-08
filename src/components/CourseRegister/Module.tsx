@@ -1,6 +1,6 @@
 import { Key, useState } from 'react';
 import Lesson from './Lesson';
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Button, Input } from '@chakra-ui/react';
 
 interface IProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,7 +47,7 @@ const Module = ({ module }: IProps) => {
 			{lessons.map((aula: unknown, index: Key | null | undefined) => (
 				<Lesson key={index} lesson={aula} />
 			))}
-			<button onClick={addLesson}>Adicionar Aula</button>
+			<Button onClick={addLesson} mt={2}>Adicionar Aula</Button>
 		</Box>
 	);
 };

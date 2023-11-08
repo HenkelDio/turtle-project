@@ -1,59 +1,153 @@
 import { useState } from "react";
 import Course from "../components/CourseRegister/Course";
-import { Box } from "@chakra-ui/react";
+import { Box, Button, Flex, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from "@chakra-ui/react";
+import { formatCourseToJson } from "../utils/formatCourseToJson";
+import { ICourse } from "../types";
+import Question from "../components/CourseRegister/Question";
+
+
+const steps = [
+	{ title: 'Primeiro passo', description: 'Informações do curso' },
+	{ title: 'Segundo passo', description: 'Questões da prova' },
+]
 
 const ContainerCourse = () => {
-	const [formattedData, setFormattedData] = useState(null);
+	const [formattedData, setFormattedData] = useState('');
+	const [courses, setCourses] = useState<ICourse[]>([
+		{
+			course_title: "",
+			modules: [
+				{
+					id: "",
+					module_title: "Módulo 1",
+					lessons: []
+				}
+			],
+			questions: [
+				{
+					question_title: "Questão 1",
+					options: [
+						{
+							option: "",
+							text: ""
+						}
+					],
+					correct_answer: ""
+				}
+			]
+		}
+	]);
+	const [questions, setQuestions] = useState(courses[0].questions);
+
+	// eslint-disable-next-line @typescript-eslint/unbound-method
+	const { activeStep, goToNext, goToPrevious } = useSteps({
+		index: 1,
+		count: steps.length,
+	})
+
+	const addQuestion = () => {
+		const newQuestion = {
+			question_title: "",
+			options: [],
+			correct_answer: ""
+		};
+		setQuestions([...questions, newQuestion]);
+
+		courses[0].questions = [...questions, newQuestion];
+	};
 
 	const formatDataToJSON = () => {
-		const formattedCourses = cursos.map((curso) => {
-			return {
-				course_title: curso.course_title,
-				modules: curso.modules.map((modulo) => {
-					return {
-						module_title: modulo.module_title,
-						lessons: modulo.lessons.map((aula) => {
-							return {
-								lesson_title: aula.lesson_title,
-								video_url: aula.video_url,
-								pdf_url: aula.pdf_url,
-								content: aula.content
-							};
-						}),
-					};
-				}),
-			};
-		});
+		const formattedCourses = formatCourseToJson(courses);
 		setFormattedData(JSON.stringify(formattedCourses, null, 2));
+
+		console.log(formattedData)
 	};
-	
 
-  const [cursos, setCursos] = useState([
-    {
-      course_title: "",
-      modules: [
-        {
-          module_title: "Módulo 1",
-          lessons: []
-        },
-      ]
-    },
-  ]);
+	return (
+		<Box w={1000} mx='auto'>
+			<h1>Criar novo curso</h1>
 
-  return (
-    <Box>
-      <h1>Criar novo curso</h1>
-      {cursos.map((curso, index) => (
-        <Course key={index} course={curso} />
-      ))}
+			<Box p={10} mx="auto">
+				<Stepper size='lg' index={activeStep} colorScheme='green'>
+					{steps.map((step, index) => (
+						<Step key={index}>
+							<StepIndicator>
+								<StepStatus
+									complete={<StepIcon />}
+									incomplete={<StepNumber />}
+									active={<StepNumber />}
+								/>
+							</StepIndicator>
 
-		<button onClick={formatDataToJSON}>Formatar e Imprimir JSON</button>
-    <pre>{formattedData}</pre>
+							<Box flexShrink='0'>
+								<StepTitle>{step.title}</StepTitle>
+								<StepDescription>{step.description}</StepDescription>
+							</Box>
 
+							<StepSeparator />
 
-		<iframe src="https://drive.google.com/file/d/1weJnHARZvTV2Tj0MoD3Ov9Fph5cXHrmj/preview" width="640" height="480" allow="autoplay"></iframe>
-    </Box>
-  );
+						</Step>
+					))}
+				</Stepper>
+			</Box>
+
+			{
+				activeStep === 1 &&
+				<>
+					{courses.map((curso, index) => (
+						<Course key={index} course={curso} />
+					))}
+
+					<Flex justifyContent="center" alignItems="center">
+						<Button
+							mt={20}
+							w={200}
+							colorScheme="green"
+							onClick={goToNext}
+						>
+							Próximo
+						</Button>
+					</Flex>
+				</>
+			}
+
+			{
+				activeStep === 2 &&
+				<>
+
+					{courses[0].questions?.map((question, index) => (
+						<Question key={index} question={question} />
+					))}
+
+					<Button
+						mt={5}
+						onClick={addQuestion}
+					>
+						Adicionar nova questão
+					</Button>
+
+					<Flex justifyContent="center" alignItems="center" gap={5}>
+						<Button
+							mt={20}
+							w={200}
+							onClick={goToPrevious}
+						>
+							Voltar
+						</Button>
+						<Button
+							mt={20}
+							w={200}
+							colorScheme="green"
+							onClick={formatDataToJSON}
+						>
+							Salvar
+						</Button>
+					</Flex>
+				</>
+			}
+
+		</Box>
+	);
 };
 
 export default ContainerCourse;
