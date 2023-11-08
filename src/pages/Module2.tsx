@@ -28,7 +28,19 @@ const ContainerCourse = () => {
 					question_title: "Questão 1",
 					options: [
 						{
-							option: "",
+							option: "a",
+							text: ""
+						},
+						{
+							option: "b",
+							text: ""
+						},
+						{
+							option: "c",
+							text: ""
+						},
+						{
+							option: "d",
 							text: ""
 						}
 					],
@@ -37,7 +49,8 @@ const ContainerCourse = () => {
 			]
 		}
 	]);
-	const [questions, setQuestions] = useState(courses[0].questions);
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const [questions, setQuestions] = useState<any>(courses[0].questions);
 
 	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { activeStep, goToNext, goToPrevious } = useSteps({
@@ -48,7 +61,24 @@ const ContainerCourse = () => {
 	const addQuestion = () => {
 		const newQuestion = {
 			question_title: "",
-			options: [],
+			options: [
+				{
+					option: "a",
+					text: ""
+				},
+				{
+					option: "b",
+					text: ""
+				},
+				{
+					option: "c",
+					text: ""
+				},
+				{
+					option: "d",
+					text: ""
+				}
+			],
 			correct_answer: ""
 		};
 		setQuestions([...questions, newQuestion]);
