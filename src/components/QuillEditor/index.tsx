@@ -8,11 +8,19 @@ interface IProps {
 	content: string
 }
 
+const modules = {
+	toolbar: [
+		['bold', 'italic', 'underline', 'strike'],
+	],
+};
+
+const formats = ['bold', 'italic', 'underline', 'strike'];
+
 const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
 
 	const placeholder = content;
 
-	const { quill, quillRef } = useQuill({ placeholder });
+	const { quill, quillRef } = useQuill({ placeholder, modules, formats	 });
 
 	// console.log(quill);    // undefined > Quill Object
 	// console.log(quillRef);
