@@ -68,7 +68,7 @@ export default function Question({ question }: IProps) {
 				<option value='a'>Opção A</option>
 				<option value='b'>Opção B</option>
 				<option value='c'>Opção C</option>
-				<option value='d'>Opção C</option>
+				<option value='d'>Opção D</option>
 			</Select>
 	
 

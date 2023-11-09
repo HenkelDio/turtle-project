@@ -89,8 +89,6 @@ const ContainerCourse = () => {
 	const formatDataToJSON = () => {
 		const formattedCourses = formatCourseToJson(courses);
 		setFormattedData(JSON.stringify(formattedCourses, null, 2));
-
-		console.log(formattedData)
 	};
 
 	return (

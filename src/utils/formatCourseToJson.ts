@@ -11,9 +11,9 @@ function formatCourseToJson(courses: ICourse[]) {
 					lessons: module.lessons?.map(( lesson: ILesson ) => {
 						return {
 							lesson_title: lesson.lesson_title,
-							video_url: lesson.video_url,
-							pdf_url: lesson.pdf_url,
-							content: lesson.content
+							lesson_video_url: lesson.video_url,
+							lesson_pdf_url: lesson.pdf_url,
+							lesson_richtext: lesson.content
 						};
 					}),
 				};
@@ -28,7 +28,7 @@ function formatCourseToJson(courses: ICourse[]) {
 		};
 	});
 
-	return formattedCourses;
+	return formattedCourses[0];
 }
 
 export { formatCourseToJson }
