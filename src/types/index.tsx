@@ -1,24 +1,23 @@
 export interface IStore {
 	credentials: ICredentials,
-	setCredentials: Function,
+	setCredentials: (credentials: ICredentials) => void,
 
 	isAuthenticated: boolean,
-	setAuthenticated: Function,
+	setAuthenticated: (isAuthenticated: boolean) => void,
 
 	registerType: string,
-	setRegisterType: Function,
-
-	onCourse: boolean,
+	setRegisterType: (registerType: string) => void,
 
 	modules: IModule[],
-	setModules: Function,
+	setModules: (modules: IModule[]) => void,
 
 	userIcon: string,
-	setUserIcon: Function
+	setUserIcon: (userIcon: string) => void
 }
 
 export interface ICredentials {
-	type: string,
+	username: string,
+	type: string
 }
 
 export interface IHttpClient {
@@ -83,7 +82,7 @@ export interface IQuestion {
 	correct_answer: string
 }
 
-export interface ICourse {
+export interface 	ICourse {
 	id?: string,
 	course_title: string,
 	percentage?: string,

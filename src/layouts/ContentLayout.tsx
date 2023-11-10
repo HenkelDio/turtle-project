@@ -1,5 +1,3 @@
-'use client'
-
 import {
   IconButton,
   Avatar,
@@ -32,6 +30,7 @@ import {
 import { LuBook } from 'react-icons/lu'
 import { IconType } from 'react-icons'
 import { Link, Outlet } from 'react-router-dom'
+import useTurtleStore from '../store'
 
 interface LinkItemProps {
   name: string
@@ -57,7 +56,13 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Treinamentos', icon: LuBook, link: '/courses' },
 ]
 
+const LinkWorkplaceItems: Array<LinkItemProps> = [
+	{ name: 'Usuários', icon: FiUsers, link: '/users' },
+]
+
 const SideBarContent = ({ onClose, ...rest }: SidebarProps) => {
+	const { credentials } = useTurtleStore((state) => state);
+
   return (
     <Box
       transition="3s ease"
@@ -74,13 +79,23 @@ const SideBarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
+      
+			{credentials.type === 'admin' && LinkItems.map((link) => (
         <Link to={link.link}>
           <NavItem key={link.name} icon={link.icon}>
               {link.name}
           </NavItem>
         </Link>
       ))}
+
+		{credentials.type === 'workplace' && LinkWorkplaceItems.map((link) => (
+        <Link to={link.link}>
+          <NavItem key={link.name} icon={link.icon}>
+              {link.name}
+          </NavItem>
+        </Link>
+      ))}
+
     </Box>
   )
 }

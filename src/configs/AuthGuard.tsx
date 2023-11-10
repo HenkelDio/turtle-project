@@ -6,14 +6,15 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ isPrivate }: AuthGuardProps) {
-	const { isAuthenticated } = useTurtleStore((state) => state);
-	const userType = 'admin';
+	const { isAuthenticated, credentials } = useTurtleStore((state) => state);
+
+	const userType = credentials.type;
 
   if(!isAuthenticated && isPrivate) {
     return <Navigate to="/" replace />
   }
 
-  if(isAuthenticated && !isPrivate && userType === 'admin') {
+  if(isAuthenticated && !isPrivate && (userType === 'admin' || userType === 'workplace')) {
     return <Navigate to="/users" replace />
   }
 
