@@ -23,7 +23,7 @@ export default function Login() {
 	function login() {
 		setCredentials({
 			username: "Willian Henkel",
-			type: "workplace"
+			type: "admin"
 		})
 		setAuthenticated(true)
 	}
