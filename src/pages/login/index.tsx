@@ -20,6 +20,7 @@ export default function Login() {
 	const [buttonLoading, setButtonLoading] = useState(false);
 	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
 
+
 	function login() {
 		setCredentials({
 			username: "Willian Henkel",
@@ -40,7 +41,9 @@ export default function Login() {
 			<>
 				<FormControl id="password">
 					<FormLabel>Senha</FormLabel>
-					<Input type={showPassword ? 'text' : 'password'} />
+					<Input 
+						type={showPassword ? 'text' : 'password'} 
+					/>
 				</FormControl>
 				<Stack spacing={6}>
 					<Stack
@@ -51,8 +54,9 @@ export default function Login() {
 							<FormLabel htmlFor='email-alerts' mb='0'>
 								Mostrar senha
 							</FormLabel>
-							<Switch id='email-alerts' onChange={() => setShowPassword(prevState => !prevState)} />
+							<Switch id='email-alerts' onChange={(e) => setShowPassword(true)} />
 						</FormControl>
+						<p>a{showPassword ? 'true' : 'false'}</p>
 					</Stack>
 					<Button colorScheme={'green'} variant={'solid'} onClick={() => login()}>
 						Entrar

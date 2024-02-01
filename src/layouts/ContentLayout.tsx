@@ -22,7 +22,6 @@ import {
 } from '@chakra-ui/react'
 import {
   FiUsers,
-  FiTrendingUp,
   FiMenu,
   FiBell,
   FiChevronDown,
