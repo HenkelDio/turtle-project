@@ -18,7 +18,7 @@ import LandingPageLayout from "../layouts/LandingPageLayout";
 import HomeLandingPage from "../pages/LandingPage/HomeLandingPage";
 import ContactLandingPage from "../pages/LandingPage/ContactLandingPage";
 import CoursesLandingPage from "../pages/LandingPage/CoursesLandingPage";
-import ContainerCourse from "../pages/Module2";
+import ContainerCourse from "../pages/adminPage/courseRegister/Module2";
 
 export function Router() {
   return(

@@ -10,12 +10,18 @@ interface IProps {
 
 const Course = ({ course }: IProps) => {
 	const [course_title, setCourseTitle] = useState(course.course_title);
+	const [course_description, setCourseDescription] = useState(course.course_description);
 	const [modules, setModules] = useState(course.modules);
 	const [newModuleTitle, setNewModuleTitle] = useState('');
 
 	const handleCourseTitleChange = (e: { target: { value: unknown; }; }) => {
 		setCourseTitle(e.target.value);
 		course.course_title = e.target.value;
+	};
+
+	const handleCourseDescriptionChange = (e: { target: { value: unknown; }; }) => {
+		setCourseDescription(e.target.value);
+		course.course_description = e.target.value;
 	};
 
 	const addModule = () => {
@@ -40,6 +46,17 @@ const Course = ({ course }: IProps) => {
 				value={course_title}
 				onChange={handleCourseTitleChange}
 			/>
+
+		<Input
+				mt={5}
+				placeholder='Descrição do curso'
+				bg="white"
+				type="text"
+				value={course_description}
+				onChange={handleCourseDescriptionChange}
+			/>
+			
+
 			{modules.map((module: IModule, index: number) => (
 				<Module key={index} module={module} />
 			))}

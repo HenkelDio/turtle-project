@@ -5,6 +5,7 @@ function formatCourseToJson(courses: ICourse[]) {
 	const formattedCourses = courses.map((course) => {
 		return {
 			course_title: course.course_title,
+			course_description: course.course_description,
 			modules: course.modules.map((module: IModule) => {
 				return {
 					module_title: module.module_title,
@@ -20,9 +21,9 @@ function formatCourseToJson(courses: ICourse[]) {
 			}),
 			questions: course.questions?.map((question: IQuestion) => {
 				return {
-					question_title: question.question_title,
-					options: question.options,
-					correct_answer: question.correct_answer
+					question_text: question.question_title,
+					question_options: question.question_options,
+					question_answer: question.question_answer
 				}
 			})
 		};

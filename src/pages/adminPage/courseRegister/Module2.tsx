@@ -1,9 +1,10 @@
 import { useState } from "react";
-import Course from "../components/CourseRegister/Course";
 import { Box, Button, Flex, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, useSteps } from "@chakra-ui/react";
-import { formatCourseToJson } from "../utils/formatCourseToJson";
-import { ICourse } from "../types";
-import Question from "../components/CourseRegister/Question";
+import { ICourse } from "../../../types";
+import { formatCourseToJson } from "../../../utils/formatCourseToJson";
+import Course from "../../../components/CourseRegister/Course";
+import Question from "../../../components/CourseRegister/Question";
+import { createCourse } from "../../../services/coursesService";
 
 
 const steps = [
@@ -16,6 +17,7 @@ const ContainerCourse = () => {
 	const [courses, setCourses] = useState<ICourse[]>([
 		{
 			course_title: "",
+			course_description: "",
 			modules: [
 				{
 					id: "",
@@ -26,25 +28,25 @@ const ContainerCourse = () => {
 			questions: [
 				{
 					question_title: "Questão 1",
-					options: [
+					question_options: [
 						{
-							option: "a",
-							text: ""
+							question_option_letter: "a",
+							question_option_text: ""
 						},
 						{
-							option: "b",
-							text: ""
+							question_option_letter: "b",
+							question_option_text: ""
 						},
 						{
-							option: "c",
-							text: ""
+							question_option_letter: "c",
+							question_option_text: ""
 						},
 						{
-							option: "d",
-							text: ""
+							question_option_letter: "d",
+							question_option_text: ""
 						}
 					],
-					correct_answer: ""
+					question_answer: ""
 				}
 			]
 		}
@@ -60,35 +62,39 @@ const ContainerCourse = () => {
 
 	const addQuestion = () => {
 		const newQuestion = {
-			question_title: "",
-			options: [
+			question_text: "",
+			question_options: [
 				{
-					option: "a",
-					text: ""
+					question_option_letter: "a",
+					question_option_text: ""
 				},
 				{
-					option: "b",
-					text: ""
+					question_option_letter: "b",
+					question_option_text: ""
 				},
 				{
-					option: "c",
-					text: ""
+					question_option_letter: "c",
+					question_option_text: ""
 				},
 				{
-					option: "d",
-					text: ""
+					question_option_letter: "d",
+					question_option_text: ""
 				}
 			],
-			correct_answer: ""
+			question_answer: ""
 		};
 		setQuestions([...questions, newQuestion]);
 
 		courses[0].questions = [...questions, newQuestion];
 	};
 
-	const formatDataToJSON = () => {
+	const formatDataToJSON = async () => {
 		const formattedCourses = formatCourseToJson(courses);
 		setFormattedData(JSON.stringify(formattedCourses, null, 2));
+
+		const response = await createCourse(formattedCourses);
+
+		console.log(response)
 	};
 
 	return (
@@ -166,11 +172,14 @@ const ContainerCourse = () => {
 							mt={20}
 							w={200}
 							colorScheme="green"
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises
 							onClick={formatDataToJSON}
 						>
 							Salvar
 						</Button>
 					</Flex>
+
+					{formattedData}
 				</>
 			}
 

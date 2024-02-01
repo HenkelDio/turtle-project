@@ -72,19 +72,20 @@ export interface IModuleClass {
 // }
 
 export interface IOptions  {
-	option: string,
-	text: string
+	question_option_letter: string,
+	question_option_text: string
 }
 
 export interface IQuestion {
 	question_title: string,
-	options: IOptions[],
-	correct_answer: string
+	question_options: IOptions[],
+	question_answer: string
 }
 
 export interface 	ICourse {
 	id?: string,
 	course_title: string,
+	course_description: string,
 	percentage?: string,
 	modules: IModule[],
 	questions?: IQuestion[]
