@@ -25,11 +25,12 @@ export interface IHttpClient {
 }
 
 export interface IUserStudent {
-	student_company_id: number,
+	student_company_id: string,
 	student_name: string,
-	student_cpf: string,
-	student_cellphone: string,
+	student_document: string,
+	student_phone: string,
 	student_email: string,
+	courses_id: string[]
 }
 
 export interface IUserAdmin {

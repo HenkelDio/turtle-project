@@ -10,23 +10,28 @@ import formatPhone from "../../../utils/phoneFormat";
 import { formatDocument } from "../../../utils/documentFormat";
 import Select from "../../../components/Select";
 import { Button, useToast } from "@chakra-ui/react";
+import Paginator from "../../../components/Paginator";
 
 const UserAdministration: React.FC = () => {
 	const [users, setUsers] = useState<any[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isLoading, setLoading] = useState(true);
-	const [openDialog, setOpenDialog] = useState(false);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
+	const [totalPages, setTotalPages] = useState(1);
   const toast = useToast()
 
-	useQuery(['user'], listStudentes, {
+	useQuery(['user', page, pageSize], () => listStudentes(page, pageSize), {
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		onSuccess: async ({ data, err }) => {
+		onSuccess: ({ data, err }) => {
 			setLoading(true)
 
 			if (!err) {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-				setUsers(data);
+				setUsers(data.students);
 				setLoading(false)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+				setTotalPages(data.totalPages)
 			}
 			if (err) {
 				toast({
@@ -42,6 +47,10 @@ const UserAdministration: React.FC = () => {
 		},
 	});
 
+	function changePageSize(pageSize: number) {
+		setPageSize(pageSize);
+	}
+
 	const filteredCards = useMemo(() => users?.filter((user) => (
 		user.student_name.toLowerCase().includes(searchTerm.toLowerCase()))), [users, searchTerm]);
 
@@ -54,10 +63,10 @@ const UserAdministration: React.FC = () => {
 						placeholder="Pesquise pelo nome do usuário"
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>
-					<Select>
-						<option defaultValue="student">Estudante</option>
-						<option defaultValue="company">Empresa</option>
-						<option defaultValue="admin">Administrador</option>
+					<Select onChange={(e) => changePageSize(e.target.value)}>
+						<option disabled selected>Resultados por página</option>
+						<option defaultValue="10">10</option>
+						<option defaultValue="20">20</option>
 					</Select>
 				</FilterInput>
 				<Link to="/users/create">
@@ -89,8 +98,12 @@ const UserAdministration: React.FC = () => {
 										return (
 											<tr>
 												<td className="name">{user.student_name}</td>
-												<td>{formatDocument(user.student_cpf)}</td>
-												<td>{formatPhone(user.student_cellphone)}</td>
+												<td>{formatDocument(user.student_document)}</td>
+												<td>
+													{user.student_phone ?
+														formatPhone(user.student_phone) 
+													: "-"}
+												</td>
 												<td className="actions"><Link to="/">Editar</Link></td>
 											</tr>
 										)
@@ -99,6 +112,13 @@ const UserAdministration: React.FC = () => {
 
 							</tbody>
 						</table>
+
+						{users && users.length === 0 && <Box>Nenhum usuário encontrado.</Box>}
+						
+						{
+							users && users.length > 0 && 
+							<Paginator setPage={setPage} page={page} totalPages={totalPages}/>
+						}
 					</ContainerList>
 
 

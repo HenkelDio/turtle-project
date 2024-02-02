@@ -8,10 +8,10 @@ export const studentValidation = yup.object().shape({
 	.required('O "e-mail" é obrigatório')
 	.email('Digite um e-mail válido'),
 
-	student_cpf: yup.string()
+	student_document: yup.string()
 	.required('O "CPF" é obrigatório'),
 
-	student_cellphone: yup.string()
+	student_phone: yup.string()
 	.required('O "número" é obrigatório')
 
 })
