@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 
-
 export const Content = styled.div`
 	margin: 0 auto;
 	flex: 2;
@@ -19,7 +18,7 @@ export const Content = styled.div`
 	details {
 		margin-top: 40px;
 		border-radius: 10px;
-		box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 
 		background-color: #fff;
 		padding: 20px;
@@ -30,8 +29,8 @@ export const Content = styled.div`
 	}
 
 	.text {
-			margin-top: 50px;
-			margin-bottom: 50px;
+		margin-top: 50px;
+		margin-bottom: 50px;
 	}
 
 	button {

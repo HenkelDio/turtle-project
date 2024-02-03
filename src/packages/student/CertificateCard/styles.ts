@@ -13,11 +13,9 @@ export const Card = styled.div`
 	align-items: center;
 	justify-content: space-around;
 
-
-	-webkit-box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
-	-moz-box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
-	box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
-
+	-webkit-box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
+	-moz-box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
+	box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
 `;
 
 export const Icon = styled.div`

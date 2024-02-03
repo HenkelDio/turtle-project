@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import RegisterForm from "../../../components/RegisterForm";
@@ -14,7 +14,7 @@ import {
 	ContainerCompaniesChip,
 } from "./styles";
 import { IoIosArrowBack } from "react-icons/io";
-import { IUserStudent } from "../../../types";
+import { IUserStudent, IWorkplace } from "../../../types";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import FieldInput from "../../../components/Fields/FieldInput";
 import MaskedInput from "react-text-mask";
@@ -25,11 +25,13 @@ import {
 	verifyIfDocumentAlreadyExists,
 	verifyIfEmailAlreadyExists,
 } from "../../../services/usersService";
-import { useToast } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
+import CreateWorkplaceDrawer from "../../../components/CreateWorkplaceDrawer";
+import { getCompanies } from "../../../services/workplaceService";
 
 const FormGroupStudentRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
-	const [isOpen, setOpen] = useState(false);
+	const [isOpenModal, setOpen] = useState(false);
 	const [selectedWorkplace, setSelectedWorkplace] = useState<any>([]);
 	const [documentAlreadyExists, setDocumentAlreadyExits] = useState(false);
 	const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
@@ -41,19 +43,16 @@ const FormGroupStudentRegister: React.FC = () => {
 		{ index: 459, name: "Como aaaa o seu yyty" },
 		{ index: 450, name: "Como aaaa o seu kugb" },
 	]);
-	const [workplaces] = useState([
-		{ index: 15, name: "Souza Treinamentos" },
-		{ index: 457, name: "Code&Code" },
-		{ index: 448, name: "Loja de Sapatos" },
-	]);
+	const [workplaces, setWorkplaces] = useState<IWorkplace[]>()
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
 	const [student, setStudent] = useState<IUserStudent | undefined>();
+	const { isOpen, onOpen, onClose } = useDisclosure()
 
 	const handleSelectedCourse = (index: number) => {
 		selectedCourses.some((el: any) => index === el)
 			? setSelectedCourses([
 					...selectedCourses.filter((course: any) => index !== course),
-			])
+				])
 			: setSelectedCourses([...selectedCourses, index]);
 	};
 
@@ -77,6 +76,35 @@ const FormGroupStudentRegister: React.FC = () => {
 			});
 		}
 	};
+
+
+
+	useEffect(() => {
+		getCompanies()
+    .then((response) => {
+      if (response.data) {
+        setWorkplaces(response.data);
+      } else {
+        toast({
+          title: 'Erro',
+          description: 'Erro ao carregar estabelecimentos',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Erro ao obter estabelecimentos', error);
+			toast({
+				title: 'Erro',
+				description: 'Erro ao carregar estabelecimentos',
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+    });
+	}, []); 
 
 	const checkIfDocumentAlreadyExists = async (document: string) => {
 		if (document.length < 14) {
@@ -157,7 +185,7 @@ const FormGroupStudentRegister: React.FC = () => {
 					selectedWorkplace={selectedWorkplace}
 					courses={courses}
 					workplaces={workplaces}
-					isOpen={isOpen}
+					isOpen={isOpenModal}
 					setOpen={setOpen}
 				/>
 			)}
@@ -255,18 +283,19 @@ const FormGroupStudentRegister: React.FC = () => {
 						<FormContainer>
 							<Input placeholder="Pesquise pelo nome da empresa" />
 							<ContainerCompaniesChip>
-								{workplaces.map((course) => {
+								{workplaces && workplaces.map((workplace, index) => {
 									return (
 										<Chip
-											key={course.index}
-											select={handleWorkplaces(course.index) ? "true" : "false"}
-											onClick={() => handleSelectedWorkplace(course.index)}
+											key={workplace.company_register}
+											select={handleWorkplaces(Number(workplace.company_register)) ? "true" : "false"}
+											onClick={() => handleSelectedWorkplace(Number(workplace.company_register))}
 										>
-											{course.name}
+											{workplace.company_name}
 										</Chip>
 									);
 								})}
 							</ContainerCompaniesChip>
+							<p>ou <span onClick={onOpen}>adicione um novo estabelecimento</span></p>
 						</FormContainer>
 					</Box>
 					<Button onClick={() => setStep(3)}>Continuar</Button>
@@ -299,6 +328,8 @@ const FormGroupStudentRegister: React.FC = () => {
 					</Button>
 				</>
 			)}
+
+			<CreateWorkplaceDrawer onClose={onClose} isOpen={isOpen} />
 		</div>
 	);
 };

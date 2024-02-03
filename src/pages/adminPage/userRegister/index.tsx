@@ -5,7 +5,6 @@ import useTurtleStore from "../../../store";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { BackPage } from "../../../packages/admin/FormGroup/styles";
-import FormGroupCompanyRegister from "../../../packages/admin/FormGroup/FormGroupCompanyRegister";
 import FormGroupAdminRegister from "../../../packages/admin/FormGroup/FormGroupAdminRegister";
 
 const UserRegister: React.FC = () => {
@@ -15,7 +14,9 @@ const UserRegister: React.FC = () => {
 	return (
 		<Container>
 			<BackPage>
-				<Link to='/users'><IoIosArrowBack /></Link>
+				<Link to="/users">
+					<IoIosArrowBack />
+				</Link>
 			</BackPage>
 
 			<h1>Criar novo usuário</h1>
@@ -24,20 +25,10 @@ const UserRegister: React.FC = () => {
 				<Select />
 			</Box>
 
-			{
-				registerType === 'student' && <FormGroupStudentRegister />
-			}
-
-			{
-				registerType === 'company' && <FormGroupCompanyRegister	/>
-			}
-
-			{
-				registerType === 'admin' && <FormGroupAdminRegister />
-			}
-
+			{registerType === "student" && <FormGroupStudentRegister />}
+			{registerType === "admin" && <FormGroupAdminRegister />}
 		</Container>
-	)
-}
+	);
+};
 
 export default UserRegister;

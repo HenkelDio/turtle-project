@@ -8,20 +8,25 @@ import Loader from "../../../components/Loader";
 
 const Certificates: React.FC = () => {
 	const [cards] = useState([
-		{title: 'Ir ao mercado: como fazer? E como montar um macaco'},
-		{title: 'Python básico para iniciantes'},
-		{title: 'Como fazer uma API REST em Node.JS e ir ao mercado'},
+		{ title: "Ir ao mercado: como fazer? E como montar um macaco" },
+		{ title: "Python básico para iniciantes" },
+		{ title: "Como fazer uma API REST em Node.JS e ir ao mercado" },
 	]);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setLoading] = useState(true);
 
-	const filteredCards = useMemo(() => cards.filter((card) => (
-    card.title.toLowerCase().includes(searchTerm.toLowerCase()))), [cards, searchTerm]);
+	const filteredCards = useMemo(
+		() =>
+			cards.filter((card) =>
+				card.title.toLowerCase().includes(searchTerm.toLowerCase()),
+			),
+		[cards, searchTerm],
+	);
 
 	const handleSearch = (e: any) => {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		setSearchTerm(e.target.value);
-	}
+	};
 
 	useEffect(() => {
 		async function handleDelay() {
@@ -32,38 +37,31 @@ const Certificates: React.FC = () => {
 
 		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		handleDelay();
+	}, []);
 
-	}, [])
-
-	if(isLoading) {
-		return (
-			<Loader />
-		)
+	if (isLoading) {
+		return <Loader />;
 	}
 
-	return(
+	return (
 		<Container>
 			<h1>Meus certificados</h1>
-			<Input 
+			<Input
 				placeholder="Pesquise pelo nome do certificado"
 				onChange={(e) => handleSearch(e)}
 			/>
-			{
-				filteredCards.length > 0 
-				? <span>{filteredCards.length} certificados encontrados</span>
-				: <span>Não foi encontrado o certificado com o nome: {searchTerm}</span>
-			}
+			{filteredCards.length > 0 ? (
+				<span>{filteredCards.length} certificados encontrados</span>
+			) : (
+				<span>Não foi encontrado o certificado com o nome: {searchTerm}</span>
+			)}
 			<ContainerCertificates>
-				{
-					filteredCards.map((card) => {
-						return <CertificateCard 
-							title={card.title}
-						/>
-					})
-				}
+				{filteredCards.map((card) => {
+					return <CertificateCard title={card.title} />;
+				})}
 			</ContainerCertificates>
 		</Container>
-	)
-}
+	);
+};
 
 export default Certificates;

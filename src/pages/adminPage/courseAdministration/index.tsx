@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom"
-import Input from "../../../components/Input"
-import { Container, ContainerList, Box } from "./styles"
-import CardCourse from "../../../packages/admin/CardCourse"
-import { Button } from "@chakra-ui/react"
+import { Link } from "react-router-dom";
+import Input from "../../../components/Input";
+import { Container, ContainerList, Box } from "./styles";
+import CardCourse from "../../../packages/admin/CardCourse";
+import { Button } from "@chakra-ui/react";
 
 const CourseAdministration: React.FC = () => {
 	return (
@@ -11,11 +11,7 @@ const CourseAdministration: React.FC = () => {
 			<Box>
 				<p>3 cursos</p>
 				<Link to="/eitalasqueira">
-					<Button
-						colorScheme="green"
-					>
-						Novo curso
-					</Button>
+					<Button colorScheme="green">Novo curso</Button>
 				</Link>
 			</Box>
 			<Input placeholder="Procure pelo nome do curso" />
@@ -26,7 +22,7 @@ const CourseAdministration: React.FC = () => {
 				<CardCourse />
 			</ContainerList>
 		</Container>
-	)
-}
+	);
+};
 
-export default CourseAdministration
+export default CourseAdministration;

@@ -1,13 +1,13 @@
 import { css, styled } from "styled-components";
 
 interface IStyleProps {
-	success: boolean,
-	error: boolean,
+	success: boolean;
+	error: boolean;
 }
 
 export const Overlay = styled.div`
 	position: absolute;
-  top: 85%;  
+	top: 85%;
 	left: 50px;
 
 	width: 300px;
@@ -29,7 +29,7 @@ export const Overlay = styled.div`
 export const Container = styled.div<IStyleProps>`
 	position: relative;
 	background-color: ${({ theme }) => theme.colors.alert.sucess};
-	font-family: 'Work Sans', sans-serif;
+	font-family: "Work Sans", sans-serif;
 
 	padding: 20px 20px;
 	border-radius: 7px;
@@ -41,29 +41,33 @@ export const Container = styled.div<IStyleProps>`
 	align-items: center;
 	gap: 20px;
 
-	${({ success }) => success && css`
-		background-color: ${({ theme }) => theme.colors.alert.success};
+	${({ success }) =>
+		success &&
+		css`
+			background-color: ${({ theme }) => theme.colors.alert.success};
 
-		p {
-			color: black;
-		}
+			p {
+				color: black;
+			}
 
-		span {
-			color: black;
-		}
-	`}
+			span {
+				color: black;
+			}
+		`}
 
-	${({ error }) => error && css`
-		background-color: ${({ theme }) => theme.colors.alert.error};
+	${({ error }) =>
+		error &&
+		css`
+			background-color: ${({ theme }) => theme.colors.alert.error};
 
-		p {
-			color: white;
-		}
+			p {
+				color: white;
+			}
 
-		span {
-			color: white;
-		}
-	`}
+			span {
+				color: white;
+			}
+		`}
 
 	p {
 		font-size: 1rem;
@@ -85,13 +89,17 @@ export const FooterLoading = styled.div<IStyleProps>`
 	bottom: 0;
 	left: 0;
 
-	${({ success }) => success && css`
-		background-color: ${({ theme }) => theme.colors.green.main};
-	`}
+	${({ success }) =>
+		success &&
+		css`
+			background-color: ${({ theme }) => theme.colors.green.main};
+		`}
 
-	${({ error }) => error && css`
-		background-color: ${({ theme }) => theme.colors.alert.errorUnderline};
-	`}
+	${({ error }) =>
+		error &&
+		css`
+			background-color: ${({ theme }) => theme.colors.alert.errorUnderline};
+		`}
 
 
 
@@ -107,4 +115,3 @@ export const FooterLoading = styled.div<IStyleProps>`
 		}
 	}
 `;
-

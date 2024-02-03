@@ -5,12 +5,9 @@ export const Container = styled.div`
 	flex-direction: column;
 	padding: 20px;
 
-
 	h1 {
 		margin-bottom: 50px;
 		font-size: 2rem;
 		text-align: center;
 	}
-
 `;
-

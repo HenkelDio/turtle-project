@@ -1,6 +1,5 @@
 import { css, styled } from "styled-components";
 
-
 export const Container = styled.div`
 	position: relative;
 	display: flex;
@@ -31,13 +30,12 @@ export const Container = styled.div`
 		outline: none;
 
 		transition: 0.5s ease-out;
-		font-family: 'Work Sans', sans-serif;
+		font-family: "Work Sans", sans-serif;
 		font-size: 1.1rem;
 
-
-	&:focus {
-		border: 3px solid #57CC99;
-	}
+		&:focus {
+			border: 3px solid #57cc99;
+		}
 	}
 
 	textarea {
@@ -51,7 +49,7 @@ export const Container = styled.div`
 		outline: none;
 
 		transition: 0.5s ease-out;
-		font-family: 'Work Sans', sans-serif;
+		font-family: "Work Sans", sans-serif;
 		font-size: 1.1rem;
 	}
 
@@ -65,8 +63,7 @@ export const Container = styled.div`
 			opacity: 1;
 		}
 	}
-
-`
+`;
 
 export const OptionsContainer = styled.div`
 	width: 10px;
@@ -83,7 +80,7 @@ export const OptionsContainer = styled.div`
 
 	border-radius: 5px;
 
-	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 
 	z-index: 9999;
 
@@ -94,16 +91,15 @@ export const OptionsContainer = styled.div`
 		height: 50px;
 	}
 
-	.stateContainer{
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 7vh;
-			width: 100%;
-			max-width: 100%;
-			min-width: 100%;
-			position: relative;
-
+	.stateContainer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 7vh;
+		width: 100%;
+		max-width: 100%;
+		min-width: 100%;
+		position: relative;
 
 		.radio-item [type="radio"] {
 			display: none;
@@ -125,27 +121,25 @@ export const OptionsContainer = styled.div`
 			position: relative;
 			transition: 0.4s ease-in-out 0s;
 		}
-		
 	}
 
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
 
-&::-webkit-scrollbar {
- 			 width: 10px;
-		}
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
 
-		/* Track */
-		&::-webkit-scrollbar-track {
-			background: #f1f1f1;
-		}
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: #d9d9d9;
+		border-radius: 4px;
+	}
 
-		/* Handle */
-		&::-webkit-scrollbar-thumb {
-			background: #D9D9D9;
-			border-radius: 4px;
-		}
-
-		/* Handle on hover */
-		&::-webkit-scrollbar-thumb:hover {
-			background: #B6B6B6;
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: #b6b6b6;
 	}
 `;

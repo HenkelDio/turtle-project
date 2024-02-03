@@ -16,11 +16,11 @@ export const Container = styled.div`
 		font-weight: 500;
 		padding-left: 5px;
 	}
-`;	
+`;
 
 export const ContainerCertificates = styled.div`
 	margin-top: 50px;
-	
+
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;

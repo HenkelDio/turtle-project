@@ -63,7 +63,7 @@ const UserAdministration: React.FC = () => {
 						placeholder="Pesquise pelo nome do usuário"
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>
-					<Select onChange={(e) => changePageSize(e.target.value)}>
+					<Select onChange={(e) => changePageSize(Number(e.target.value))}>
 						<option disabled selected>Resultados por página</option>
 						<option defaultValue="10">10</option>
 						<option defaultValue="20">20</option>
@@ -104,7 +104,7 @@ const UserAdministration: React.FC = () => {
 														formatPhone(user.student_phone) 
 													: "-"}
 												</td>
-												<td className="actions"><Link to="/">Editar</Link></td>
+												<td className="actions"><Link to={`/users/edit/${user.student_document}`}>Editar</Link></td>
 											</tr>
 										)
 									})

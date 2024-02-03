@@ -5,7 +5,7 @@ const Loader: React.FC = () => {
 		<ContainerLoader>
 			<span className="loader"></span>
 		</ContainerLoader>
-	)
-}
+	);
+};
 
 export default Loader;

@@ -13,8 +13,7 @@ export default styled.input`
 	transition: 0.5s ease-out;
 	font-size: 1.1rem;
 
-
 	&:focus {
-		border: 3px solid #57CC99;
+		border: 3px solid #57cc99;
 	}
 `;

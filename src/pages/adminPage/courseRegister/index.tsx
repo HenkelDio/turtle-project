@@ -14,70 +14,66 @@ import useTurtleStore from "../../../store";
 
 const CourseRegister: React.FC = () => {
 	const [isOpenEditorModule, setOpenEditorModule] = useState(false);
-	
+
 	const { modules } = useTurtleStore((state) => state);
-	
+
 	return (
 		<Container>
 			<BackPage>
-				<Link to='/courses'><IoIosArrowBack /></Link>
+				<Link to="/courses">
+					<IoIosArrowBack />
+				</Link>
 			</BackPage>
 
-			{
-				isOpenEditorModule 
-				? <FormModule />
-				:
+			{isOpenEditorModule ? (
+				<FormModule />
+			) : (
 				<>
-				<h1>Criar novo curso</h1>
+					<h1>Criar novo curso</h1>
 
-<Formik
-	onSubmit={(values) => console.log(values)}
-	initialValues={{}}
->
-	<Form style={{ textAlign: 'center'}}>
-		<FieldInput
-			name="course_title"
-			placeholder="Digite o título do curso"
-			title="Título do curso"
-		/>
+					<Formik onSubmit={(values) => console.log(values)} initialValues={{}}>
+						<Form style={{ textAlign: "center" }}>
+							<FieldInput
+								name="course_title"
+								placeholder="Digite o título do curso"
+								title="Título do curso"
+							/>
 
-		<ModulesContainer>
-			<p>Módulos</p>
+							<ModulesContainer>
+								<p>Módulos</p>
 
-			<div className="modules">
-				<ModuleBox />
-				{
-					modules?.map((val) => {
-						return <ModuleBox />
-					})
-				}
-				<div 
-					className="addMoreModulesContainer"
-					onClick={() => setOpenEditorModule(true)}
-					>
-					<span><MdNoteAdd /></span>
-					<p>Adicionar novo módulo</p>
-				</div>
-			</div>
-		</ModulesContainer>
+								<div className="modules">
+									<ModuleBox />
+									{modules?.map((val) => {
+										return <ModuleBox />;
+									})}
+									<div
+										className="addMoreModulesContainer"
+										onClick={() => setOpenEditorModule(true)}
+									>
+										<span>
+											<MdNoteAdd />
+										</span>
+										<p>Adicionar novo módulo</p>
+									</div>
+								</div>
+							</ModulesContainer>
 
-		<RegisterForm>
-			<label htmlFor="student_cpf">Descrição do curso</label>
-			<Field as="textarea" name="course_description" placeholder="Digite a descrição do curso"/>
-			<ErrorMessage 
-					name="course_description"
-					component="span"
-				/>
-		</RegisterForm>
+							<RegisterForm>
+								<label htmlFor="student_cpf">Descrição do curso</label>
+								<Field
+									as="textarea"
+									name="course_description"
+									placeholder="Digite a descrição do curso"
+								/>
+								<ErrorMessage name="course_description" component="span" />
+							</RegisterForm>
 
-		<Button style={{ marginTop: '20px'}}>
-			Salvar
-		</Button>
-	</Form>
-</Formik>
-
+							<Button style={{ marginTop: "20px" }}>Salvar</Button>
+						</Form>
+					</Formik>
 				</>
-			}
+			)}
 			{/* {
 				step === 1 &&
 				<>
@@ -103,9 +99,8 @@ const CourseRegister: React.FC = () => {
 					<ContainerPreview dangerouslySetInnerHTML={{ __html: value }} />
 				</>
 			} */}
-
 		</Container>
-	)
-}
+	);
+};
 
 export default CourseRegister;

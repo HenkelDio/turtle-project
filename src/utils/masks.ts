@@ -19,17 +19,7 @@ const cnpjMask = [
 	/\d/,
 ];
 
-const cepMask = [
-	/[0-9]/,
-	/\d/,
-	/\d/,
-	/\d/,
-	/\d/,
-	"-",
-	/\d/,
-	/\d/,
-	/\d/,
-]
+const cepMask = [/[0-9]/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/];
 
 const phoneMask = [
 	"+",
@@ -50,7 +40,7 @@ const phoneMask = [
 	/\d/,
 	/\d/,
 	/\d/,
-]
+];
 
 const cpfMask = [
 	/[0-9]/,
@@ -66,7 +56,7 @@ const cpfMask = [
 	/\d/,
 	"-",
 	/\d/,
-	/\d/
-]
+	/\d/,
+];
 
 export { cnpjMask, cepMask, phoneMask, cpfMask };

@@ -4,8 +4,10 @@ import CardCourseLandingPage from "../../components/LandingPage/CardCourseLandin
 export default function CoursesLandingPage() {
 	return (
 		<Box p={10}>
-			<Text fontSize='4xl' mb={10} fontWeight="bold">Cursos</Text>
-			<Flex wrap="wrap" gap={10} justifyContent='center'>
+			<Text fontSize="4xl" mb={10} fontWeight="bold">
+				Cursos
+			</Text>
+			<Flex wrap="wrap" gap={10} justifyContent="center">
 				<CardCourseLandingPage />
 				<CardCourseLandingPage />
 				<CardCourseLandingPage />
@@ -14,5 +16,5 @@ export default function CoursesLandingPage() {
 				<CardCourseLandingPage />
 			</Flex>
 		</Box>
-	)
+	);
 }

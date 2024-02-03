@@ -1,8 +1,8 @@
-import { FieldContainer } from "./styles"
+import { FieldContainer } from "./styles";
 
 interface IProps {
-	title: string,
-	content?: string,
+	title: string;
+	content?: string;
 }
 
 const Field: React.FC<IProps> = ({ title, content }: IProps) => {
@@ -11,7 +11,7 @@ const Field: React.FC<IProps> = ({ title, content }: IProps) => {
 			<label>{title}</label>
 			<p>{content}</p>
 		</FieldContainer>
-	)
-}
+	);
+};
 
 export default Field;

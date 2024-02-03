@@ -1,69 +1,69 @@
 export interface IStore {
-	credentials: ICredentials,
-	setCredentials: (credentials: ICredentials) => void,
+	credentials: ICredentials;
+	setCredentials: (credentials: ICredentials) => void;
 
-	isAuthenticated: boolean,
-	setAuthenticated: (isAuthenticated: boolean) => void,
+	isAuthenticated: boolean;
+	setAuthenticated: (isAuthenticated: boolean) => void;
 
-	registerType: string,
-	setRegisterType: (registerType: string) => void,
+	registerType: string;
+	setRegisterType: (registerType: string) => void;
 
-	modules: IModule[],
-	setModules: (modules: IModule[]) => void,
+	modules: IModule[];
+	setModules: (modules: IModule[]) => void;
 
-	userIcon: string,
-	setUserIcon: (userIcon: string) => void
+	userIcon: string;
+	setUserIcon: (userIcon: string) => void;
 }
 
 export interface ICredentials {
-	username: string,
-	type: string
+	username: string;
+	type: string;
 }
 
 export interface IHttpClient {
-	baseURL: string,
+	baseURL: string;
 }
 
 export interface IUserStudent {
-	student_company_id: string,
-	student_name: string,
-	student_document: string,
-	student_phone: string,
-	student_email: string,
-	courses_id: string[]
+	student_company_id: string;
+	student_name: string;
+	student_document: string;
+	student_phone: string;
+	student_email: string;
+	courses_id: string[];
 }
 
 export interface IUserAdmin {
-	admin_name: string,
-	admin_email: string,
+	admin_name: string;
+	admin_email: string;
 }
 
 export interface ICompany {
-	company_name: string,
-	company_contact: string,
-	company_register: string,
-	company_telephone: string,
-	company_email: string,
-	company_cep: string,
-	company_street: string,
-	company_district: string,
-	company_state: string,
-	company_city: string,
-	company_address_number: string
+	company_name: string;
+	company_contact: string;
+	company_register: string;
+	company_telephone: string;
+	company_email: string;
+	company_cep: string;
+	company_street: string;
+	company_district: string;
+	company_state: string;
+	company_city: string;
+	company_address_number: string;
 }
 
 export interface IFieldErrors {
-	field: string,
-	message: string
+	field: string;
+	message: string;
 }
 
 export interface IModuleClass {
-	title: string,
-	id: string,
-	completed: boolean,
-	videoUrl: string,
-	description: string,
-	pdfPath: string
+	title: string;
+	id: string;
+	completed: boolean;
+	videoUrl: string;
+	description: string;
+	pdfPath: string;
 }
 
 // export interface IModule {
@@ -72,48 +72,55 @@ export interface IModuleClass {
 // 	modules: IModuleClass[]
 // }
 
-export interface IOptions  {
-	question_option_letter: string,
-	question_option_text: string
+export interface IOptions {
+	question_option_letter: string;
+	question_option_text: string;
 }
 
 export interface IQuestion {
-	question_title: string,
-	question_options: IOptions[],
-	question_answer: string
+	question_title: string;
+	question_options: IOptions[];
+	question_answer: string;
 }
 
-export interface 	ICourse {
-	id?: string,
-	course_title: string,
-	course_description: string,
-	percentage?: string,
-	modules: IModule[],
-	questions?: IQuestion[]
+export interface ICourse {
+	id?: string;
+	course_title: string;
+	course_description: string;
+	percentage?: string;
+	modules: IModule[];
+	questions?: IQuestion[];
 }
 
 export interface IContentClass {
-	id?: string,
-	title: string,
-	urlVideo: string,
-	urlPdf: string,
-	content: string,
-	completed: boolean
+	id?: string;
+	title: string;
+	urlVideo: string;
+	urlPdf: string;
+	content: string;
+	completed: boolean;
 }
 
 export interface ILesson {
-	lesson_title: string,
-	video_url: string,
-	pdf_url: string,
-	content: string,
+	lesson_title: string;
+	video_url: string;
+	pdf_url: string;
+	content: string;
 }
 
 export interface IModule {
-	id: string,
-	module_title: string,
-	lessons?: ILesson[]
+	id: string;
+	module_title: string;
+	lessons?: ILesson[];
 }
 
 export interface ICertificate {
-	title: string
+	title: string;
+}
+
+export interface IWorkplace {
+	company_name: string,
+	company_register: string,
+	company_number: string,
+	company_email: string
 }

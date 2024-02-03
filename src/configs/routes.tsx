@@ -19,43 +19,49 @@ import HomeLandingPage from "../pages/LandingPage/HomeLandingPage";
 import ContactLandingPage from "../pages/LandingPage/ContactLandingPage";
 import CoursesLandingPage from "../pages/LandingPage/CoursesLandingPage";
 import ContainerCourse from "../pages/adminPage/courseRegister/Module2";
+import UserEdit from "../pages/adminPage/usersEdit";
 
 export function Router() {
-  return(
-    <BrowserRouter>
-      <Routes>
-
-        <Route element={<AuthGuard isPrivate={false} />}>
-          <Route path="/login" element={<Login />}/>
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route element={<AuthGuard isPrivate={false} />}>
+					<Route path="/login" element={<Login />} />
 
 					<Route element={<LandingPageLayout />}>
-						<Route path="/" element={<HomeLandingPage />}/>
+						<Route path="/" element={<HomeLandingPage />} />
 						<Route path="/contato" element={<ContactLandingPage />} />
 						<Route path="/cursos" element={<CoursesLandingPage />} />
 					</Route>
-        </Route>
+				</Route>
 
-        <Route element={<AuthGuard isPrivate={true} />}>
-          <Route element={<ContentLayout />}>
-            <Route path="/users" element={<UserAdministration />}/>
-						<Route path="/users/create" element={<UserRegister />}/>
+				<Route element={<AuthGuard isPrivate={true} />}>
+					<Route element={<ContentLayout />}>
+						<Route path="/users" element={<UserAdministration />} />
+						<Route path="/users/edit/:document" element={<UserEdit />} />
+						<Route path="/users/create" element={<UserRegister />} />
 						<Route path="/eitalasqueira" element={<ContainerCourse />} />
 
-						<Route path="/courses" element={<CourseAdministration />}/>
-						<Route path="/courses/create" element={<CourseRegister />}/>
-						<Route path="/profile" element={<Profile />}/>
-          </Route>
+						<Route path="/courses" element={<CourseAdministration />} />
+						<Route path="/courses/create" element={<CourseRegister />} />
+						<Route path="/profile" element={<Profile />} />
+					</Route>
 
 					<Route element={<StudentLayout />}>
-            <Route path="/student/courses" element={<Courses />}/>
-						<Route path="/student/certificates" element={<CertificatesPage />}/>
-						<Route path="/course/:idCourse/:idModule/:idContent" element={<ClassPage />}/>
+						<Route path="/student/courses" element={<Courses />} />
+						<Route
+							path="/student/certificates"
+							element={<CertificatesPage />}
+						/>
+						<Route
+							path="/course/:idCourse/:idModule/:idContent"
+							element={<ClassPage />}
+						/>
 						<Route path="/course/exam/:idCourse" element={<ExamPage />} />
 						<Route path="/student/profile" element={<Profile />} />
-          </Route>
-        </Route>
-
-      </Routes>
-    </BrowserRouter>
-  )
+					</Route>
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	);
 }

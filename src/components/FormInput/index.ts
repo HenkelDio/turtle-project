@@ -20,4 +20,4 @@ export const FormInput = styled.div`
 			opacity: 1;
 		}
 	}
-`
+`;

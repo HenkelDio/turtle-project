@@ -1,21 +1,21 @@
 import { css, styled } from "styled-components";
 
 interface IStyleProps {
-	isSelected: boolean,
+	isSelected: boolean;
 }
 
 interface IStyleFold {
-	isfold: string,
+	isfold: string;
 }
 
 interface IStyleFoldAndPage {
-	isfold: string,
-	page: string,
+	isfold: string;
+	page: string;
 }
 
 export const CloseSideMenu = styled.div<IStyleFold>`
 	position: absolute;
-	top: 50%; 
+	top: 50%;
 	right: -10px;
 	font-size: 1.3rem;
 	cursor: pointer;
@@ -29,30 +29,31 @@ export const CloseSideMenu = styled.div<IStyleFold>`
 
 export const Container = styled.div<IStyleFold>`
 	position: relative;
-	width: ${({ isfold }: IStyleFold) => isfold === 'true' ? '90px' : '220px'};
+	width: ${({ isfold }: IStyleFold) => (isfold === "true" ? "90px" : "220px")};
 	height: 100vh;
 	background-color: #fff;
 	padding: 20px;
 	transition: 1s;
 
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
-	-webkit-box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
-	-moz-box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
-	box-shadow: 4px 0px 11px 1px rgba(179,179,179,1);
+	-webkit-box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
+	-moz-box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
+	box-shadow: 4px 0px 11px 1px rgba(179, 179, 179, 1);
 
-	.containerBox{
+	.containerBox {
 		display: flex;
 		flex-direction: column;
 		gap: 35px;
 		width: 100%;
 
-		${({ isfold }) => isfold === 'true' && css`
-		align-items: center;
-	`}
+		${({ isfold }) =>
+			isfold === "true" &&
+			css`
+				align-items: center;
+			`}
 
 		a {
 			color: black;
@@ -60,42 +61,45 @@ export const Container = styled.div<IStyleFold>`
 
 			border-radius: 7px;
 			&:hover {
-				background-color: #EAEAEA;
+				background-color: #eaeaea;
 			}
 		}
 
 		> p {
-			font-family: 'Work Sans', sans-serif;
+			font-family: "Work Sans", sans-serif;
 			font-size: 1rem;
 			font-weight: 500;
-			display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
+			display: ${({ isfold }: IStyleFold) =>
+				isfold === "true" ? "none" : "block"};
 		}
 	}
 
-	.boxExit{
+	.boxExit {
 		position: absolute;
-		bottom: 20px;	
+		bottom: 20px;
 		cursor: pointer;
 
 		p {
-			font-family: 'Work Sans', sans-serif;
+			font-family: "Work Sans", sans-serif;
 			font-size: 1rem;
 			font-weight: 500;
 			text-decoration: underline;
 		}
-
 	}
 `;
 
 export const Logo = styled.div<IStyleFold>`
-	font-size: ${({ isfold }: IStyleFold) => isfold === 'true' ? '2rem' : '4rem'};
+	font-size: ${({ isfold }: IStyleFold) =>
+		isfold === "true" ? "2rem" : "4rem"};
 	margin-bottom: 20px;
 	opacity: 0.9;
 	transition: 0.8s;
 
-	${({ isfold }) => isfold === 'true' && css`
-		margin-top: 30px;
-	`}
+	${({ isfold }) =>
+		isfold === "true" &&
+		css`
+			margin-top: 30px;
+		`}
 `;
 
 export const Box = styled.div<IStyleFoldAndPage>`
@@ -104,11 +108,11 @@ export const Box = styled.div<IStyleFoldAndPage>`
 	align-items: center;
 	padding: 10px 10px;
 	border-radius: 7px;
-	font-family: 'Work Sans', sans-serif;
+	font-family: "Work Sans", sans-serif;
 	font-size: 1rem;
 
 	&:hover {
-		background-color: #EAEAEA;
+		background-color: #eaeaea;
 	}
 
 	div {
@@ -119,12 +123,11 @@ export const Box = styled.div<IStyleFoldAndPage>`
 	}
 
 	p {
-		
-		display: ${({ isfold }: IStyleFold) => isfold === 'true' ? 'none' : 'block'};
+		display: ${({ isfold }: IStyleFold) =>
+			isfold === "true" ? "none" : "block"};
 	}
 	cursor: pointer;
 `;
-
 
 export const ContainerMenu = styled.div<IStyleFold>`
 	position: relative;
@@ -133,33 +136,32 @@ export const ContainerMenu = styled.div<IStyleFold>`
 	border-radius: 8px;
 
 	&:hover {
-		background-color: #EAEAEA;
+		background-color: #eaeaea;
 	}
-
 
 	.options {
 		position: absolute;
-		right: ${({ isfold }: IStyleFold) => isfold === 'true' ? '-198px' : '-180px'};
+		right: ${({ isfold }: IStyleFold) =>
+			isfold === "true" ? "-198px" : "-180px"};
 		display: flex;
 		z-index: 9999;
 		flex-direction: column;
 		width: 200px;
 		padding: 10px;
-		background-color: #EAEAEA;
+		background-color: #eaeaea;
 		border-radius: 8px;
-		border-top-left-radius: ${({ isfold }: IStyleFold) => isfold === 'true' ? '0' : '8px'};
+		border-top-left-radius: ${({ isfold }: IStyleFold) =>
+			isfold === "true" ? "0" : "8px"};
 
 		a {
-		padding: 10px;
-		font-family: 'Work Sans', sans-serif;
-		font-size: 0.9rem;
-		border-radius: 8px;
+			padding: 10px;
+			font-family: "Work Sans", sans-serif;
+			font-size: 0.9rem;
+			border-radius: 8px;
 
-		&:hover {
-			background-color: #ccc;
+			&:hover {
+				background-color: #ccc;
+			}
 		}
 	}
-	}
-
-	
 `;

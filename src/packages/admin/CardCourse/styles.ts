@@ -15,7 +15,7 @@ export const Card = styled.div`
 	align-items: center;
 	gap: 15px;
 
-	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 
 	span {
 		width: 60px;
@@ -26,30 +26,30 @@ export const Card = styled.div`
 
 		border-radius: 50px;
 
-		background-color: #E2E2E2;
+		background-color: #e2e2e2;
 		color: #262626;
 	}
 
 	p {
 		font-weight: 500;
 	}
-`
+`;
 export const Button = styled.button`
 	cursor: pointer;
-		
-		border: none;
 
-		padding: 10px;
-		border-radius: 5px;
+	border: none;
 
-		background-color: #3E3E3E;
+	padding: 10px;
+	border-radius: 5px;
 
-		color: #ffff;
-		font-family: 'Work Sans', sans-serif;
-		font-weight: 500;
-		margin-left: 5px;
+	background-color: #3e3e3e;
 
-		&:hover {
-			background-color: #282626;
-		}
-`
+	color: #ffff;
+	font-family: "Work Sans", sans-serif;
+	font-weight: 500;
+	margin-left: 5px;
+
+	&:hover {
+		background-color: #282626;
+	}
+`;

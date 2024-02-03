@@ -14,7 +14,6 @@ export const Container = styled.div`
 		margin-bottom: 50px;
 	}
 
-
 	@keyframes showContainer {
 		0% {
 			opacity: 0;
@@ -53,8 +52,8 @@ export const ModulesContainer = styled.div`
 		overflow-x: auto;
 
 		&::-webkit-scrollbar {
- 			 width: 2px;
-			 height: 10px;
+			width: 2px;
+			height: 10px;
 		}
 
 		/* Track */
@@ -64,16 +63,16 @@ export const ModulesContainer = styled.div`
 
 		/* Handle */
 		&::-webkit-scrollbar-thumb {
-			background: #D9D9D9;
+			background: #d9d9d9;
 			border-radius: 4px;
 		}
 
 		/* Handle on hover */
 		&::-webkit-scrollbar-thumb:hover {
-			background: #B6B6B6;
+			background: #b6b6b6;
 		}
 
-		.addMoreModulesContainer{
+		.addMoreModulesContainer {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -100,13 +99,12 @@ export const ModulesContainer = styled.div`
 	}
 `;
 
-
 export const Box = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	gap: 20px;
-`;	
+`;
 
 export const ContainerPreview = styled.div`
 	width: 1000px;
@@ -116,28 +114,27 @@ export const ContainerPreview = styled.div`
 	overflow-y: auto;
 
 	background-color: #fff;
-	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 
 	padding: 10px 50px;
 
 	&::-webkit-scrollbar {
- 			 width: 10px;
-		}
+		width: 10px;
+	}
 
-		/* Track */
-		&::-webkit-scrollbar-track {
-			background: #f1f1f1;
-		}
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
 
-		/* Handle */
-		&::-webkit-scrollbar-thumb {
-			background: #D9D9D9;
-			border-radius: 4px;
-		}
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: #d9d9d9;
+		border-radius: 4px;
+	}
 
-		/* Handle on hover */
-		&::-webkit-scrollbar-thumb:hover {
-			background: #B6B6B6;
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: #b6b6b6;
 	}
 `;
-

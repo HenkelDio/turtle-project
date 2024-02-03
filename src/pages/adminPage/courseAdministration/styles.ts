@@ -26,7 +26,7 @@ export const Box = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	height: 100px;
-	
+
 	width: 500px;
 
 	p {

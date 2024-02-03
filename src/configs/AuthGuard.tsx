@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import useTurtleStore from "../store";
 
 interface AuthGuardProps {
-  isPrivate: boolean
+	isPrivate: boolean;
 }
 
 export function AuthGuard({ isPrivate }: AuthGuardProps) {
@@ -10,17 +10,21 @@ export function AuthGuard({ isPrivate }: AuthGuardProps) {
 
 	const userType = credentials.type;
 
-  if(!isAuthenticated && isPrivate) {
-    return <Navigate to="/" replace />
-  }
+	if (!isAuthenticated && isPrivate) {
+		return <Navigate to="/" replace />;
+	}
 
-  if(isAuthenticated && !isPrivate && (userType === 'admin' || userType === 'workplace')) {
-    return <Navigate to="/users" replace />
-  }
+	if (
+		isAuthenticated &&
+		!isPrivate &&
+		(userType === "admin" || userType === "workplace")
+	) {
+		return <Navigate to="/users" replace />;
+	}
 
-	if(isAuthenticated && !isPrivate && userType === 'student') {
-    return <Navigate to="/student/courses" replace />
-  }
+	if (isAuthenticated && !isPrivate && userType === "student") {
+		return <Navigate to="/student/courses" replace />;
+	}
 
-  return <Outlet />
+	return <Outlet />;
 }

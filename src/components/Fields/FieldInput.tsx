@@ -7,7 +7,7 @@ interface IProps {
 	title: string;
 	maxLength?: number | undefined;
 	value?: string;
-	onBlur?: (e: any) => Promise<void>
+	onBlur?: (e: any) => Promise<void>;
 }
 
 const FieldInput: React.FC<IProps> = ({
@@ -15,7 +15,7 @@ const FieldInput: React.FC<IProps> = ({
 	placeholder,
 	title,
 	maxLength,
-	onBlur
+	onBlur,
 }: IProps) => {
 	return (
 		<RegisterForm>

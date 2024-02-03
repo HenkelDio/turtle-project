@@ -11,10 +11,8 @@ export const Container = styled.div`
 	h1 {
 		margin-bottom: 50px;
 	}
-
 `;
 
 export const Box = styled.div`
 	margin-bottom: 50px;
-`
-
+`;

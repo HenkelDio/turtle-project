@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components";
 
 interface ISelect {
-	select: string,
+	select: string;
 }
 
 export const Box = styled.div`
@@ -18,15 +18,18 @@ export const Box = styled.div`
 	h3 {
 		text-align: left;
 	}
-`
+`;
 
 export const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
 	margin-top: 10px;
-`
 
+	p {
+		opacity: 1;
+	}
+`;
 
 export const ContainerChips = styled.div`
 	display: flex;
@@ -41,55 +44,56 @@ export const ContainerChips = styled.div`
 	width: 1000px;
 	border-radius: 8px;
 
-	box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 	background-color: #fff;
-	
 
 	overflow-y: auto;
 
 	&::-webkit-scrollbar {
- 			 width: 10px;
-		}
-
-		/* Track */
-		&::-webkit-scrollbar-track {
-			background: #f1f1f1;
-		}
-
-		/* Handle */
-		&::-webkit-scrollbar-thumb {
-			background: #D9D9D9;
-			border-radius: 4px;
-		}
-
-		/* Handle on hover */
-		&::-webkit-scrollbar-thumb:hover {
-			background: #B6B6B6;
+		width: 10px;
 	}
-`
+
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: #d9d9d9;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: #b6b6b6;
+	}
+`;
 
 export const Chip = styled.div<ISelect>`
 	display: flex;
 	align-items: center;
 	text-align: center;
 	font-weight: 500;
-  background: ${({ theme }) => theme.colors.green.main};
+	background: ${({ theme }) => theme.colors.green.main};
 	color: #ffff;
 	/* TODO trazer color do theme */
 	max-height: 50px;
-  padding: 20px 10px;
-  border-radius: 10px;
-  font-size: 13px;
+	padding: 20px 10px;
+	border-radius: 10px;
+	font-size: 13px;
 	cursor: pointer;
 
-  &:hover {
-    background: ${({ theme }) => theme.colors.green.light};
-  }
+	&:hover {
+		background: ${({ theme }) => theme.colors.green.light};
+	}
 
-	${({ select }: ISelect) => select === 'true' && css`
+	${({ select }: ISelect) =>
+		select === "true" &&
+		css`
 			background: ${({ theme }) => theme.colors.green.dark}!important;
-	`}
-`
+		`}
+`;
 
 export const BackPage = styled.div`
 	position: absolute;
@@ -121,7 +125,7 @@ export const BoxAddress = styled.div`
 			width: 100%;
 		}
 	}
-`
+`;
 
 export const ContainerCompaniesChip = styled.div`
 	display: flex;
@@ -129,7 +133,7 @@ export const ContainerCompaniesChip = styled.div`
 	flex-wrap: wrap;
 	justify-content: start;
 	gap: 10px;
-	height: 300px;
+	height: 200px;
 
-	overflow-y:auto;
-`;	
+	overflow-y: auto;
+`;

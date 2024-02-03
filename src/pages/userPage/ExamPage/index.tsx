@@ -13,33 +13,27 @@ export default function ExamPage() {
 
 	useEffect(() => {
 		function handleGetQuestions() {
-			setQuestions(coursesMock.filter((val) => val.id === idCourse)[0].questions);
+			setQuestions(
+				coursesMock.filter((val) => val.id === idCourse)[0].questions,
+			);
 		}
 
 		handleGetQuestions();
 
+		console.log(questions);
+	});
 
-		console.log(questions)
-	})
-
-	return(
+	return (
 		<Container>
-
 			<h1>Prova</h1>
 
-			{
-				questions?.map((question) => {
-					return <ExamQuestion title={question?.title} options={question?.options}/>
-				})
-			}
+			{questions?.map((question) => {
+				return (
+					<ExamQuestion title={question?.title} options={question?.options} />
+				);
+			})}
 
-			<Button>
-				Finalizar prova
-			</Button>
-
-
-	
-
+			<Button>Finalizar prova</Button>
 		</Container>
-	)
+	);
 }

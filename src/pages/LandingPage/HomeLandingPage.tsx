@@ -7,10 +7,10 @@ export default function HomeLandingPage() {
 	return (
 		<>
 			<SplitWithImage />
-			<Box p={50} >
+			<Box p={50}>
 				<SimpleThreeColumns />
 			</Box>
 			<FooterLandingPage />
 		</>
-	)
+	);
 }

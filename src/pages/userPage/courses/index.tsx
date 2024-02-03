@@ -8,16 +8,21 @@ import GenericCard from "../../../components/GenericCard";
 
 const Courses: React.FC = () => {
 	const [cards] = useState(coursesMock);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setLoading] = useState(true);
 
-	const filteredCards = useMemo(() => cards.filter((card) => (
-    card.courseTitle[0].toLowerCase().includes(searchTerm.toLowerCase()))), [cards, searchTerm]);
+	const filteredCards = useMemo(
+		() =>
+			cards.filter((card) =>
+				card.courseTitle[0].toLowerCase().includes(searchTerm.toLowerCase()),
+			),
+		[cards, searchTerm],
+	);
 
 	const handleSearch = (e: any) => {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		setSearchTerm(e.target.value);
-	}
+	};
 
 	useEffect(() => {
 		async function handleDelay() {
@@ -28,46 +33,35 @@ const Courses: React.FC = () => {
 
 		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		handleDelay();
+	}, []);
 
-	}, [])
-
-	if(isLoading) {
-		return (
-			<Loader />
-		)
+	if (isLoading) {
+		return <Loader />;
 	}
 
-	return(
+	return (
 		<Container>
-			
 			<h1>Meus cursos</h1>
-			<Input 
+			<Input
 				onChange={(e) => handleSearch(e)}
 				placeholder="Pesquise pelo nome do curso"
 				variant="filled"
 				bg="white"
 				_hover={{
-					background: 'white'
+					background: "white",
 				}}
 				_focus={{
-					background: 'white'
+					background: "white",
 				}}
 			/>
 
-
 			<Flex gap={5} wrap="wrap" mt={50}>
-				{
-					filteredCards.map((card) => {
-						return <GenericCard
-							key={card.id}
-							type="course"
-							courseData={card}
-						/>
-					})
-				}
+				{filteredCards.map((card) => {
+					return <GenericCard key={card.id} type="course" courseData={card} />;
+				})}
 			</Flex>
 		</Container>
-	)
-}
+	);
+};
 
 export default Courses;

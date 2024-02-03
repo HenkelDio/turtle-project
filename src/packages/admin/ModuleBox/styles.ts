@@ -8,10 +8,9 @@ export const Container = styled.div`
 	height: 200px;
 
 	background-color: #d9d9d9;
-	box-shadow: 10px 10px 15px -10px rgba(0,0,0,0.2);
+	box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.2);
 
 	border-radius: 4px;
-
 
 	display: flex;
 	align-items: center;
@@ -22,7 +21,6 @@ export const Container = styled.div`
 		font-weight: 500;
 	}
 
-
 	.menuOptions {
 		position: absolute;
 		right: 5px;
@@ -30,5 +28,4 @@ export const Container = styled.div`
 
 		cursor: pointer;
 	}
-
 `;

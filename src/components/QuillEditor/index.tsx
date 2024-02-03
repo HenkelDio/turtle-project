@@ -1,33 +1,30 @@
-import { useQuill } from 'react-quilljs';
+import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useEffect } from "react";
-import { ContainerQuill } from './styles';
+import { ContainerQuill } from "./styles";
 
 interface IProps {
-	setValue: Function,
-	content: string
+	setValue: Function;
+	content: string;
 }
 
 const modules = {
-	toolbar: [
-		['bold', 'italic', 'underline', 'strike'],
-	],
+	toolbar: [["bold", "italic", "underline", "strike"]],
 };
 
-const formats = ['bold', 'italic', 'underline', 'strike'];
+const formats = ["bold", "italic", "underline", "strike"];
 
 const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
-
 	const placeholder = content;
 
-	const { quill, quillRef } = useQuill({ placeholder, modules, formats	 });
+	const { quill, quillRef } = useQuill({ placeholder, modules, formats });
 
 	// console.log(quill);    // undefined > Quill Object
 	// console.log(quillRef);
 
 	useEffect(() => {
 		if (quill) {
-			quill.on('text-change', (delta, oldDelta, source) => {
+			quill.on("text-change", (delta, oldDelta, source) => {
 				// console.log('Text change!');
 				// console.log(quill.getText()); // Get text only
 				// console.log(quill.getContents()); // Get delta contents
@@ -39,9 +36,12 @@ const QuillEditor: React.FC<IProps> = ({ setValue, content }: IProps) => {
 
 	return (
 		<ContainerQuill>
-			<div style={{ height: '200px', backgroundColor: '#ffff' }} ref={quillRef} />
+			<div
+				style={{ height: "200px", backgroundColor: "#ffff" }}
+				ref={quillRef}
+			/>
 		</ContainerQuill>
-	)
-}
+	);
+};
 
 export default QuillEditor;
