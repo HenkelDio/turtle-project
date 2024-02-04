@@ -149,12 +149,9 @@ const FormGroupStudentRegister: React.FC = () => {
 	}, [isCreated, toast]);
 
 	useEffect(() => {
-		console.log('start')
 		async function getCourses() {
 			const response = await getAdminCourses();
 			if (response.data) {
-				console.log(response.data)
-				console.log('oiiiiiii')
 				setCourses(response.data);
 			} else {
 				toast({

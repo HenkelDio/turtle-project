@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from "axios";
+import { ICreateRegister, IUpdateStudent } from "../types";
 
 export const verifyIfDocumentAlreadyExists = async (document: string) => {
 	try {
@@ -57,14 +58,41 @@ export const deleteStudent = async (document: string | undefined) => {
 	}
 };
 
-export const updateStudent = async (document: string | undefined) => {
+export const updateStudent = async (document: string | undefined, body: IUpdateStudent | undefined) => {
 	try {
-		const { data } = await axios.put(
-			`${import.meta.env.VITE_APP_SERVER}/updateStudent?document=${document}`,
-		);
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_APP_SERVER}/updateStudent`,
+      body,
+      {
+        params: { document } // Passando o documento como parâmetro de consulta
+      }
+    );
 		return { data: data, err: null };
 	} catch (err) {
 		return { data: null, err };
 	}
 };
+
+export const deleteRegister= async (registerId: number | undefined) => {
+	try {
+    const { data } = await axios.delete(
+      `${import.meta.env.VITE_APP_SERVER}/deleteRegister?id=${registerId}`,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const createRegister= async (body: ICreateRegister) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/createRegister`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
 

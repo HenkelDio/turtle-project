@@ -144,5 +144,10 @@ export interface IRegister {
 
 export interface IUpdateStudent {
 	student: IUserStudent,
-	workplace: IWorkplace
+	workplace: IWorkplace | undefined
+}
+
+export interface ICreateRegister {
+	courses_id: number[],
+	student_document: string | undefined
 }
