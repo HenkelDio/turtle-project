@@ -6,29 +6,61 @@ import RegisterForm from "../RegisterForm";
 import MaskedInput from "react-text-mask";
 import { studentValidation } from "../../validations";
 import { cpfMask, phoneMask } from "../../utils/masks";
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
 import SelectWorkplaceDrawer from "../SelectWorkplaceDrawer";
 import { useEffect, useState } from "react";
 import { IUpdateStudent, IUserStudent, IWorkplace } from "../../types";
+import { FiTrash2 } from "react-icons/fi";
+import { updateStudent } from "../../services/usersService";
 
 interface IProps {
-	student: IUserStudent | undefined,
-	workplace: IWorkplace | undefined,
-	setNewData: IUpdateStudent
+	student: IUserStudent | undefined;
+	workplace: IWorkplace | undefined
 }
 
-const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
+const FormEditUser: React.FC<IProps> = ({
+	student,
+	workplace
+}: IProps) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [selectedNewWorkplace, setSelectedNewWorkplace] = useState<IWorkplace | undefined>();
-	const [inputChanges, setInputChanges] = useState(0);
+	const [selectedNewWorkplace, setSelectedNewWorkplace] = useState<
+		IWorkplace | undefined
+	>();
+	const [newData, setNewData] = useState<IUpdateStudent | undefined>();
 
-	function saveEditUser(values: any) {
-		console.log(values);
+	const toast = useToast();
+
+	async function saveEditUser(values: any) {
+		const data = {
+			student: values,
+			workplace: selectedNewWorkplace ? selectedNewWorkplace : workplace,
+		}
+
+		const response = await updateStudent(student?.student_document, data);
+		console.log(data)
+		if(response.data) {
+			toast({
+				title: 'Sucesso',
+				description: "Estudante atualizado com sucesso",
+				status: 'success',
+				duration: 5000,
+				isClosable: true,
+			});
+
+		} else {
+			toast({
+				title: 'Erro',
+				description: "Erro ao atualizar estudante",
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+		}
 	}
 
 	useEffect(() => {
-		console.log(student)
-	}, [student])
+		console.log(student);
+	}, [student]);
 
 	return (
 		<>
@@ -43,7 +75,6 @@ const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
 							name="student_name"
 							title="Nome do estudante"
 							placeholder="Digite o nome do estudante"
-							onBlur={() => setInputChanges(prevState => prevState + 1)}
 						/>
 						<RegisterForm>
 							<label htmlFor="student_document">CPF</label>
@@ -102,10 +133,25 @@ const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
 							>
 								{!selectedNewWorkplace && workplace && workplace.company_name}
 								{selectedNewWorkplace?.company_name}
-								{!workplace && !selectedNewWorkplace && <p>Sem estabelecimento vinculado</p>}
+								{!workplace && !selectedNewWorkplace && (
+									<p>Sem estabelecimento vinculado</p>
+								)}
 							</Box>
 						</RegisterForm>
 					</FormContainer>
+
+					<Flex direction='column'>
+						<Button
+							colorScheme="green"
+							mt={10}
+							w="500px"
+							type="submit"
+						>
+							Salvar
+						</Button>
+
+					
+					</Flex>
 				</Form>
 			</Formik>
 

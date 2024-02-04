@@ -24,6 +24,17 @@ export const ContainerList = styled.div`
 		height: 30px;
 	}
 
+	.styled-table tbody tr .remove_register {
+		text-decoration: none;
+			color: ${({ theme }) => theme.colors.red.main};
+			font-weight: 500;
+			cursor: pointer;
+
+			&:hover {
+				color: ${({ theme }) => theme.colors.red.dark};
+			}
+	}
+
 	.styled-table tbody tr .actions {
 		a {
 			text-decoration: none;
