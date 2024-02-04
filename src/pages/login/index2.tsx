@@ -14,9 +14,8 @@ import {
 import useTurtleStore from "../../store";
 
 export default function LoginPage() {
-	const { setAuthenticated, setCredentials, credentials } = useTurtleStore(
-		(state) => state,
-	);
+
+	const { setAuthenticated,  setCredentials} = useTurtleStore((state) => state);
 
 	function login() {
 		setCredentials({

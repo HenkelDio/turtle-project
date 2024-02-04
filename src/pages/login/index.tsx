@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
 	Button,
 	Flex,
@@ -9,93 +10,94 @@ import {
 	Image,
 	Switch,
 	Spinner,
-} from "@chakra-ui/react";
-import useTurtleStore from "../../store";
-import { useState } from "react";
-import delay from "../../utils/delay";
+} from '@chakra-ui/react';
+import useTurtleStore from '../../store';
 
 export default function Login() {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [secondStep, setSecondStep] = useState(false);
 	const [buttonLoading, setButtonLoading] = useState(false);
 	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
+	const [firstLogin, setFirstLogin] = useState(true);
 
-	function login() {
+	const handleLogin = () => {
 		setCredentials({
 			username: "Willian Henkel",
-			type: "admin",
-		});
-		setAuthenticated(true);
-	}
+			type: "admin"
+		})
+		setAuthenticated(true)
+	};
 
-	async function nextStep() {
+	const handleNextStep = async () => {
 		setButtonLoading(true);
-		await delay();
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		setSecondStep(true);
 		setButtonLoading(false);
-	}
+	};
 
-	function Password() {
-		return (
-			<>
-				<FormControl id="password">
-					<FormLabel>Senha</FormLabel>
-					<Input type={showPassword ? "text" : "password"} />
-				</FormControl>
-				<Stack spacing={6}>
-					<Stack
-						direction={{ base: "column", sm: "row" }}
-						align={"start"}
-						justify={"space-between"}
-					>
-						<FormControl display="flex" alignItems="center">
-							<FormLabel htmlFor="email-alerts" mb="0">
-								Mostrar senha
-							</FormLabel>
-							<Switch
-								id="email-alerts"
-								onChange={(e) => setShowPassword(true)}
-							/>
-						</FormControl>
-						<p>a{showPassword ? "true" : "false"}</p>
-					</Stack>
-					<Button
-						colorScheme={"green"}
-						variant={"solid"}
-						onClick={() => login()}
-					>
-						Entrar
-					</Button>
-				</Stack>
-			</>
-		);
-	}
+	const handleTogglePassword = () => {
+		setShowPassword((prevShowPassword) => !prevShowPassword);
+	};
 
 	return (
-		<Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
-			<Flex p={8} flex={1} align={"center"} justify={"center"} bg={"white"}>
-				<Stack spacing={4} w={"full"} maxW={"md"}>
-					<Heading fontSize={"lg"} opacity={0.4}>
+		<Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
+			<Flex p={8} flex={1} align={'center'} justify={'center'} bg={'white'}>
+				<Stack spacing={4} w={'full'} maxW={'md'}>
+					<Heading fontSize={'lg'} opacity={0.4}>
 						ST Treinamentos
 					</Heading>
-					<Heading fontSize={"2xl"}>Entre em sua conta</Heading>
+					<Heading fontSize={'2xl'}>Entre em sua conta</Heading>
 					<FormControl id="email">
 						<FormLabel>Email</FormLabel>
-						<Input type="email" />
+						<Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 					</FormControl>
 
-					{secondStep && <Password />}
-					{!secondStep && (
-						// eslint-disable-next-line @typescript-eslint/no-misused-promises
-						<Button
-							colorScheme={"green"}
-							variant={"solid"}
-							// eslint-disable-next-line @typescript-eslint/no-misused-promises
-							onClick={() => nextStep()}
-						>
-							{buttonLoading ? <Spinner /> : "Próximo"}
-						</Button>
+					{secondStep && (
+						<>
+							<FormControl id="password">
+								<div>
+									<FormLabel>Senha</FormLabel>
+									<Input
+										type={showPassword ? 'text' : 'password'}
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+									/>
+								</div>
+								{firstLogin &&
+									<div>
+										<FormLabel>Confirme a senha</FormLabel>
+										<Input
+											type={showPassword ? 'text' : 'password'}
+											value={confirmPassword}
+											onChange={(e) => setConfirmPassword(e.target.value)}
+										/>
+									</div>	
+								}
+
+								{password !== confirmPassword && (
+										<p style={{ color: 'red' }}>As senhas não coincidem. Por favor, insira senhas iguais.</p>
+								)}
+
+							</FormControl>
+							<Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+								<FormControl display="flex" alignItems="center">
+									<FormLabel htmlFor="email-alerts" mb="0">
+										Mostrar senha
+									</FormLabel>
+									<Switch id="email-alerts" onChange={handleTogglePassword} />
+								</FormControl>
+							</Stack>
+						</>
 					)}
+
+					<Stack spacing={6}>
+						<Button colorScheme={'green'} variant={'solid'} onClick={secondStep ? handleLogin : handleNextStep}>
+							{buttonLoading ? <Spinner /> : secondStep ? 'Entrar' : 'Próximo'}
+						</Button>
+					</Stack>
 				</Stack>
 			</Flex>
 			<Flex flex={1} display={{ base: "none", md: "flex" }}>
