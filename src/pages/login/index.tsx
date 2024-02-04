@@ -85,12 +85,12 @@ export default function Login() {
 					</FormControl>
 
 					{secondStep && <Password />}
-
 					{!secondStep && (
 						// eslint-disable-next-line @typescript-eslint/no-misused-promises
 						<Button
 							colorScheme={"green"}
 							variant={"solid"}
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises
 							onClick={() => nextStep()}
 						>
 							{buttonLoading ? <Spinner /> : "Próximo"}

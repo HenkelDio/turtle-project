@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { deleteStudent, getStudentByDocument } from "../../../services/usersService";
 import Loader from "../../../components/Loader";
-import { IUserStudent, IWorkplace } from "../../../types";
+import { IUpdateStudent, IUserStudent, IWorkplace } from "../../../types";
 import { FiTrash2 } from "react-icons/fi";
 import GenericModal from "../../../components/GenericModal";
 
@@ -20,6 +20,7 @@ const UserEdit: React.FC = () => {
 	const [loading, setLoading] = useState(true);
 	const [student, setStudent] = useState<IUserStudent>();
 	const [workplace, setWorkplace] = useState<IWorkplace | undefined>();
+	const [newData, setNewData] = useState<IUpdateStudent>();
 	const toast = useToast();
 	const navigate = useNavigate();
 	const { isOpen, onClose, onOpen } = useDisclosure();
@@ -101,7 +102,7 @@ const UserEdit: React.FC = () => {
 
 				<h1>Editar usuário</h1>
 
-				<FormEditUser student={student} workplace={workplace} />
+				<FormEditUser student={student} workplace={workplace} setNewData={setNewData}/>
 
 				<RegistersTable student={student} />
 

@@ -26,8 +26,6 @@ const RegistersTable: React.FC<IProps> = ({ student }: IProps) => {
 				if (!err) {
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					setRegisters(data.registers)
-					console.log(data)
-					console.log(registers)
 					setLoading(false);
 				}
 				if (err) {

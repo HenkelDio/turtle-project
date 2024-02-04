@@ -7,7 +7,7 @@ interface IProps {
 	title: string;
 	maxLength?: number | undefined;
 	value?: string;
-	onBlur?: (e: any) => Promise<void>;
+	onBlur?: (e: React.FocusEvent<HTMLInputElement>) => Promise<void> | void;
 }
 
 const FieldInput: React.FC<IProps> = ({

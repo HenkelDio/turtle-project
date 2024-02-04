@@ -57,3 +57,14 @@ export const deleteStudent = async (document: string | undefined) => {
 	}
 };
 
+export const updateStudent = async (document: string | undefined) => {
+	try {
+		const { data } = await axios.put(
+			`${import.meta.env.VITE_APP_SERVER}/updateStudent?document=${document}`,
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+

@@ -8,21 +8,27 @@ import { studentValidation } from "../../validations";
 import { cpfMask, phoneMask } from "../../utils/masks";
 import { Box, useDisclosure } from "@chakra-ui/react";
 import SelectWorkplaceDrawer from "../SelectWorkplaceDrawer";
-import { useState } from "react";
-import { IUserStudent, IWorkplace } from "../../types";
+import { useEffect, useState } from "react";
+import { IUpdateStudent, IUserStudent, IWorkplace } from "../../types";
 
 interface IProps {
 	student: IUserStudent | undefined,
-	workplace: IWorkplace | undefined
+	workplace: IWorkplace | undefined,
+	setNewData: IUpdateStudent
 }
 
 const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [selectedNewWorkplace, setSelectedNewWorkplace] = useState<IWorkplace | undefined>();
+	const [inputChanges, setInputChanges] = useState(0);
 
 	function saveEditUser(values: any) {
 		console.log(values);
 	}
+
+	useEffect(() => {
+		console.log(student)
+	}, [student])
 
 	return (
 		<>
@@ -37,6 +43,7 @@ const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
 							name="student_name"
 							title="Nome do estudante"
 							placeholder="Digite o nome do estudante"
+							onBlur={() => setInputChanges(prevState => prevState + 1)}
 						/>
 						<RegisterForm>
 							<label htmlFor="student_document">CPF</label>

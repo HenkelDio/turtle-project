@@ -141,3 +141,8 @@ export interface IRegister {
 	register_id: number,
 	student_id: number
 }
+
+export interface IUpdateStudent {
+	student: IUserStudent,
+	workplace: IWorkplace
+}
