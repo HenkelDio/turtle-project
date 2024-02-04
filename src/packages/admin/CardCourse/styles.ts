@@ -13,6 +13,8 @@ export const Card = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
+
 	gap: 15px;
 
 	box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -33,6 +35,7 @@ export const Card = styled.div`
 	p {
 		font-weight: 500;
 	}
+
 `;
 export const Button = styled.button`
 	cursor: pointer;

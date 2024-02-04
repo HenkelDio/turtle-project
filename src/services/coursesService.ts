@@ -23,3 +23,14 @@ export const getAdminCourses = async () => {
 		return { data: null, err };
 	}
 };
+
+export const deleteCourse = async (id: number) => {
+	try {
+		const { data } = await axios.delete(
+			`${import.meta.env.VITE_APP_SERVER}/deleteCourse`,{headers: {id}}
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
