@@ -13,12 +13,14 @@ import {
 	StepTitle,
 	Stepper,
 	useSteps,
+	useToast,
 } from "@chakra-ui/react";
 import { ICourse } from "../../../types";
 import { formatCourseToJson } from "../../../utils/formatCourseToJson";
 import Course from "../../../components/CourseRegister/Course";
 import Question from "../../../components/CourseRegister/Question";
 import { createCourse } from "../../../services/coursesService";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
 	{ title: "Primeiro passo", description: "Informações do curso" },
@@ -64,6 +66,9 @@ const ContainerCourse = () => {
 			],
 		},
 	]);
+
+	const toast = useToast();
+	const navigate = useNavigate();
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const [questions, setQuestions] = useState<any>(courses[0].questions);
 
@@ -107,7 +112,24 @@ const ContainerCourse = () => {
 
 		const response = await createCourse(formattedCourses);
 
-		console.log(response);
+		if(response.data) {
+			toast({
+				title: "Sucesso.",
+				description: "Curso criado com sucesso.",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
+			navigate('/courses');
+		} else {
+			toast({
+				title: "Erro.",
+				description: "Não foi possível carregar as matrículas.",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
+		}
 	};
 
 	return (
@@ -175,8 +197,6 @@ const ContainerCourse = () => {
 							Salvar
 						</Button>
 					</Flex>
-
-					{formattedData}
 				</>
 			)}
 		</Box>

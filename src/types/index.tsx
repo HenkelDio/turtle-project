@@ -73,21 +73,24 @@ export interface IModuleClass {
 // }
 
 export interface IOptions {
+	question_option_id: number,
+	question_id: number,
 	question_option_letter: string;
 	question_option_text: string;
 }
 
 export interface IQuestion {
-	question_title: string;
-	question_options: IOptions[];
+	question_id: number,
+	course_id: number,
+	question_text: string;
+	questionsOptions: IOptions[];
 	question_answer: string;
 }
 
 export interface ICourse {
-	id?: string;
+	course_id: number;
 	course_title: string;
 	course_description: string;
-	percentage?: string;
 	modules: IModule[];
 	questions?: IQuestion[];
 }
@@ -102,14 +105,17 @@ export interface IContentClass {
 }
 
 export interface ILesson {
+	lesson_id: number,
+	module_id: number,
 	lesson_title: string;
-	video_url: string;
-	pdf_url: string;
-	content: string;
+	lesson_video_url: string;
+	lesson_pdf_url: string;
+	lesson_richtext: string;
 }
 
 export interface IModule {
-	id: string;
+	module_id: number,
+	course_id: number,
 	module_title: string;
 	lessons?: ILesson[];
 }
@@ -119,8 +125,19 @@ export interface ICertificate {
 }
 
 export interface IWorkplace {
+	index?: number,
 	company_name: string,
 	company_register: string,
 	company_number: string,
 	company_email: string
+}
+
+export interface IRegister {
+	course: {
+		course_title: string
+	},
+	course_id: number,
+	is_done: boolean,
+	register_id: number,
+	student_id: number
 }

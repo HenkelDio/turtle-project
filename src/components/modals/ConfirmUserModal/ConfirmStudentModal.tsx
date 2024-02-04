@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import ReactDOM from "react-dom";
 import {
@@ -9,14 +10,14 @@ import {
 } from "../styles";
 import Field from "../../ProfileField";
 import Button from "../../Button";
-import { IUserStudent } from "../../../types";
+import { ICourse, IUserStudent, IWorkplace } from "../../../types";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addStudentUser } from "../../../services";
 import Loader from "../../Loader";
 import Alert from "../../Alert";
 import delay from "../../../utils/delay";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
 	user: IUserStudent;
@@ -25,7 +26,7 @@ interface IProps {
 	isOpen: boolean;
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	setOpen: Function;
-	selectedWorkplace?: [];
+	selectedWorkplace?: IWorkplace[];
 	workplaces?: any;
 }
 
@@ -75,16 +76,30 @@ const ConfirmStudentModal: React.FC<IProps> = ({
 		},
 	});
 
+	const extractCourseIds = (courses: ICourse[] | undefined): number[] | undefined => {
+		if (courses) {
+			const ids: number[] = [];
+	
+			courses.forEach((item: ICourse) => {
+				ids.push(item.course_id);
+			});
+	
+			return ids;
+		}
+		return undefined;
+	};
+
 	const handleCreateUser = () => {
+
 		const data = {
-			student_company_id: selectedWorkplace
-				? selectedWorkplace.toString()
+			student_company_id:	selectedWorkplace &&  selectedWorkplace?.length !== 0
+				? selectedWorkplace[0].company_register
 				: null,
 			student_name: user.student_name,
 			student_document: user.student_document.replace(/\D/g, ""),
 			student_email: user.student_email,
 			student_phone: user.student_phone.replace(/\D/g, ""),
-			courses_id: selectedCourses,
+			courses_id: extractCourseIds(selectedCourses)
 		};
 		mutate(data);
 	};
@@ -104,33 +119,34 @@ const ConfirmStudentModal: React.FC<IProps> = ({
 
 				<h1>Confirme os dados do usuário</h1>
 				<ContainerField>
-					<Field title="Nome" content={user.student_email} />
+					<Field title="Nome" content={user.student_name} />
 					<Field title="CPF" content={user.student_document} />
 					<Field title="E-mail" content={user.student_email} />
-					<Field title="Celular" content={user.student_cellphone} />
+					<Field title="Celular" content={user.student_phone} />
 					<b>Cursos matriculados</b>
 					<div className="courses">
-						{selectedCourses?.map((course) => {
+						{selectedCourses?.map((course: ICourse) => {
 							return (
 								<p>
-									{courses.filter((el: any) => el.index === course)[0].name}
+									{course.course_title}
 								</p>
 							);
 						})}
 					</div>
-					<b>Matriculado pela empresa</b>
+				{
+					selectedWorkplace && selectedWorkplace?.length !== 0 &&
+					<>
+					<b>Matriculado pelo estabelecimento</b>
 					<div className="workplace">
-						{selectedWorkplace?.map((workplace) => {
-							return (
-								<p>
-									{
-										workplaces.filter((el: any) => el.index === workplace)[0]
-											.name
-									}
-								</p>
-							);
-						})}
+						{selectedWorkplace[0].company_name}
 					</div>
+					</>
+				}
+
+				{
+					selectedWorkplace && selectedWorkplace?.length === 0 &&
+					<b>*Sem vinculo com estabelecimento</b>
+				}
 				</ContainerField>
 				<Footer>
 					<button

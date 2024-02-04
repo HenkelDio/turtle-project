@@ -6,18 +6,19 @@ import RegisterForm from "../RegisterForm";
 import MaskedInput from "react-text-mask";
 import { studentValidation } from "../../validations";
 import { cpfMask, phoneMask } from "../../utils/masks";
-import { Box, Select, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import SelectWorkplaceDrawer from "../SelectWorkplaceDrawer";
 import { useState } from "react";
-import { IUserStudent } from "../../types";
+import { IUserStudent, IWorkplace } from "../../types";
 
 interface IProps {
-	student: IUserStudent | undefined;
+	student: IUserStudent | undefined,
+	workplace: IWorkplace | undefined
 }
 
-const FormEditUser: React.FC<IProps> = ({ student }: IProps) => {
+const FormEditUser: React.FC<IProps> = ({ student, workplace }: IProps) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [selectedNewWorkplace, setSelectedNewWorkplace] = useState(0);
+	const [selectedNewWorkplace, setSelectedNewWorkplace] = useState<IWorkplace | undefined>();
 
 	function saveEditUser(values: any) {
 		console.log(values);
@@ -92,7 +93,9 @@ const FormEditUser: React.FC<IProps> = ({ student }: IProps) => {
 								paddingX="10px"
 								fontFamily='"Work Sans", sans-serif'
 							>
-								{selectedNewWorkplace}
+								{!selectedNewWorkplace && workplace && workplace.company_name}
+								{selectedNewWorkplace?.company_name}
+								{!workplace && !selectedNewWorkplace && <p>Sem estabelecimento vinculado</p>}
 							</Box>
 						</RegisterForm>
 					</FormContainer>

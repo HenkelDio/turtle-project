@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import RegisterForm from "../../../components/RegisterForm";
@@ -14,7 +15,7 @@ import {
 	ContainerCompaniesChip,
 } from "./styles";
 import { IoIosArrowBack } from "react-icons/io";
-import { IUserStudent, IWorkplace } from "../../../types";
+import { ICourse, IUserStudent, IWorkplace } from "../../../types";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import FieldInput from "../../../components/Fields/FieldInput";
 import MaskedInput from "react-text-mask";
@@ -25,36 +26,57 @@ import {
 	verifyIfDocumentAlreadyExists,
 	verifyIfEmailAlreadyExists,
 } from "../../../services/usersService";
-import { useDisclosure, useToast } from "@chakra-ui/react";
+import {
+	Card,
+	CardHeader,
+	Heading,
+	useDisclosure,
+	useToast,
+} from "@chakra-ui/react";
 import CreateWorkplaceDrawer from "../../../components/CreateWorkplaceDrawer";
 import { getCompanies } from "../../../services/workplaceService";
+import { getAdminCourses } from "../../../services/coursesService";
 
 const FormGroupStudentRegister: React.FC = () => {
 	const [step, setStep] = useState<number>(1);
 	const [isOpenModal, setOpen] = useState(false);
-	const [selectedWorkplace, setSelectedWorkplace] = useState<any>([]);
+	const [selectedWorkplace, setSelectedWorkplace] = useState<IWorkplace[]>([]);
 	const [documentAlreadyExists, setDocumentAlreadyExits] = useState(false);
 	const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
+	const [isCreated, setCreated] = useState<boolean>(false);
+	const [courses, setCourses] = useState<ICourse[]>([]);
 	const toast = useToast();
-	const [courses] = useState([
-		{ index: 1, name: "Como treinar o seu dragão" },
-		{ index: 457, name: "Como aaaa o seu dragãoaaaaaaaaaaaaaaaaa" },
-		{ index: 448, name: "Como aaaa o seu dasdasd" },
-		{ index: 459, name: "Como aaaa o seu yyty" },
-		{ index: 450, name: "Como aaaa o seu kugb" },
-	]);
-	const [workplaces, setWorkplaces] = useState<IWorkplace[]>()
+	const [workplaces, setWorkplaces] = useState<IWorkplace[]>([]);
 	const [selectedCourses, setSelectedCourses] = useState<any>([]);
 	const [student, setStudent] = useState<IUserStudent | undefined>();
-	const { isOpen, onOpen, onClose } = useDisclosure()
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [searchTerm, setSearchTerm] = useState("");
 
-	const handleSelectedCourse = (index: number) => {
-		selectedCourses.some((el: any) => index === el)
+	const filteredCards = useMemo(
+		() =>
+			workplaces?.filter((workplace: IWorkplace) =>
+				workplace.company_name.toLowerCase().includes(searchTerm.toLowerCase()),
+			),
+		[workplaces, searchTerm],
+	);
+
+	const handleSelectedCourse = (course: ICourse) => {
+		selectedCourses.some((el: ICourse) => course.course_id === el.course_id)
 			? setSelectedCourses([
-					...selectedCourses.filter((course: any) => index !== course),
+					...selectedCourses.filter((item: ICourse) => course.course_id !== item.course_id),
 				])
-			: setSelectedCourses([...selectedCourses, index]);
+			: setSelectedCourses([...selectedCourses, course]);
 	};
+
+	function openDrawer() {
+		setStudent((prevState: any) => (
+			{
+				...prevState,
+				courses_id: selectedCourses
+			}
+		));
+		setOpen(true)
+	}
 
 	const initialValuesEmpty = {
 		student_name: undefined,
@@ -63,48 +85,89 @@ const FormGroupStudentRegister: React.FC = () => {
 		student_document: undefined,
 	};
 
+	function selectNoWorkplace() {
+		setSelectedWorkplace([]);
+	}
+
+	function goToStepThree() {
+		setStep(3)
+		setStudent((prevState: any) => (
+			{
+				...prevState,
+				student_company_id: selectedWorkplace[0].company_register 
+			}
+		));
+	}
+
 	const handleSetStudent = (values: IUserStudent) => {
-		if (!documentAlreadyExists && !emailAlreadyExists) {
+		if (!documentAlreadyExists && !emailAlreadyExists ) {
+			console.log( 'selected', selectedWorkplace)
+
 			setStep(2);
 			setStudent({
 				student_name: values.student_name,
 				student_email: values.student_email,
 				student_phone: values.student_phone,
-				student_company_id: selectedWorkplace,
+				student_company_id: '',
 				student_document: values.student_document,
-				courses_id: selectedCourses,
+				courses_id: [''],
 			});
 		}
 	};
 
+	function compareByCompanyName(a: IWorkplace, b: IWorkplace) {
+		const companyA = a.company_name.toUpperCase();
+		const companyB = b.company_name.toUpperCase();
 
+		let comparison = 0;
+		if (companyA > companyB) {
+			comparison = 1;
+		} else if (companyA < companyB) {
+			comparison = -1;
+		}
+		return comparison;
+	}
 
 	useEffect(() => {
-		getCompanies()
-    .then((response) => {
-      if (response.data) {
-        setWorkplaces(response.data);
-      } else {
-        toast({
-          title: 'Erro',
-          description: 'Erro ao carregar estabelecimentos',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      }
-    })
-    .catch((error) => {
-      console.error('Erro ao obter estabelecimentos', error);
-			toast({
-				title: 'Erro',
-				description: 'Erro ao carregar estabelecimentos',
-				status: 'error',
-				duration: 5000,
-				isClosable: true,
-			});
-    });
-	}, []); 
+		async function getWorkplaces() {
+			const response = await getCompanies();
+			setCreated(false);
+			if (response.data) {
+				response.data.sort(compareByCompanyName);
+				setWorkplaces(response.data);
+			} else {
+				toast({
+					title: "Erro",
+					description: "Erro ao carregar estabelecimentos",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
+			}
+		}
+		getWorkplaces();
+	}, [isCreated, toast]);
+
+	useEffect(() => {
+		console.log('start')
+		async function getCourses() {
+			const response = await getAdminCourses();
+			if (response.data) {
+				console.log(response.data)
+				console.log('oiiiiiii')
+				setCourses(response.data);
+			} else {
+				toast({
+					title: "Erro",
+					description: "Erro ao carregar cursos",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
+			}
+		}
+		getCourses();
+	}, []);
 
 	const checkIfDocumentAlreadyExists = async (document: string) => {
 		if (document.length < 14) {
@@ -158,21 +221,21 @@ const FormGroupStudentRegister: React.FC = () => {
 		}
 	};
 
-	const handleSelectedWorkplace = (index: number) => {
-		if (!selectedWorkplace.some((el: any) => index === el)) {
-			setSelectedWorkplace([index]);
+	const handleSelectedWorkplace = (workplace: IWorkplace) => {
+		if (!selectedWorkplace.some((el: IWorkplace) => workplace.company_register === el.company_register)) {
+			setSelectedWorkplace([workplace]);
 		}
 
 		console.log(selectedWorkplace);
 	};
 
-	const handle = (index: number) => {
-		const test = selectedCourses.some((el: number) => index === el);
+	const handle = (course: ICourse) => {
+		const test = selectedCourses.some((el: ICourse) => course.course_id === el.course_id);
 		return test;
 	};
 
-	const handleWorkplaces = (index: number) => {
-		const test = selectedWorkplace.some((el: number) => index === el);
+	const handleWorkplaces = (workplace: IWorkplace) => {
+		const test = selectedWorkplace.some((el: IWorkplace) => workplace.company_register === el.company_register);
 		return test;
 	};
 
@@ -281,24 +344,55 @@ const FormGroupStudentRegister: React.FC = () => {
 					<Box>
 						<p>Selecione por qual empresa o usuário está se matriculando</p>
 						<FormContainer>
-							<Input placeholder="Pesquise pelo nome da empresa" />
+							<Input
+								placeholder="Pesquise pelo nome da empresa"
+								onChange={(e) => setSearchTerm(e.target.value)}
+							/>
 							<ContainerCompaniesChip>
-								{workplaces && workplaces.map((workplace, index) => {
-									return (
-										<Chip
-											key={workplace.company_register}
-											select={handleWorkplaces(Number(workplace.company_register)) ? "true" : "false"}
-											onClick={() => handleSelectedWorkplace(Number(workplace.company_register))}
-										>
-											{workplace.company_name}
-										</Chip>
-									);
-								})}
+								<Card
+									variant={selectedWorkplace.length === 0 ? "filled" : 'outline'}
+									cursor="pointer"
+									p={5}
+									textAlign="left"
+									onClick={() => selectNoWorkplace()}
+								>
+									<Heading size="md">
+										Estudante sem vinculo com estabelecimento
+									</Heading>
+								</Card>
+								{workplaces &&
+									filteredCards.map((workplace) => {
+										return (
+											<Card
+												variant={
+													handleWorkplaces(workplace)
+														? "filled"
+														: "outline"
+												}
+												cursor="pointer"
+												p={5}
+												textAlign="left"
+												key={workplace.company_register}
+												onClick={() =>
+													handleSelectedWorkplace(
+														workplace,
+													)
+												}
+											>
+												<Heading size="md"> {workplace.company_name}</Heading>
+												<p style={{ textAlign: "left" }}>
+													{workplace.company_register}
+												</p>
+											</Card>
+										);
+									})}
 							</ContainerCompaniesChip>
-							<p>ou <span onClick={onOpen}>adicione um novo estabelecimento</span></p>
+							<p>
+								ou <b onClick={onOpen}>adicione um novo estabelecimento</b>
+							</p>
 						</FormContainer>
 					</Box>
-					<Button onClick={() => setStep(3)}>Continuar</Button>
+					<Button onClick={() => goToStepThree()}>Continuar</Button>
 				</>
 			)}
 
@@ -313,23 +407,27 @@ const FormGroupStudentRegister: React.FC = () => {
 							{courses.map((course) => {
 								return (
 									<Chip
-										key={course.index}
-										select={handle(course.index) ? "true" : "false"}
-										onClick={() => handleSelectedCourse(course.index)}
+										key={course.course_id}
+										select={handle(course) ? "true" : "false"}
+										onClick={() => handleSelectedCourse(course)}
 									>
-										{course.name}
+										{course.course_title}
 									</Chip>
 								);
 							})}
 						</ContainerChips>
 					</Box>
-					<Button disabled={false} type="button" onClick={() => setOpen(true)}>
+					<Button disabled={false} type="button" onClick={() => openDrawer()}>
 						Salvar
 					</Button>
 				</>
 			)}
 
-			<CreateWorkplaceDrawer onClose={onClose} isOpen={isOpen} />
+			<CreateWorkplaceDrawer
+				onClose={onClose}
+				isOpen={isOpen}
+				setCreated={setCreated}
+			/>
 		</div>
 	);
 };

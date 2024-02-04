@@ -1,29 +1,66 @@
-import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Input } from "@chakra-ui/react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Input, useToast } from "@chakra-ui/react";
 import CardSelectWorkplace from "./CardSelectWorkplace";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { getCompanies } from "../../services/workplaceService";
+import { IWorkplace } from "../../types";
 
 interface IProps {
 	isOpen: boolean,
 	onClose: () => void,
-	setSelectedNewWorkplace: Dispatch<SetStateAction<number>>
-
+	setSelectedNewWorkplace: Dispatch<SetStateAction<IWorkplace | undefined>>
 }
 
 const SelectWorkplaceDrawer: React.FC<IProps> = ({ isOpen, onClose, setSelectedNewWorkplace }:IProps ) => {
+	const [workplaces, setWorkplaces] = useState<IWorkplace[]>([])
+	const [selectedWorkplace, setSelectedWorkplace] = useState<IWorkplace>();
+	const [searchTerm, setSearchTerm] = useState('');
 
-	const [workplaces] = useState([
-		{index: 1, name: 'Souza Treinamentos', cnpj: '02.541.094/0001-31'},
-		{index: 2, name: 'Code e Code', cnpj: '02.541.094/0001-31'},
-		{index: 3, name: 'Souza Treinamentos 2',cnpj: '02.541.094/0001-31'},
-		{index: 4, name: 'Souza Treinamentos', cnpj: '02.541.094/0001-31'},
-		{index: 5, name: 'Code e Code', cnpj: '02.541.094/0001-31'},
-		{index: 6, name: 'Souza Treinamentos 2',cnpj: '02.541.094/0001-31'},
-		{index: 7, name: 'Souza Treinamentos', cnpj: '02.541.094/0001-31'},
-		{index: 8, name: 'Code e Code', cnpj: '02.541.094/0001-31'},
-		{index: 9, name: 'Souza Treinamentos 2',cnpj: '02.541.094/0001-31'}
-	])
+	const filteredCards = useMemo(() => workplaces?.filter((workplace) => (
+		workplace.company_name.toLowerCase().includes(searchTerm.toLowerCase()))), [workplaces, searchTerm]);
 
-	const [selectedWorkplace, setSelectedWorkplace] = useState(0);
+
+	const toast = useToast()
+
+	function cancel() {
+		setSelectedNewWorkplace(undefined);
+		setSelectedWorkplace(undefined);
+		onClose();
+	}
+
+	function compareByCompanyName(a: IWorkplace, b: IWorkplace) {
+		const companyA = a.company_name.toUpperCase();
+		const companyB = b.company_name.toUpperCase();
+
+		let comparison = 0;
+		if (companyA > companyB) {
+			comparison = 1;
+		} else if (companyA < companyB) {
+			comparison = -1;
+		}
+		return comparison;
+	}
+
+	useEffect(() => {
+		async function getWorkplaces() {
+			const response = await getCompanies();
+			if (response.data) {
+				response.data.sort(compareByCompanyName);
+				setWorkplaces(response.data);
+			} else {
+				toast({
+					title: "Erro",
+					description: "Erro ao carregar estabelecimentos",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
+			}
+		}
+		getWorkplaces();
+	}, []);
 
 	useEffect(() => {
 		setSelectedNewWorkplace(selectedWorkplace);
@@ -44,15 +81,14 @@ const SelectWorkplaceDrawer: React.FC<IProps> = ({ isOpen, onClose, setSelectedN
           <DrawerBody>
 						<Input 
 							placeholder="Pesquise pelo nome da empresa"
+							onChange={(e) => setSearchTerm(e.target.value)}
 						/>
 
 						<Flex direction='column' gap={2} mt={5}>
 						{
-							workplaces.map((item) => {
+							filteredCards.map((item) => {
 								return <CardSelectWorkplace 
-								index={item.index}
-								name={item.name}
-								cnpj={item.cnpj}	
+								actualWorkplace={item}
 								key={item.index}
 								selectedWorkplace={selectedWorkplace}
 								setSelectedWorkplace={setSelectedWorkplace}
@@ -64,7 +100,7 @@ const SelectWorkplaceDrawer: React.FC<IProps> = ({ isOpen, onClose, setSelectedN
           </DrawerBody>
 
           <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
+            <Button variant='outline' mr={3} onClick={cancel}>
               Cancelar
             </Button>
           </DrawerFooter>

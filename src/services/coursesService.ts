@@ -1,10 +1,22 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from "axios";
 
 export const createCourse = async (payload: object) => {
 	try {
 		const { data } = await axios.post(
-			`http://localhost:3001/createCourse`,
+			`${import.meta.env.VITE_APP_SERVER}/createCourse`,
 			payload,
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const getAdminCourses = async () => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getAdminCourses`
 		);
 		return { data: data, err: null };
 	} catch (err) {

@@ -1,24 +1,23 @@
 import { Card } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
+import { IWorkplace } from "../../types";
 
 interface IProps {
-	index: number,
-	name: string,
-	cnpj: string
-	selectedWorkplace: number,
-	setSelectedWorkplace: Dispatch<SetStateAction<number>>
+	actualWorkplace: IWorkplace,
+	selectedWorkplace: IWorkplace | undefined,
+	setSelectedWorkplace: Dispatch<SetStateAction<IWorkplace | undefined>>
 }
 
-const CardSelectWorkplace: React.FC<IProps> = ({ index, name, cnpj, selectedWorkplace, setSelectedWorkplace }: IProps) => {
+const CardSelectWorkplace: React.FC<IProps> = ({ actualWorkplace, selectedWorkplace, setSelectedWorkplace }: IProps) => {
 	return (
 		<Card 
 			padding={5} 
-			variant={selectedWorkplace === index ? 'filled' : 'outline'}
+			variant={selectedWorkplace?.company_register === actualWorkplace.company_register ? 'filled' : 'outline'}
 			cursor='pointer'
-			onClick={() => setSelectedWorkplace(index)}
+			onClick={() => setSelectedWorkplace(actualWorkplace)}
 		>
-        <p><b>{name}</b></p>
-        <p>{cnpj}</p>
+        <p><b>{actualWorkplace.company_name}</b></p>
+        <p>{actualWorkplace.company_register}</p>
     </Card>
 	)
 }

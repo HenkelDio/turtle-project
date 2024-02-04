@@ -29,6 +29,12 @@ export const FormContainer = styled.div`
 	p {
 		opacity: 1;
 	}
+
+	b {
+		color: ${({ theme }) => theme.colors.green.dark};
+		cursor: pointer;
+	}
+	
 `;
 
 export const ContainerChips = styled.div`
@@ -130,10 +136,32 @@ export const BoxAddress = styled.div`
 export const ContainerCompaniesChip = styled.div`
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
 	justify-content: start;
 	gap: 10px;
-	height: 200px;
+	height: 300px;
+	padding: 15px 10px;
+	background-color: white;
+	border-radius: 8px;
 
 	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: #d9d9d9;
+		border-radius: 4px;
+	}
+
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: #b6b6b6;
+	}
 `;

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+	Box,
 	Button,
 	Drawer,
 	DrawerBody,
@@ -13,44 +14,97 @@ import {
 	Input,
 	useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IWorkplace } from "../../types";
 import { cnpjFormatter } from "../../utils/documentFormat";
 import formatPhone from "../../utils/phoneFormat";
-import { createCompany } from "../../services/workplaceService";
+import { createCompany, verifyCnpj } from "../../services/workplaceService";
 
 interface IProps {
 	isOpen: boolean;
 	onClose: () => void;
+	setCreated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const CreateWorkplaceDrawer: React.FC<IProps> = ({
 	isOpen,
 	onClose,
+	setCreated
 }: IProps) => {
 	const [workplace, setWorplace] = useState<IWorkplace>();
 	const [error, setError] = useState(false);
+	const [cnpjExists, setCnpjExists] = useState<boolean>(false);
 	const toast = useToast();
 
-	function handleWorkplace(field: string, value: string) {
+	async function handleWorkplace(field: string, value: string) {
+
+		if(field === 'company_register') {
+			if(value.length === 14) {
+				const cnpj = value.replace(/\D/g, "");
+				await checkIfCnpjAlreadyExists(cnpj);
+			}
+		}
+
+		if(field === 'company_number') {
+			setWorplace((prevState: any) => ({
+				...prevState,
+				company_number: value.replace(/\D/g, ""),
+			}));
+			return;
+		}
+
 		setWorplace((prevState: any) => ({
 			...prevState,
 			[field]: value,
 		}));
 	}
 
-	async function saveWorkplace() {
+	async function checkIfCnpjAlreadyExists(cnpj: string) {
+		const response = await verifyCnpj(cnpj);
+		
+		if(response.data) {
+			if(response.data.found) {
+				setCnpjExists(true);
+			} else {
+				setCnpjExists(false)
+			}
+		} else {
+			toast({
+				title: 'Erro',
+				description: "Erro ao verificar CNPJ",
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+		}
+	}
+
+	function validateFields() {
 		if(
 			!workplace?.company_email ||
 			!workplace?.company_name ||
 			!workplace?.company_number ||
 			!workplace?.company_register
 		) {
+			console.log('erro')
 			setError(true);
 		} else {
+			console.log('não erro')
+			setError(false)
+		}
+	}
+
+	useEffect(() => {
+		validateFields();
+	}, [workplace])
+
+	async function saveWorkplace() {
+		if(!error && !cnpjExists && workplace) {
 			const response = await createCompany(workplace);
-		
+			setError(false);
+
 			if(response.data) {
+				setCreated(true);
 				toast({
           title: 'Sucesso',
           description: "Estabelecimento criado com sucesso",
@@ -58,6 +112,13 @@ const CreateWorkplaceDrawer: React.FC<IProps> = ({
           duration: 5000,
           isClosable: true,
         });
+
+				setWorplace({
+					company_email: '',
+					company_name: '',
+					company_number: '',
+					company_register: ''
+				});
 
 				onClose()
 			} else {
@@ -108,10 +169,21 @@ const CreateWorkplaceDrawer: React.FC<IProps> = ({
 					</DrawerBody>
 
 					<DrawerFooter>
-						{
-							error && <p>Preencha todos os campos necessários</p>
-						}
-						<Button variant="solid" colorScheme="green" mr={3} onClick={saveWorkplace}>
+						<Box mr={10}>
+							{
+								error && <Box color='red.600'>Preencha todos os campos necessários</Box>
+							}
+							{
+								cnpjExists && <Box  color='red.600' >Esse CNPJ já existe</Box>
+							}
+						</Box>
+						<Button 
+							variant="solid" 
+							colorScheme="green" 
+							mr={3} 
+							onClick={saveWorkplace}
+							isDisabled={error || cnpjExists ? true : false}
+						>
 							Salvar
 						</Button>
 						<Button variant="outline" mr={3} onClick={onClose}>

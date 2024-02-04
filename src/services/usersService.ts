@@ -34,3 +34,26 @@ export const getStudentByDocument = async (document: string | undefined) => {
 		return { data: null, err };
 	}
 };
+
+export const getRegistersByStudent = async (document: string | undefined) => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getRegistersByStudent?document=${document}`,
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const deleteStudent = async (document: string | undefined) => {
+	try {
+		const { data } = await axios.delete(
+			`${import.meta.env.VITE_APP_SERVER}/deleteStudent?document=${document}`,
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+

@@ -16,7 +16,18 @@ export const createCompany = async (body: IWorkplace) => {
 export const getCompanies = async () => {
 	try {
 		const { data } = await axios.get(
-			`${import.meta.env.VITE_APP_SERVER}/getStudents`
+			`${import.meta.env.VITE_APP_SERVER}/getCompanies`
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const verifyCnpj = async (cnpj: string) => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getCompanyByCnpj?cnpj=${cnpj}`
 		);
 		return { data: data, err: null };
 	} catch (err) {
