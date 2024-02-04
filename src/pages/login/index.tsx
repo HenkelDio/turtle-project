@@ -16,11 +16,12 @@ import useTurtleStore from '../../store';
 export default function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [secondStep, setSecondStep] = useState(false);
 	const [buttonLoading, setButtonLoading] = useState(false);
 	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
-
+	const [firstLogin, setFirstLogin] = useState(true);
 
 	const handleLogin = () => {
 		setCredentials({
@@ -57,12 +58,29 @@ export default function Login() {
 					{secondStep && (
 						<>
 							<FormControl id="password">
-								<FormLabel>Senha</FormLabel>
-								<Input
-									type={showPassword ? 'text' : 'password'}
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-								/>
+								<div>
+									<FormLabel>Senha</FormLabel>
+									<Input
+										type={showPassword ? 'text' : 'password'}
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+									/>
+								</div>
+								{firstLogin &&
+									<div>
+										<FormLabel>Confirme a senha</FormLabel>
+										<Input
+											type={showPassword ? 'text' : 'password'}
+											value={confirmPassword}
+											onChange={(e) => setConfirmPassword(e.target.value)}
+										/>
+									</div>	
+								}
+
+								{password !== confirmPassword && (
+										<p style={{ color: 'red' }}>As senhas não coincidem. Por favor, insira senhas iguais.</p>
+								)}
+
 							</FormControl>
 							<Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
 								<FormControl display="flex" alignItems="center">
