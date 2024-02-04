@@ -34,3 +34,14 @@ export const deleteCourse = async (id: number) => {
 		return { data: null, err };
 	}
 };
+
+export const getCoursesByStudents = async (idStudent: number) => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getCourseStudent?idStudent=${idStudent}`
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};

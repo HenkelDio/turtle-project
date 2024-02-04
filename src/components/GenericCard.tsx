@@ -42,13 +42,13 @@ export default function GenericCard({
 				<Text fontSize={"2xl"} fontWeight={800}>
 					{type === "certificate"
 						? certificateData?.title
-						: courseData?.courseTitle}
+						: courseData?.course_title}
 				</Text>
-				<Text color={"gray.500"}>
+				{/* <Text color={"gray.500"}>
 					{type === "certificate"
 						? "Certificado"
 						: courseData && `Em progresso - ${courseData?.percentage}%`}
-				</Text>
+				</Text> */}
 			</Stack>
 		);
 	}
@@ -75,7 +75,8 @@ export default function GenericCard({
 
 				<Box px={6} pb={10}>
 					<Link
-						to={`/course/${courseData?.id}/${courseData?.modules[0].id}/${courseData?.modules[0].modules[0].id}`}
+						// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+						to={`/course/${courseData?.course_id}/${courseData?.modules[0].module_id}/${courseData?.modules[0].lessons[0].lesson_id}`}
 					>
 						<Button
 							w={"full"}

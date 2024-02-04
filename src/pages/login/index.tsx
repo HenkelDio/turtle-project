@@ -26,7 +26,7 @@ export default function Login() {
 	const handleLogin = () => {
 		setCredentials({
 			username: "Willian Henkel",
-			type: "admin"
+			type: "student"
 		})
 		setAuthenticated(true)
 	};
