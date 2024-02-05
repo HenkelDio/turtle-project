@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from "axios";
-import { ICheckEmail, ICreateRegister, ILogin, IUpdateStudent } from "../types";
+import { ICheckEmail, ICreateRegister, ILogin, IUpdateStudent, IUserAdmin } from "../types";
 
 export const verifyIfDocumentAlreadyExists = async (document: string) => {
 	try {
@@ -135,6 +135,39 @@ export const authLogin = async (body: ILogin) => {
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_SERVER}/authStudent`, body,
     );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const authLoginAdmin = async (body: ILogin) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/authAdmin`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const addAdminUser = async (body: IUserAdmin) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/createAdmin`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const listAdmins = async (page: number, pageSize: number) => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getAdmins?page=${page}&pageSize=${pageSize}`,
+		);
 		return { data: data, err: null };
 	} catch (err) {
 		return { data: null, err };

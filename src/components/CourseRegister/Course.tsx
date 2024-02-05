@@ -13,6 +13,7 @@ const Course = ({ course }: IProps) => {
 	const [course_description, setCourseDescription] = useState(
 		course.course_description,
 	);
+	const [course_rule, setCourseRule] = useState(course.course_rule);
 	const [modules, setModules] = useState(course.modules);
 	const [newModuleTitle, setNewModuleTitle] = useState("");
 
@@ -24,6 +25,11 @@ const Course = ({ course }: IProps) => {
 	const handleCourseDescriptionChange = (e: { target: { value: unknown } }) => {
 		setCourseDescription(e.target.value);
 		course.course_description = e.target.value;
+	};
+
+	const handleCourseRuleChange = (e: { target: { value: unknown } }) => {
+		setCourseRule(e.target.value);
+		course.course_rule = e.target.value;
 	};
 
 	const addModule = () => {
@@ -56,6 +62,15 @@ const Course = ({ course }: IProps) => {
 				type="text"
 				value={course_description}
 				onChange={handleCourseDescriptionChange}
+			/>
+
+			<Input
+				mt={5}
+				placeholder="Norma Regulamentadora [] (NR []), da Portaria SIT Nº [], de 23/03/2012 do Ministério do Trabalho"
+				bg="white"
+				type="text"
+				value={course_rule}
+				onChange={handleCourseRuleChange}
 			/>
 
 			{modules.map((module: IModule, index: number) => (

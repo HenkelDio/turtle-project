@@ -35,6 +35,7 @@ const ClassPage: React.FC = () => {
 				const selectedModule = selectedCourse.modules.find((val: IModule) => val.module_id.toString() === idModule);
 				if (selectedModule) {
 					setModule(selectedModule);
+					console.log("selectedModule", selectedModule)
 	
 					const selectedContent = selectedModule.lessons?.find((val: ILesson) => val.lesson_id.toString() === idContent);
 					if (selectedContent) {

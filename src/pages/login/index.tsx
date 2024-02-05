@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import useTurtleStore from "../../store";
 import { ICheckEmail, ILogin } from "../../types";
-import { authLogin, createPassword, verifyEmail } from "../../services/usersService";
+import { authLogin, authLoginAdmin, createPassword, verifyEmail } from "../../services/usersService";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ export default function Login() {
 	const handleLogin = () => {
 		setCredentials({
 			username: username,
-			type: 'admin',
+			type: type,
 			email: email,
 		});
 		console.log(credentials);
@@ -45,35 +45,72 @@ export default function Login() {
 	};
 
 	async function login() {
-		const data: ILogin = {
-			student_email: email,
-			student_password: actualPassword,
-		};
 
-		const response = await authLogin(data);
+		if(type === 'admin') {
 
-		if(response.data) {
-			if(response.data.auth) {
-				setUsername(response.data.student_name);
-				handleLogin();
+			const data: ILoginAdmin = {
+				admin_email: email,
+				admin_password: actualPassword,
+			};
+
+			const response = await authLoginAdmin(data);
+			
+			if(response.data) {
+				if(response.data.auth) {
+					setUsername(response.data);
+					handleLogin();
+				} else {
+					toast({
+						title: "Erro.",
+						description: "Senha ou e-mail inválidos",
+						status: "error",
+						duration: 5000,
+						isClosable: true,
+					});
+				}
 			} else {
 				toast({
 					title: "Erro.",
-					description: "Senha ou e-mail inválidos",
+					description: "Não foi possível realizar o login. Tente novamente",
 					status: "error",
 					duration: 5000,
 					isClosable: true,
 				});
 			}
 		} else {
-			toast({
-				title: "Erro.",
-				description: "Não foi possível realizar o login. Tente novamente",
-				status: "error",
-				duration: 5000,
-				isClosable: true,
-			});
+			const data: ILogin = {
+				student_email: email,
+				student_password: actualPassword,
+			};
+
+			const response = await authLogin(data);
+			
+
+			if(response.data) {
+				if(response.data.auth) {
+					setUsername(response.data.student_name);
+					handleLogin();
+				} else {
+					toast({
+						title: "Erro.",
+						description: "Senha ou e-mail inválidos",
+						status: "error",
+						duration: 5000,
+						isClosable: true,
+					});
+				}
+			} else {
+				toast({
+					title: "Erro.",
+					description: "Não foi possível realizar o login. Tente novamente",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
+			}
 		}
+
+		
 	}
 
 	async function handleCreatePassword() {

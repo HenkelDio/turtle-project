@@ -16,6 +16,8 @@ import { addStudentUser } from "../../../services";
 import Loader from "../../Loader";
 import Alert from "../../Alert";
 import delay from "../../../utils/delay";
+import { addAdminUser } from "../../../services/usersService";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
 	admin: IUserAdmin;
@@ -33,22 +35,22 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 	const [error, setError] = useState(false);
 	const [openDialog, setOpenDialog] = useState(false);
 	const [label, setLabel] = useState("");
+	const navigate = useNavigate();
 
 	const queryClient = useQueryClient();
 
-	const { mutate, isLoading } = useMutation(["user"], addStudentUser, {
+	const { mutate, isLoading } = useMutation(["user", admin], () => addAdminUser(admin), {
 		onSuccess: async ({ data, err }) => {
-			await delay();
-
 			if (!err) {
 				if (data && data.data) {
-					console.log(data.data);
 					setSuccess(true);
 					setError(false);
 					setLabel("Usuário adicionado com sucesso!");
 					setOpenDialog(true);
 					await delay(5000);
 					setOpenDialog(false);
+
+					navigate('/users')
 				}
 			}
 
@@ -70,6 +72,7 @@ const ConfirmAdminModal: React.FC<IProps> = ({
 		const data = {
 			admin_name: admin.admin_name,
 			admin_email: admin.admin_email,
+			admin_password: admin.admin_password
 		};
 		mutate(data);
 	};

@@ -20,6 +20,11 @@ export const adminValidation = yup.object().shape({
 		.string()
 		.email("Digite um e-mail valído")
 		.required('O "e-mail" é obrigatório'),
+
+		admin_password: yup.
+		string()
+		.required('Senha é obrigatória')
+		.min(6, 'Digite uma senha de no mínimo 6 carecteres')
 });
 
 export const workplaceValidation = yup.object().shape({

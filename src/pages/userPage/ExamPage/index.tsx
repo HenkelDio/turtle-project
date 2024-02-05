@@ -92,7 +92,7 @@ export default function ExamPage() {
 				isOpen={isOpen}
 				onClose={onClose}
 				actionLabel="OK"
-				action={() => navigate('/courses')}
+				action={() => navigate('/student/courses')}
 			>
 				{
 					approved ? 

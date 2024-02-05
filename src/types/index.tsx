@@ -40,6 +40,7 @@ export interface IUserStudent {
 export interface IUserAdmin {
 	admin_name: string;
 	admin_email: string;
+	admin_password: string
 }
 
 export interface ICompany {
@@ -94,6 +95,7 @@ export interface IQuestion {
 export interface ICourse {
 	course_id?: number;
 	course_title: string;
+	course_rule: string,
 	course_description: string;
 	modules: IModule[];
 	questions?: IQuestion[];
@@ -171,4 +173,9 @@ export interface ICheckEmail {
 export interface ILogin {
 	student_email: string,
 	student_password: string
+}
+
+export interface ILoginAdmin {
+	admin_email: string,
+	admin_password: string
 }

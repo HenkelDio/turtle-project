@@ -22,6 +22,7 @@ const FormGroupAdminRegister: React.FC = () => {
 		setAdmin({
 			admin_name: values.admin_name,
 			admin_email: values.admin_email,
+			admin_password: values.admin_password
 		});
 	};
 
@@ -49,6 +50,11 @@ const FormGroupAdminRegister: React.FC = () => {
 								name="admin_email"
 								title="E-mail"
 								placeholder="Digite o e-mail do administrador"
+							/>
+							<FieldInput
+								name="admin_password"
+								title="Senha"
+								placeholder="Digite a senha do administrador"
 							/>
 						</FormContainer>
 					</Box>

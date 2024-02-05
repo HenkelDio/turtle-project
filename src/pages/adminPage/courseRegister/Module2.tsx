@@ -33,6 +33,7 @@ const ContainerCourse = () => {
 		{
 			course_title: "",
 			course_description: "",
+			course_rule: "Norma Regulamentadora [] (NR []), da Portaria SIT Nº [], de 23/03/2012 do Ministério do Trabalho",
 			modules: [
 				{
 					module_id: 0,
@@ -124,7 +125,7 @@ const ContainerCourse = () => {
 		} else {
 			toast({
 				title: "Erro.",
-				description: "Não foi possível carregar as matrículas.",
+				description: "Não foi possível criar o curso.",
 				status: "error",
 				duration: 5000,
 				isClosable: true,

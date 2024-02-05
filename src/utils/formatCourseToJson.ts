@@ -5,6 +5,7 @@ function formatCourseToJson(courses: ICourse[]) {
 		return {
 			course_title: course.course_title,
 			course_description: course.course_description,
+			course_rule: course.course_rule,
 			modules: course.modules.map((module: IModule) => {
 				return {
 					module_title: module.module_title,
