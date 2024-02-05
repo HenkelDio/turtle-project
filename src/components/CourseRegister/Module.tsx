@@ -23,9 +23,9 @@ const Module = ({ module }: IProps) => {
 	const addLesson = () => {
 		const newLesson = {
 			lesson_title: newLessonTitle,
-			video_url: videoUrl,
-			pdf_url: pdfUrl,
-			content: content,
+			lesson_video_url: videoUrl,
+			lesson_pdf_url: pdfUrl,
+			lesson_richtext: content,
 		};
 		setLessons([...lessons, newLesson]);
 		setNewLessonTitle("");

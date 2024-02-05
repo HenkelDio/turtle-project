@@ -13,11 +13,15 @@ export interface IStore {
 
 	userIcon: string;
 	setUserIcon: (userIcon: string) => void;
+
+	course: ICourse[],
+	setCourse: (course: ICourse[]) => void;
 }
 
 export interface ICredentials {
 	username: string;
 	type: string;
+	email: string
 }
 
 export interface IHttpClient {
@@ -73,26 +77,34 @@ export interface IModuleClass {
 // }
 
 export interface IOptions {
-	question_option_id: number,
-	question_id: number,
+	question_option_id?: number,
+	question_id?: number,
 	question_option_letter: string;
 	question_option_text: string;
 }
 
 export interface IQuestion {
-	question_id: number,
-	course_id: number,
+	question_id?: number,
+	course_id?: number,
 	question_text: string;
 	questionsOptions: IOptions[];
 	question_answer: string;
 }
 
 export interface ICourse {
-	course_id: number;
+	course_id?: number;
 	course_title: string;
 	course_description: string;
 	modules: IModule[];
 	questions?: IQuestion[];
+}
+
+export interface ICourseRegister {
+	course: ICourse,
+	course_id: number,
+	is_done: boolean,
+	register_id: number,
+	student_id: number
 }
 
 export interface IContentClass {
@@ -115,7 +127,7 @@ export interface ILesson {
 
 export interface IModule {
 	module_id: number,
-	course_id: number,
+	course_id?: number,
 	module_title: string;
 	lessons?: ILesson[];
 }
@@ -150,4 +162,13 @@ export interface IUpdateStudent {
 export interface ICreateRegister {
 	courses_id: number[],
 	student_document: string | undefined
+}
+
+export interface ICheckEmail {
+	email: string
+}
+
+export interface ILogin {
+	student_email: string,
+	student_password: string
 }

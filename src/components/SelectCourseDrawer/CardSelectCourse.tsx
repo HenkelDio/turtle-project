@@ -1,6 +1,5 @@
 import { Card, Checkbox } from "@chakra-ui/react";
 import { ICourse } from "../../types";
-import { useState } from "react";
 
 interface IProps {
 	course: ICourse;

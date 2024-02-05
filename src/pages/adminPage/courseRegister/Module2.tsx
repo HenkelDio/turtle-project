@@ -35,15 +35,15 @@ const ContainerCourse = () => {
 			course_description: "",
 			modules: [
 				{
-					id: "",
+					module_id: 0,
 					module_title: "Módulo 1",
 					lessons: [],
 				},
 			],
 			questions: [
 				{
-					question_title: "Questão 1",
-					question_options: [
+					question_text: "Questão 1",
+					questionsOptions: [
 						{
 							question_option_letter: "a",
 							question_option_text: "",
@@ -81,7 +81,7 @@ const ContainerCourse = () => {
 	const addQuestion = () => {
 		const newQuestion = {
 			question_text: "",
-			question_options: [
+			questionsOptions: [
 				{
 					question_option_letter: "a",
 					question_option_text: "",

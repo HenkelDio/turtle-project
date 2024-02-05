@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
 import { IconType } from "react-icons";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import useTurtleStore from "../store";
 
 interface LinkItemProps {
@@ -80,6 +80,20 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 	const { userIcon } = useTurtleStore((state) => state);
 
+	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
+
+	const navigate = useNavigate();
+
+	function logoff() {
+		setCredentials({
+			type: '',
+			username: '',
+			email: ''
+		});
+		setAuthenticated(false)
+		navigate('/login')
+	}
+
 	return (
 		<Flex
 			ml={{ base: 0, md: 0 }}
@@ -136,7 +150,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 								);
 							})}
 							<MenuDivider />
-							<MenuItem>Sair</MenuItem>
+							<MenuItem onClick={logoff}>Sair</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>

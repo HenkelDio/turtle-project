@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import {
 	Button,
@@ -13,7 +15,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import CardSelectCourse from "./CardSelectCourse";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getAdminCourses } from "../../services/coursesService";
 import { ICourse, ICreateRegister, IRegister, IUserStudent } from "../../types";
 import { createRegister } from "../../services/usersService";
@@ -46,6 +48,7 @@ const SelectCourseDrawer: React.FC<IProps> = ({
 }: IProps) => {
 	const [courses, setCourses] = useState<ICourse[]>([]);
 	const [selectedCourses, setSelectedCourses] = useState<number[]>([]);
+	const [searchTerm, setSearchTerm] = useState('');
 	const toast = useToast();
 
 	useEffect(() => {
@@ -65,6 +68,7 @@ const SelectCourseDrawer: React.FC<IProps> = ({
 			}
 		}
 		getCourses();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	function isAlreadySelected(id: number) {
@@ -91,6 +95,7 @@ const SelectCourseDrawer: React.FC<IProps> = ({
 				duration: 5000,
 				isClosable: true,
 			});
+			setSearchTerm('');
 			getRegisterQuery.refetch()
 			onClose()
 		} else {
@@ -104,6 +109,10 @@ const SelectCourseDrawer: React.FC<IProps> = ({
 		}
 	}
 
+
+	const filteredCards = useMemo(() => courses?.filter((course: ICourse) => (
+		course.course_title.toLowerCase().includes(searchTerm.toLowerCase()))), [courses, searchTerm]);
+
 	return (
 		<>
 			<Drawer isOpen={isOpen} placement="right" onClose={onClose} size="lg">
@@ -113,11 +122,11 @@ const SelectCourseDrawer: React.FC<IProps> = ({
 					<DrawerHeader>Nova matricula</DrawerHeader>
 
 					<DrawerBody>
-						<Input placeholder="Pesquise pelo nome do curso" />
+						<Input placeholder="Pesquise pelo nome do curso" onChange={(e) => setSearchTerm(e.target.value)}/>
 
 						<Flex mt={5} direction="column" gap={4}>
 							{courses &&
-								courses.map((item: ICourse) => {
+								filteredCards.map((item: ICourse) => {
 									return (
 										<CardSelectCourse
 											course={item}

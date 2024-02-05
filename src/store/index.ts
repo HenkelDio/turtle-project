@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ICredentials, IModule, IStore } from "../types";
+import { ICourse, ICredentials, IModule, IStore } from "../types";
 
 const useTurtleStore = create<IStore>((set) => ({
 	credentials: {} as ICredentials,
@@ -19,6 +19,9 @@ const useTurtleStore = create<IStore>((set) => ({
 
 	userIcon: "" as string,
 	setUserIcon: (payload: string) => set((state) => ({ userIcon: payload })),
+
+	course: [] as ICourse[],
+	setCourse: (payload: ICourse[]) => set((state) => ({ course: payload })),
 }));
 
 export default useTurtleStore;

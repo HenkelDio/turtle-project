@@ -50,7 +50,7 @@ const CardCourse: React.FC<IProps> = ({ course, setDeleted }: IProps) => {
 				<BiSolidBookOpen />
 			</span>
 			<p>{course.course_title}</p>
-			<Box onClick={onOpen}>
+			<Box onClick={onOpen} cursor='pointer'>
 				<MdDelete size={20} />
 			</Box>
 			<GenericModal

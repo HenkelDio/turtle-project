@@ -11,26 +11,43 @@ import { BsArrowUpLeftSquareFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { SetStateAction, useEffect, useState } from "react";
 import { coursesMock } from "../../../mocks/states";
-import { ICourse, IModule, IModuleClass } from "../../../types";
+import { ICourse, ILesson, IModule, IModuleClass } from "../../../types";
 import ContentClass from "../../../components/ContentClass";
+import useTurtleStore from "../../../store";
 
 const ClassPage: React.FC = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [data, setData] = useState<ICourse>();
 	const [module, setModule] = useState<IModule | undefined>();
-	const [content, setContent] = useState<IModuleClass | undefined>();
+	const [content, setContent] = useState<ILesson | undefined>();
 
 	const { idCourse, idModule, idContent } = useParams();
 
+	const { course } = useTurtleStore((state) => state);
+
 	useEffect(() => {
 		function handleSetData() {
-			setData(coursesMock.filter((val) => val.id === idCourse)[0]);
-			setModule(data?.modules.filter((val) => val.id === idModule)[0]);
-			setContent(module?.modules.filter((val) => val.id === idContent)[0]);
-		}
+			const selectedCourse = course.find((val: ICourse) => val.course_id.toString() === idCourse);
+	
+			if (selectedCourse) {
+				setData(selectedCourse);
+	
+				const selectedModule = selectedCourse.modules.find((val: IModule) => val.module_id.toString() === idModule);
+				if (selectedModule) {
+					setModule(selectedModule);
+	
+					const selectedContent = selectedModule.lessons?.find((val: ILesson) => val.lesson_id.toString() === idContent);
+					if (selectedContent) {
+						setContent(selectedContent);
+					}
+				}
+			}
 
+			console.log('content', content)
+		}
+	
 		handleSetData();
-	});
+	}, [course, idCourse, idModule, idContent]);
 
 	return (
 		<>
@@ -52,16 +69,16 @@ const ClassPage: React.FC = () => {
 			<ModuleDrawer
 				onClose={onClose}
 				isOpen={isOpen}
-				courseName={data?.courseTitle}
+				courseName={data?.course_title}
 				modules={data?.modules}
-				idCourse={data?.id}
+				idCourse={data?.course_id.toString()}
 			/>
 
 			<ContentClass
-				title={content?.title}
-				videoUrl={content?.videoUrl}
-				description={content?.description}
-				pdfPath={content?.pdfPath}
+				title={content?.lesson_title}
+				videoUrl={content?.lesson_video_url}
+				description={content?.lesson_richtext}
+				pdfPath={content?.lesson_pdf_url}
 			/>
 		</>
 	);

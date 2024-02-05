@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { ICertificate, ICourse } from "../types";
 import { Link } from "react-router-dom";
+import useTurtleStore from "../store";
 
 interface IProps {
 	type: string;
@@ -20,6 +21,14 @@ export default function GenericCard({
 	courseData,
 	certificateData,
 }: IProps) {
+	const { setCourse } = useTurtleStore((state) => state);
+
+	function selectCourse() {
+		if(courseData) {
+			setCourse([courseData])
+		}
+	}
+
 	function Header() {
 		return (
 			<Text
@@ -77,6 +86,7 @@ export default function GenericCard({
 					<Link
 						// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 						to={`/course/${courseData?.course_id}/${courseData?.modules[0].module_id}/${courseData?.modules[0].lessons[0].lesson_id}`}
+						onClick={selectCourse}
 					>
 						<Button
 							w={"full"}

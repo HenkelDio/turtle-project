@@ -23,7 +23,7 @@ import {
 import { FiUsers, FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 import { LuBook } from "react-icons/lu";
 import { IconType } from "react-icons";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import useTurtleStore from "../store";
 
 interface LinkItemProps {
@@ -134,6 +134,20 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
+
+	const navigate = useNavigate();
+
+	function logoff() {
+		setCredentials({
+			type: '',
+			username: '',
+			email: ''
+		});
+		setAuthenticated(false)
+		navigate('/login')
+	}
+
 	return (
 		<Flex
 			ml={{ base: 0, md: 60 }}
@@ -208,7 +222,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 							</Link>
 							<MenuItem>Configurações</MenuItem>
 							<MenuDivider />
-							<MenuItem>Sair</MenuItem>
+							<MenuItem onClick={logoff}>Sair</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>

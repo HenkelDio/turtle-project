@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import {
 	Box,
 	Button,
@@ -29,6 +30,9 @@ export default function ModuleDrawer({
 	modules,
 	idCourse,
 }: IProps) {
+
+	console.log(courseName)
+
 	return (
 		<>
 			<Drawer placement="left" onClose={onClose} isOpen={isOpen} size="sm">
@@ -45,11 +49,11 @@ export default function ModuleDrawer({
 							{modules?.map((module) => {
 								return (
 									<ModuleContainer
-										modules={module.modules}
-										title={module.title}
-										key={module.title}
+										modules={module.lessons}
+										title={module.module_title}
+										key={module.module_id}
 										idCourse={idCourse}
-										idModule={module.id}
+										idModule={module.module_id.toString()}
 										onClose={onClose}
 									/>
 								);
@@ -63,7 +67,7 @@ export default function ModuleDrawer({
 									_hover={{
 										background: "green.500",
 									}}
-									isDisabled={true}
+									isDisabled={false}
 									color="white"
 									w={["full", 300]}
 									h={50}

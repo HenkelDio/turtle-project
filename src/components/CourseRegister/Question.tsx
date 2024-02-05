@@ -1,5 +1,4 @@
 import { Box, Flex, Input, Select } from "@chakra-ui/react";
-import { useState } from "react";
 
 interface IProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,15 +7,15 @@ interface IProps {
 
 export default function Question({ question }: IProps) {
 	function handleSetTitleQuestion(value: string) {
-		question.question_title = value;
+		question.question_text = value;
 	}
 
 	function handleSetQuestion(value: string, position: number) {
-		question.options[position].text = value;
+		question.questionsOptions[position].question_option_text = value;
 	}
 
 	function handleSetCorrectAnswer(value: string) {
-		question.correct_answer = value;
+		question.question_answer = value;
 	}
 
 	return (

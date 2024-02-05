@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { useDisclosure } from "@chakra-ui/react";
 import SelectCourseDrawer from "../SelectCourseDrawer";
 import { IRegister, IUserStudent } from "../../types";
@@ -22,7 +24,7 @@ interface IProps {
 const AddRegisterCourse: React.FC<IProps> = ({
 	registers,
 	student,
-	getRegisterQuery
+	getRegisterQuery,
 }: IProps) => {
 	const { isOpen, onClose, onOpen } = useDisclosure();
 

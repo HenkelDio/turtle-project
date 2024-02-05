@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from "axios";
-import { ICreateRegister, IUpdateStudent } from "../types";
+import { ICheckEmail, ICreateRegister, ILogin, IUpdateStudent } from "../types";
 
 export const verifyIfDocumentAlreadyExists = async (document: string) => {
 	try {
@@ -47,6 +47,19 @@ export const getRegistersByStudent = async (document: string | undefined) => {
 	}
 };
 
+export const getRegistersByEmail = async (email: string | undefined) => {
+	try {
+		const { data } = await axios.get(
+			`${import.meta.env.VITE_APP_SERVER}/getRegistersByEmail`, {headers: {
+				email
+			}},
+		);
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
 export const deleteStudent = async (document: string | undefined) => {
 	try {
 		const { data } = await axios.delete(
@@ -64,7 +77,7 @@ export const updateStudent = async (document: string | undefined, body: IUpdateS
       `${import.meta.env.VITE_APP_SERVER}/updateStudent`,
       body,
       {
-        params: { document } // Passando o documento como parâmetro de consulta
+        params: { document } 
       }
     );
 		return { data: data, err: null };
@@ -94,5 +107,39 @@ export const createRegister= async (body: ICreateRegister) => {
 		return { data: null, err };
 	}
 };
+
+export const verifyEmail = async (body: ICheckEmail) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/emailUser`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const createPassword = async (body: ILogin) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/createPassStudent`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
+export const authLogin = async (body: ILogin) => {
+	try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_SERVER}/authStudent`, body,
+    );
+		return { data: data, err: null };
+	} catch (err) {
+		return { data: null, err };
+	}
+};
+
 
 

@@ -11,17 +11,17 @@ function formatCourseToJson(courses: ICourse[]) {
 					lessons: module.lessons?.map((lesson: ILesson) => {
 						return {
 							lesson_title: lesson.lesson_title,
-							lesson_video_url: lesson.video_url,
-							lesson_pdf_url: lesson.pdf_url,
-							lesson_richtext: lesson.content,
+							lesson_video_url: lesson.lesson_video_url,
+							lesson_pdf_url: lesson.lesson_pdf_url,
+							lesson_richtext: lesson.lesson_richtext,
 						};
 					}),
 				};
 			}),
 			questions: course.questions?.map((question: IQuestion) => {
 				return {
-					question_text: question.question_title,
-					question_options: question.question_options,
+					question_text: question.question_text,
+					question_options: question.questionsOptions,
 					question_answer: question.question_answer,
 				};
 			}),

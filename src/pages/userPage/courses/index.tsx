@@ -6,30 +6,30 @@ import { coursesMock } from "../../../mocks/states";
 import { Flex, Input, useToast } from "@chakra-ui/react";
 import GenericCard from "../../../components/GenericCard";
 import { useQuery } from "react-query";
-import { getCoursesByStudents } from "../../../services/coursesService";
-import { ICourse } from "../../../types";
+import { getRegistersByEmail } from "../../../services/usersService";
+import useTurtleStore from "../../../store";
+import { ICourseRegister } from "../../../types";
 
 const Courses: React.FC = () => {
 	const [cards] = useState(coursesMock);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isLoading, setLoading] = useState(true);
-	const [courses, setCourses] = useState<ICourse[]>([]);
+	const [courses, setCourses] = useState<ICourseRegister[]>([]);
+	const { credentials } = useTurtleStore((state) => state);
 
 	const toast = useToast();
 
 	useQuery(
 		["getCoursesByStudents"],
-		() => getCoursesByStudents(1),
+		() => getRegistersByEmail(credentials.email),
 		{
 			// eslint-disable-next-line @typescript-eslint/no-misused-promises
 			onSuccess: ({ data, err }) => {
-				setLoading(true);
-
-				console.log(courses)
+				setLoading(true)
 	
 				if (!err) {
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-					setCourses(data)
+					setCourses(data.registers)
 					setLoading(false);
 				}
 				if (err) {
@@ -92,8 +92,12 @@ const Courses: React.FC = () => {
 			/>
 
 			<Flex gap={5} wrap="wrap" mt={50}>
-				{courses && courses.length < 0 && courses.map((card) => {
-					return <GenericCard key={card.course_id} type="course" courseData={card} />;
+				{courses && courses.length > 0 && courses.map((card) => {
+					return (
+						<>
+						<GenericCard key={card.course_id} type="course" courseData={card.course} />
+						</>
+					)
 				})}
 			</Flex>
 		</Container>

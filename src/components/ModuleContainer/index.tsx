@@ -11,12 +11,12 @@ import {
 	Text,
 } from "@chakra-ui/react";
 import { TbSquareCheckFilled, TbSquareCheck } from "react-icons/tb";
-import { IModuleClass } from "../../types";
+import { ILesson } from "../../types";
 import { Link } from "react-router-dom";
 
 interface IProps {
 	title: string;
-	modules: IModuleClass[];
+	modules: ILesson[] | undefined;
 	idCourse: string | undefined;
 	idModule: string | undefined;
 	onClose: () => void;
@@ -44,8 +44,8 @@ export function ModuleContainer({
 					{modules.map((module) => {
 						return (
 							<Link
-								to={`/course/${idCourse}/${idModule}/${module.id}`}
-								key={module.title}
+								to={`/course/${idCourse}/${idModule}/${module.lesson_id}`}
+								key={module.lesson_title}
 								onClick={onClose}
 							>
 								<Flex
@@ -58,12 +58,13 @@ export function ModuleContainer({
 									rounded="md"
 									gap={5}
 								>
-									<Text w={[250, 300]}>{module.title}</Text>
+									<Text w={[250, 300]}>{module.lesson_title}</Text>
+									{/* 
 									<Icon
-										as={module.completed ? TbSquareCheckFilled : TbSquareCheck}
+										as={module ? TbSquareCheckFilled : TbSquareCheck}
 										color={module.completed ? "green" : "black"}
 										boxSize={6}
-									/>
+									/> */}
 								</Flex>
 							</Link>
 						);

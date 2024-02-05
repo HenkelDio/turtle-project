@@ -43,7 +43,7 @@ const CourseAdministration: React.FC = () => {
 			<h1>Cursos</h1>
 			<Box>
 				<p>{courses ? `${courses.length} cursos` : 'Carregando...'}</p>
-				<Link to="/eitalasqueira">
+				<Link to="/createCourse">
 					<Button colorScheme="green">Novo curso</Button>
 				</Link>
 			</Box>

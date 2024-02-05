@@ -1,4 +1,6 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { useState } from "react";
 import {
 	Button,
 	Flex,
@@ -10,32 +12,127 @@ import {
 	Image,
 	Switch,
 	Spinner,
-} from '@chakra-ui/react';
-import useTurtleStore from '../../store';
+	useToast,
+} from "@chakra-ui/react";
+import useTurtleStore from "../../store";
+import { ICheckEmail, ILogin } from "../../types";
+import { authLogin, createPassword, verifyEmail } from "../../services/usersService";
 
 export default function Login() {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [secondStep, setSecondStep] = useState(false);
 	const [buttonLoading, setButtonLoading] = useState(false);
-	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
-	const [firstLogin, setFirstLogin] = useState(true);
+	const [actualPassword, setActualPassword] = useState('');
+	const [type, setType] = useState("");
+	const [username, setUsername] = useState("");
+	const { setAuthenticated, setCredentials, credentials } = useTurtleStore(
+		(state) => state,
+	);
+	const [firstLogin, setFirstLogin] = useState(false);
+	const toast = useToast();
 
 	const handleLogin = () => {
 		setCredentials({
-			username: "Willian Henkel",
-			type: "student"
-		})
-		setAuthenticated(true)
+			username: username,
+			type: 'admin',
+			email: email,
+		});
+		console.log(credentials);
+		setAuthenticated(true);
 	};
 
+	async function login() {
+		const data: ILogin = {
+			student_email: email,
+			student_password: actualPassword,
+		};
+
+		const response = await authLogin(data);
+
+		if(response.data) {
+			if(response.data.auth) {
+				setUsername(response.data.student_name);
+				handleLogin();
+			} else {
+				toast({
+					title: "Erro.",
+					description: "Senha ou e-mail inválidos",
+					status: "error",
+					duration: 5000,
+					isClosable: true,
+				});
+			}
+		} else {
+			toast({
+				title: "Erro.",
+				description: "Não foi possível realizar o login. Tente novamente",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
+		}
+	}
+
+	async function handleCreatePassword() {
+		const data: ILogin = {
+			student_email: email,
+			student_password: confirmPassword,
+		};
+
+		const response = await createPassword(data);
+
+		if (response.data) {
+			toast({
+				title: "Sucesso.",
+				description: "Senha criada com sucesso.",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
+			setUsername(response.data.user.student_name);
+			handleLogin();
+		} else {
+			toast({
+				title: "Erro.",
+				description: "Não foi possível criar a senha",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
+		}
+	}
+
 	const handleNextStep = async () => {
+		const data: ICheckEmail = {
+			email: email,
+		};
 		setButtonLoading(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		setSecondStep(true);
+		const response = await verifyEmail(data);
+
+		if (response.data) {
+			if (response.data.found) {
+				setFirstLogin(response.data.first_login);
+				console.log(response.data);
+				setType(response.data.type);
+				setSecondStep(true);
+			} else {
+				toast({
+					title: "Erro.",
+					description: "E-mail não encontrado",
+					status: "error",
+					duration: 3000,
+					isClosable: true,
+				});
+			}
+		}
+
 		setButtonLoading(false);
+		// await new Promise((resolve) => setTimeout(resolve, 1000));
+		// setSecondStep(true);
+		// setButtonLoading(false);
 	};
 
 	const handleTogglePassword = () => {
@@ -43,46 +140,68 @@ export default function Login() {
 	};
 
 	return (
-		<Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
-			<Flex p={8} flex={1} align={'center'} justify={'center'} bg={'white'}>
-				<Stack spacing={4} w={'full'} maxW={'md'}>
-					<Heading fontSize={'lg'} opacity={0.4}>
+		<Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+			<Flex p={8} flex={1} align={"center"} justify={"center"} bg={"white"}>
+				<Stack spacing={4} w={"full"} maxW={"md"}>
+					<Heading fontSize={"lg"} opacity={0.4}>
 						ST Treinamentos
 					</Heading>
-					<Heading fontSize={'2xl'}>Entre em sua conta</Heading>
+					<Heading fontSize={"2xl"}>Entre em sua conta</Heading>
 					<FormControl id="email">
 						<FormLabel>Email</FormLabel>
-						<Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+						<Input
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 					</FormControl>
 
 					{secondStep && (
 						<>
 							<FormControl id="password">
-								<div>
+								{
+									!firstLogin && <div>
 									<FormLabel>Senha</FormLabel>
 									<Input
-										type={showPassword ? 'text' : 'password'}
-										value={password}
-										onChange={(e) => setPassword(e.target.value)}
+										type={showPassword ? "text" : "password"}
+										value={actualPassword}
+										onChange={(e) => setActualPassword(e.target.value)}
 									/>
-								</div>
-								{firstLogin &&
-									<div>
-										<FormLabel>Confirme a senha</FormLabel>
-										<Input
-											type={showPassword ? 'text' : 'password'}
-											value={confirmPassword}
-											onChange={(e) => setConfirmPassword(e.target.value)}
-										/>
-									</div>	
+								</div> 
 								}
 
-								{password !== confirmPassword && (
-										<p style={{ color: 'red' }}>As senhas não coincidem. Por favor, insira senhas iguais.</p>
+								{firstLogin && (
+									<>
+										<div>
+											<FormLabel>Senha</FormLabel>
+											<Input
+												type={showPassword ? "text" : "password"}
+												value={password}
+												onChange={(e) => setPassword(e.target.value)}
+											/>
+										</div>
+										<div>
+											<FormLabel>Confirme a senha</FormLabel>
+											<Input
+												type={showPassword ? "text" : "password"}
+												value={confirmPassword}
+												onChange={(e) => setConfirmPassword(e.target.value)}
+											/>
+										</div>
+									</>
 								)}
 
+								{password !== confirmPassword && (
+									<p style={{ color: "red" }}>
+										As senhas não coincidem. Por favor, insira senhas iguais.
+									</p>
+								)}
 							</FormControl>
-							<Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+							<Stack
+								direction={{ base: "column", sm: "row" }}
+								align={"start"}
+								justify={"space-between"}
+							>
 								<FormControl display="flex" alignItems="center">
 									<FormLabel htmlFor="email-alerts" mb="0">
 										Mostrar senha
@@ -94,9 +213,31 @@ export default function Login() {
 					)}
 
 					<Stack spacing={6}>
-						<Button colorScheme={'green'} variant={'solid'} onClick={secondStep ? handleLogin : handleNextStep}>
-							{buttonLoading ? <Spinner /> : secondStep ? 'Entrar' : 'Próximo'}
-						</Button>
+						{!firstLogin && (
+							<Button
+								colorScheme={"green"}
+								variant={"solid"}
+								onClick={secondStep ? login : handleNextStep}
+							>
+								{buttonLoading ? (
+									<Spinner />
+								) : secondStep ? (
+									"Entrar"
+								) : (
+									"Próximo"
+								)}
+							</Button>
+						)}
+
+						{firstLogin && (
+							<Button
+								colorScheme={"green"}
+								variant={"solid"}
+								onClick={handleCreatePassword}
+							>
+								{buttonLoading ? <Spinner /> : "Criar senha e entrar"}
+							</Button>
+						)}
 					</Stack>
 				</Stack>
 			</Flex>

@@ -40,7 +40,7 @@ export function Router() {
 						<Route path="/users" element={<UserAdministration />} />
 						<Route path="/users/edit/:document" element={<UserEdit />} />
 						<Route path="/users/create" element={<UserRegister />} />
-						<Route path="/eitalasqueira" element={<ContainerCourse />} />
+						<Route path="/createCourse" element={<ContainerCourse />} />
 
 						<Route path="/courses" element={<CourseAdministration />} />
 						<Route path="/courses/create" element={<CourseRegister />} />

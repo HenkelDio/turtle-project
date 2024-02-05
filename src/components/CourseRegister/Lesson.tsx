@@ -9,9 +9,9 @@ interface IProps {
 
 const Lesson = ({ lesson }: IProps) => {
 	const [lesson_title, setLessonTitle] = useState(lesson.lesson_title);
-	const [videoUrl, setVideoUrl] = useState(lesson.video_url);
-	const [pdfUrl, setPdfUrl] = useState(lesson.pdf_url);
-	const [content, setContent] = useState(lesson.content);
+	const [videoUrl, setVideoUrl] = useState(lesson.lesson_video_url);
+	const [pdfUrl, setPdfUrl] = useState(lesson.lesson_pdf_url);
+	const [content, setContent] = useState(lesson.lesson_richtext);
 	const [value, setValue] = useState("");
 
 	const handleLessonTitleChange = (e: { target: { value: unknown } }) => {
@@ -21,17 +21,17 @@ const Lesson = ({ lesson }: IProps) => {
 
 	const handleUrlVideoChange = (e: { target: { value: unknown } }) => {
 		setVideoUrl(e.target.value);
-		lesson.video_url = e.target.value;
+		lesson.lesson_video_url = e.target.value;
 	};
 
 	const handleUrlPdfChange = (e: { target: { value: unknown } }) => {
 		setPdfUrl(e.target.value);
-		lesson.pdf_url = e.target.value;
+		lesson.lesson_pdf_url = e.target.value;
 	};
 
 	const handleContentChange = (value: string) => {
 		setContent(value);
-		lesson.content = value;
+		lesson.lesson_richtext = value;
 	};
 
 	useEffect(() => {
