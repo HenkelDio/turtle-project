@@ -14,12 +14,14 @@ interface IProps {
 	type: string;
 	courseData?: ICourse;
 	certificateData?: ICertificate;
+	isDone: boolean
 }
 
 export default function GenericCard({
 	type,
 	courseData,
 	certificateData,
+	isDone
 }: IProps) {
 	const { setCourse } = useTurtleStore((state) => state);
 
@@ -53,11 +55,11 @@ export default function GenericCard({
 						? certificateData?.title
 						: courseData?.course_title}
 				</Text>
-				{/* <Text color={"gray.500"}>
+				<Text color={"gray.500"}>
 					{type === "certificate"
 						? "Certificado"
-						: courseData && `Em progresso - ${courseData?.percentage}%`}
-				</Text> */}
+						: isDone  ? 'Concluído' : 'Em progresso'}
+				</Text>
 			</Stack>
 		);
 	}
@@ -66,6 +68,7 @@ export default function GenericCard({
 		<Center py={0}>
 			<Box
 				maxW={"400px"}
+				minW={"300px"}
 				w={"full"}
 				bg={useColorModeValue("white", "gray.800")}
 				boxShadow={"2xl"}

@@ -15,7 +15,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import useTurtleStore from "../../store";
-import { ICheckEmail, ILogin } from "../../types";
+import { ICheckEmail, ILogin, ILoginAdmin } from "../../types";
 import { authLogin, authLoginAdmin, createPassword, verifyEmail } from "../../services/usersService";
 
 export default function Login() {
@@ -34,13 +34,12 @@ export default function Login() {
 	const [firstLogin, setFirstLogin] = useState(false);
 	const toast = useToast();
 
-	const handleLogin = () => {
+	const handleLogin = (username: string) => {
 		setCredentials({
 			username: username,
 			type: type,
 			email: email,
 		});
-		console.log(credentials);
 		setAuthenticated(true);
 	};
 
@@ -50,15 +49,17 @@ export default function Login() {
 
 			const data: ILoginAdmin = {
 				admin_email: email,
-				admin_password: actualPassword,
+				admin_password: actualPassword
 			};
 
 			const response = await authLoginAdmin(data);
 			
+
 			if(response.data) {
 				if(response.data.auth) {
-					setUsername(response.data);
-					handleLogin();
+					console.log(response.data)
+					setUsername(response.data.adminInfoJSON.admin_name);
+					handleLogin(response.data.adminInfoJSON.admin_name);
 				} else {
 					toast({
 						title: "Erro.",
@@ -88,8 +89,9 @@ export default function Login() {
 
 			if(response.data) {
 				if(response.data.auth) {
-					setUsername(response.data.student_name);
-					handleLogin();
+					setUsername(response.data.studentInfoJson.student_name);
+					console.log(username)
+					handleLogin(response.data.studentInfoJson.student_name);
 				} else {
 					toast({
 						title: "Erro.",
