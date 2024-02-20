@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import axios from "axios";
-import { ICheckEmail, ICreateRegister, ILogin, IUpdateStudent, IUserAdmin } from "../types";
+import { ICheckEmail, ICreateRegister, ILogin, ILoginAdmin, IUpdateStudent, IUserAdmin } from "../types";
 
 export const verifyIfDocumentAlreadyExists = async (document: string) => {
 	try {
@@ -141,7 +141,7 @@ export const authLogin = async (body: ILogin) => {
 	}
 };
 
-export const authLoginAdmin = async (body: ILogin) => {
+export const authLoginAdmin = async (body: ILogin | ILoginAdmin) => {
 	try {
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_SERVER}/authAdmin`, body,

@@ -15,7 +15,7 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import useTurtleStore from "../../store";
-import { ICheckEmail, ILogin } from "../../types";
+import { ICheckEmail, ILogin, ILoginAdmin } from "../../types";
 import { authLogin, authLoginAdmin, createPassword, verifyEmail } from "../../services/usersService";
 
 export default function Login() {
@@ -28,6 +28,7 @@ export default function Login() {
 	const [actualPassword, setActualPassword] = useState('');
 	const [type, setType] = useState("");
 	const [username, setUsername] = useState("");
+	const [document, setDocument] = useState("");
 	const { setAuthenticated, setCredentials, credentials } = useTurtleStore(
 		(state) => state,
 	);
@@ -39,6 +40,7 @@ export default function Login() {
 			username: username,
 			type: type,
 			email: email,
+			document: document
 		});
 		console.log(credentials);
 		setAuthenticated(true);
@@ -88,7 +90,9 @@ export default function Login() {
 
 			if(response.data) {
 				if(response.data.auth) {
-					setUsername(response.data.student_name);
+					console.log(response.data.studentInfoJson.student_document)
+					setUsername(response.data.studentInfoJson.student_name);
+					setDocument(response.data.studentInfoJson.student_document)
 					handleLogin();
 				} else {
 					toast({

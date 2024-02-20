@@ -22,6 +22,7 @@ export interface ICredentials {
 	username: string;
 	type: string;
 	email: string
+	document?: string
 }
 
 export interface IHttpClient {
@@ -178,4 +179,9 @@ export interface ILogin {
 export interface ILoginAdmin {
 	admin_email: string,
 	admin_password: string
+}
+
+export interface IGenerateCertificate {
+	document: string,
+	course_id: number
 }
