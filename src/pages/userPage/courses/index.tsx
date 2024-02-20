@@ -91,11 +91,11 @@ const Courses: React.FC = () => {
 				}}
 			/>
 
-			<Flex gap={5} wrap="wrap" mt={50}>
+			<Flex gap={5} wrap="wrap" mt={50} justifyContent='center'>
 				{courses && courses.length > 0 && courses.map((card) => {
 					return (
 						<>
-						<GenericCard key={card.course_id} type="course" courseData={card.course} />
+						<GenericCard key={card.course_id} type="course" courseData={card.course} isDone={card.is_done} />
 						</>
 					)
 				})}

@@ -273,12 +273,12 @@ const NAV_ITEMS: Array<NavItem> = [
 			{
 				label: "NR 20: Incêndios",
 				subLabel: "Ver detalhes",
-				href: "#",
+				href: "/cursos",
 			},
 			{
 				label: "NR 30: Incêndios",
 				subLabel: "Ver detalhres",
-				href: "#",
+				href: "/cursos",
 			},
 			{
 				label: "Ver todos os cursos",
@@ -289,9 +289,5 @@ const NAV_ITEMS: Array<NavItem> = [
 	{
 		label: "Contato",
 		href: "/contato",
-	},
-	{
-		label: "Sobre",
-		href: "#",
-	},
+	}
 ];

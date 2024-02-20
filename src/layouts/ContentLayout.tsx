@@ -134,9 +134,11 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
+	const { setAuthenticated, setCredentials, credentials } = useTurtleStore((state) => state);
 
 	const navigate = useNavigate();
+
+	console.log("credentials", credentials)
 
 	function logoff() {
 		setCredentials({
@@ -203,7 +205,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 									spacing="1px"
 									ml="2"
 								>
-									<Text fontSize="sm">Willian Henkel</Text>
+									<Text fontSize="sm">{credentials.username}</Text>
 									<Text fontSize="xs" color="gray.600">
 										Administrador
 									</Text>
@@ -217,10 +219,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 							bg={useColorModeValue("white", "gray.900")}
 							borderColor={useColorModeValue("gray.200", "gray.700")}
 						>
-							<Link to="/profile">
+							{/* <Link to="/profile">
 								<MenuItem>Perfil</MenuItem>
-							</Link>
-							<MenuItem>Configurações</MenuItem>
+							</Link> */}
+							{/* <MenuItem>Configurações</MenuItem> */}
 							<MenuDivider />
 							<MenuItem onClick={logoff}>Sair</MenuItem>
 						</MenuList>

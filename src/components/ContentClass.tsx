@@ -43,9 +43,9 @@ export default function ContentClass({
 				</details>
 			)}
 
-			<div className="text">{description}</div>
+			<div className="text" dangerouslySetInnerHTML={{ __html: description! }} />
 
-			<Button
+			{/* <Button
 				variant="solid"
 				bg="green.400"
 				_hover={{
@@ -58,7 +58,7 @@ export default function ContentClass({
 			>
 				<BiCheckboxChecked />
 				Conclur módulo
-			</Button>
+			</Button> */}
 		</Content>
 	);
 }

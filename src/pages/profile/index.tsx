@@ -20,6 +20,7 @@ import useTurtleStore from "../../store";
 export default function UserProfileEdit() {
 	const { userIcon, setUserIcon } = useTurtleStore((state) => state);
 	const { onOpen, onClose, isOpen } = useDisclosure();
+	const { credentials } = useTurtleStore((store) => store);
 
 	return (
 		<>
@@ -62,6 +63,7 @@ export default function UserProfileEdit() {
 					</FormControl>
 					<FormControl id="userName" isRequired>
 						<FormLabel>Nome de usuário</FormLabel>
+						
 						<Input
 							placeholder="Seu nome de usuário"
 							_placeholder={{ color: "gray.500" }}

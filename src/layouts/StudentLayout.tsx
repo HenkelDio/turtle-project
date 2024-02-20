@@ -36,8 +36,8 @@ interface MobileProps extends FlexProps {
 
 const LinkItems: Array<LinkItemProps> = [
 	{ name: "Cursos", link: "/student/courses" },
-	{ name: "Certificados", link: "/student/certificates" },
-	{ name: "Perfil", link: "/student/profile" },
+	// { name: "Certificados", link: "/student/certificates" },
+	// { name: "Perfil", link: "/student/profile" },
 ];
 
 const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
@@ -80,7 +80,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 	const { userIcon } = useTurtleStore((state) => state);
 
-	const { setAuthenticated, setCredentials } = useTurtleStore((state) => state);
+	const { setAuthenticated, setCredentials, credentials } = useTurtleStore((state) => state);
 
 	const navigate = useNavigate();
 
@@ -128,7 +128,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 									spacing="1px"
 									ml="2"
 								>
-									<Text fontSize="sm">Willian Henkel</Text>
+									<Text fontSize="sm">{credentials.username}</Text>
 									<Text fontSize="xs" color="gray.600">
 										Estudante
 									</Text>

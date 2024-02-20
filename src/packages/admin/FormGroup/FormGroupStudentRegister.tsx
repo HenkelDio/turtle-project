@@ -91,12 +91,21 @@ const FormGroupStudentRegister: React.FC = () => {
 
 	function goToStepThree() {
 		setStep(3)
-		setStudent((prevState: any) => (
-			{
-				...prevState,
-				student_company_id: selectedWorkplace[0].company_register 
-			}
-		));
+		if(selectedWorkplace.length !== 0) {
+			setStudent((prevState: any) => (
+				{
+					...prevState,
+					student_company_id: selectedWorkplace[0].company_register 
+				}
+			));
+		} else {
+			setStudent((prevState: any) => (
+				{
+					...prevState,
+					student_company_id: null
+				}
+			));
+		}
 	}
 
 	const handleSetStudent = (values: IUserStudent) => {
