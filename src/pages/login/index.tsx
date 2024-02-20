@@ -94,7 +94,7 @@ export default function Login() {
 					console.log(response.data.studentInfoJson.student_document)
 					setUsername(response.data.studentInfoJson.student_name);
 					setDocument(response.data.studentInfoJson.student_document)
-					handleLogin();
+					handleLogin(username);
 				} else {
 					toast({
 						title: "Erro.",
@@ -135,7 +135,7 @@ export default function Login() {
 				isClosable: true,
 			});
 			setUsername(response.data.user.student_name);
-			handleLogin();
+			handleLogin(response.data.user.student_name);
 		} else {
 			toast({
 				title: "Erro.",
